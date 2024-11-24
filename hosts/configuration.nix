@@ -7,6 +7,7 @@
 {
   imports =
     [
+      ../modules/xdg-portal.nix
     ];
 
   # Bootloader.
@@ -14,7 +15,7 @@
   boot.loader.grub.device = "/dev/sda";
   boot.loader.grub.useOSProber = true;
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "areas-vm-test"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -23,6 +24,8 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
+  programs.hyprland.enable = true;
+  programs.hyprland.portalPackage = pkgs.xdg-desktop-portal-hyprland;
 
   # Set your time zone.
   time.timeZone = "Europe/Paris";
@@ -45,11 +48,11 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Enable the X11 windowing system.
-  services.xserver.enable = true;
+  # services.xserver.enable = true;
 
   # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  # services.xserver.displayManager.gdm.enable = true;
+  # services.xserver.desktopManager.gnome.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -76,8 +79,6 @@
     #media-session.enable = true;
   };
 
-  #programs.hyprland.enable = true;
-
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
   programs.zsh.enable = true;
@@ -86,7 +87,7 @@
   users.users.areas = {
     isNormalUser = true;
     description = "areas";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
     packages = with pkgs; [
       firefox
       vim
