@@ -4,5 +4,6 @@
     ./kitty.nix
     ./hyprland
     ./hyprlock
+    ./rofi
   ];
 }
