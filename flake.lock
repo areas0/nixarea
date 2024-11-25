@@ -53,11 +53,28 @@
         "type": "github"
       }
     },
+    "nixpkgs_teleport_12": {
+      "locked": {
+        "lastModified": 1677162936,
+        "narHash": "sha256-q6wDJEiBUUBecedEPyei7So6qE9h39plbC0cSShEaVk=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "857636b0327ad7e092ec6cbd71a7735c885cbebd",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "857636b0327ad7e092ec6cbd71a7735c885cbebd",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
-        "nixpkgs-unstable": "nixpkgs-unstable"
+        "nixpkgs-unstable": "nixpkgs-unstable",
+        "nixpkgs_teleport_12": "nixpkgs_teleport_12"
       }
     }
   },
