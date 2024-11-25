@@ -4,6 +4,6 @@
     ./zsh.nix
     ./zoxide.nix
     ./fzf.nix
-    ./starship.nix
+    ./kitty.nix
   ];
 }

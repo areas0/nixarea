@@ -72,6 +72,8 @@
     pkgs.xclip
     pkgs.bc
 
+    pkgs.teleport
+
     pkgs.pre-commit
 
     # VLC
