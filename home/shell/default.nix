@@ -5,5 +5,6 @@
     ./zoxide.nix
     ./fzf.nix
     ./kitty.nix
+    ./starship.nix
   ];
 }

@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ pkgs, pkgs-unstable, config, ... }:
 
 {
   imports =
@@ -80,8 +80,8 @@
 
     # Enable nixFlakes on system
     package = pkgs.nixVersions.latest;
-    registry.nixpkgs.flake = inputs.nixpkgs;
-    registry.unstable.flake = inputs.unstable;
+    # registry.nixpkgs.flake = pkgs;
+    # registry.unstable.flake = pkgs-unstable;
 
     extraOptions = ''
       experimental-features = nix-command flakes
@@ -89,10 +89,6 @@
       keep-derivations = true
     '';
   };
-
-  # Allow proprietary software.
-  nixpkgs.config.allowUnfree = true;
-
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
