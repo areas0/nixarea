@@ -27,6 +27,25 @@
   programs.hyprland.enable = true;
   programs.hyprland.portalPackage = pkgs.xdg-desktop-portal-hyprland;
 
+  fonts.packages = with pkgs; [
+    noto-fonts
+    noto-fonts-cjk
+    noto-fonts-emoji
+    liberation_ttf
+    fira-code
+    fira-code-symbols
+    mplus-outline-fonts.githubRelease
+    dina-font
+    proggyfonts
+    terminus_font
+    terminus_font_ttf
+    terminus-nerdfont
+    termsyn
+    font-awesome
+    (nerdfonts.override { fonts = [ "Hack" "Noto" "Iosevka" "Terminus" ]; })
+    siji
+  ];
+
   # Set your time zone.
   time.timeZone = "Europe/Paris";
 
