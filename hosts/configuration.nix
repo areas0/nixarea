@@ -64,7 +64,34 @@
     LC_TIME = "fr_FR.UTF-8";
   };
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix = {
+    # Nix Package Manager settings
+    settings = { 
+      auto-optimise-store = true; 
+      experimental-features = [ "nix-command" "flakes" ];
+    };
+
+    # Garbage collector settings
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 7d";
+    };
+
+    # Enable nixFlakes on system
+    package = pkgs.nixVersions.latest;
+    registry.nixpkgs.flake = inputs.nixpkgs;
+    registry.unstable.flake = inputs.unstable;
+
+    extraOptions = ''
+      experimental-features = nix-command flakes
+      keep-outputs = true
+      keep-derivations = true
+    '';
+  };
+
+  # Allow proprietary software.
+  nixpkgs.config.allowUnfree = true;
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
