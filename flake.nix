@@ -8,9 +8,13 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nixpkgs_teleport_12.url =
       "github:nixos/nixpkgs?rev=857636b0327ad7e092ec6cbd71a7735c885cbebd";
+    nvchad4nix = {
+      url = "github:nix-community/nix4nvchad";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = inputs@{ nixpkgs, home-manager, nixpkgs-unstable, nixpkgs_teleport_12, ... }:
+  outputs = inputs@{ nixpkgs, home-manager, nixpkgs-unstable, nixpkgs_teleport_12, nvchad4nix, ... }:
   let
     system = "x86_64-linux";
 
@@ -45,7 +49,7 @@
               home-manager.users.areas = import ./home;
 
               home-manager.extraSpecialArgs = {
-                inherit pkgs pkgs-unstable;
+                inherit pkgs pkgs-unstable nvchad4nix;
               };
               # Optionally, use home-manager.extraSpecialArgs to pass
               # arguments to home.nix

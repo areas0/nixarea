@@ -1,7 +1,11 @@
 { pkgs-unstable, ... }:
 {
+  imports = [
+    ./nvchad.nix
+  ];
+
   programs.neovim = {
-    enable = true;
+    enable = false;
     package = pkgs-unstable.neovim-unwrapped;
     viAlias = true;
     vimAlias = true;
