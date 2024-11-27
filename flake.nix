@@ -56,6 +56,28 @@
             }
           ];
         };
+
+        areas-thinkpad-home = nixpkgs.lib.nixosSystem {
+	  specialArgs = { inherit pkgs-unstable; };
+          system = "x86_64-linux";
+          modules = [
+            ./hosts/configuration.nix
+            ./hosts/areas-thinkpad-home/configuration.nix
+            ./hosts/areas-thinkpad-home/hardware-configuration.nix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.areas = import ./home;
+
+              home-manager.extraSpecialArgs = {
+                inherit pkgs pkgs-unstable nvchad4nix;
+              };
+              # Optionally, use home-manager.extraSpecialArgs to pass
+              # arguments to home.nix
+            }
+          ];
+        };
       };
     };
 }

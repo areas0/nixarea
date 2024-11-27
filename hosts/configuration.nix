@@ -9,13 +9,6 @@
     [
       ../modules/xdg-portal.nix
     ];
-
-  # Bootloader.
-  boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/sda";
-  boot.loader.grub.useOSProber = true;
-
-  networking.hostName = "areas-vm-test"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -24,8 +17,11 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
-  programs.hyprland.enable = true;
-  programs.hyprland.portalPackage = pkgs.xdg-desktop-portal-hyprland;
+  programs.hyprland = {
+	enable = false;
+  	portalPackage = pkgs.xdg-desktop-portal-hyprland;
+	package = pkgs-unstable.hyprland;
+  };
 
   fonts.packages = with pkgs; [
     noto-fonts

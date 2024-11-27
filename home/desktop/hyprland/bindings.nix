@@ -13,6 +13,16 @@
       "$mod, P, pseudo, # dwindle"
       "$mod, J, togglesplit, # dwindle"
       "$mod, F, exec, firefox"
+
+      "$mod, left, movefocus, l"
+      "$mod, right, movefocus, r"
+      "$mod, up, movefocus, u"
+      "$mod, down, movefocus, d"
+      "SUPER_SHIT, left, movewindow, l"
+      "SUPER_SHIT, right, movewindow, r"
+      "SUPER_SHIT, up, movewindow, u"
+      "SUPER_SHIT, down, movewindow, d"
+
     ]
     ++ (
       # workspaces
@@ -27,4 +37,24 @@
         )
         9)
     );
+  wayland.windowManager.hyprland.settings.bindm = [
+    "ALT, mouse:272, movewindow"
+    "ALT, mouse:273, resizeWindow"
+  ];
+
+  wayland.windowManager.hyprland.settings.input = {
+    kb_layout = "us,fr";
+    kb_options = "grp:win_space_toggle";
+    follow_mouse = "1";
+    mouse_refocus = true;
+    touchpad = {
+      natural_scroll = "yes";
+    };
+  };
+
+  wayland.windowManager.hyprland.settings.general = {
+    gaps_in = 5;
+    gaps_out = 1;
+    border_size = 1;
+  };
 }

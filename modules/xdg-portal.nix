@@ -1,11 +1,10 @@
-{ pkgs, ... }:
+{ pkgs, pkgs-unstable, ... }:
 {
   xdg.portal = {
     enable = true;
     config.common.default = "*";
     wlr.enable = true;
     xdgOpenUsePortal = true;
-    extraPortals =
-      [ pkgs.xdg-desktop-portal-hyprland pkgs.xdg-desktop-portal-gtk ];
+    extraPortals = [ pkgs-unstable.xdg-desktop-portal-hyprland pkgs.xdg-desktop-portal-gtk ];
   };
 }
