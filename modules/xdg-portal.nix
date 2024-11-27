@@ -5,6 +5,6 @@
     config.common.default = "*";
     wlr.enable = true;
     xdgOpenUsePortal = true;
-    extraPortals = [ pkgs-unstable.xdg-desktop-portal-hyprland pkgs.xdg-desktop-portal-gtk ];
+    extraPortals = [ pkgs.xdg-desktop-portal-hyprland pkgs.xdg-desktop-portal-gtk ];
   };
 }

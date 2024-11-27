@@ -9,7 +9,6 @@
     [
       ../modules/xdg-portal.nix
     ];
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -18,10 +17,16 @@
   # Enable networking
   networking.networkmanager.enable = true;
   programs.hyprland = {
-	enable = false;
-  	portalPackage = pkgs.xdg-desktop-portal-hyprland;
-	package = pkgs-unstable.hyprland;
+    enable = true;
+    portalPackage = pkgs.xdg-desktop-portal-hyprland;
+    package = pkgs.hyprland;
   };
+
+  programs.hyprlock = {
+    enable = true;
+    package = pkgs.hyprlock;
+  };
+
 
   fonts.packages = with pkgs; [
     noto-fonts
@@ -62,8 +67,8 @@
 
   nix = {
     # Nix Package Manager settings
-    settings = { 
-      auto-optimise-store = true; 
+    settings = {
+      auto-optimise-store = true;
       experimental-features = [ "nix-command" "flakes" ];
     };
 
@@ -118,7 +123,7 @@
   };
 
   # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
+  services.xserver.libinput.enable = true;
   programs.zsh.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.

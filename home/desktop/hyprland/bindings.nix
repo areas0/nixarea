@@ -57,4 +57,19 @@
     gaps_out = 1;
     border_size = 1;
   };
+
+  wayland.windowManager.hyprland.settings.decoration = {
+    rounding = 10;
+    
+    blur = {
+        enabled = true;
+        size = 3;
+        passes = 1;
+    };
+
+    drop_shadow = "yes";
+    shadow_range = 4;
+    shadow_render_power = 3;
+    "col.shadow" = "rgba(1a1a1aee)";
+  };
 }
