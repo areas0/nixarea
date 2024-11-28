@@ -5,5 +5,6 @@
     ./hyprlock
     ./rofi
     ./waybar
+    ./hyprpaper
   ];
 }

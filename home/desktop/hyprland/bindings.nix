@@ -39,7 +39,7 @@
     );
   wayland.windowManager.hyprland.settings.bindm = [
     "ALT, mouse:272, movewindow"
-    "ALT, mouse:273, resizeWindow"
+    "ALT, mouse:273, resizewindow"
   ];
 
   wayland.windowManager.hyprland.settings.input = {
