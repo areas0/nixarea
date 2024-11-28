@@ -1,5 +1,8 @@
 { pkgs, ... }:
 {
+  imports = [
+    ../../modules/bluetooth.nix
+  ];
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Bootloader.
