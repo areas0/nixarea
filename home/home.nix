@@ -135,6 +135,7 @@
     # Postgres
     pkgs.postgresql
 
+    pkgs.pavucontrol
   ];
 
   programs.hyprlock = {
