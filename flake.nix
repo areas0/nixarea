@@ -64,7 +64,7 @@
             ./hosts/areas-thinkpad-home/hardware-configuration.nix
             home-manager.nixosModules.home-manager
             {
-              home-manager.useGlobalPkgs = false;
+              home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.users.areas = import ./home;
               home-manager.backupFileExtension = "backup";
