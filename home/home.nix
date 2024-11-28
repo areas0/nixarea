@@ -60,7 +60,7 @@
     pkgs.kube-linter
     pkgs.postgresql
     pkgs.terraform-docs
-    # pkgs-unstable.pritunl-client
+    pkgs-unstable.pritunl-client
     pkgs.yarn
     pkgs.tree
     pkgs.bat

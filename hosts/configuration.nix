@@ -16,6 +16,13 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
+
+  services.xserver.updateDbusEnvironment = true;
+  security.polkit.enable = true;
+  security.pam.services = {
+    hyprlock = {};
+    # gdm.enableGnomeKeyring = true;
+  };
   programs.hyprland = {
     enable = true;
     portalPackage = pkgs.xdg-desktop-portal-hyprland;
@@ -26,6 +33,8 @@
     enable = true;
     package = pkgs.hyprlock;
   };
+
+  services.hypridle.enable = true;
 
 
   fonts.packages = with pkgs; [
@@ -153,8 +162,6 @@
     wget
     curl
     kitty
-    #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    #  wget
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

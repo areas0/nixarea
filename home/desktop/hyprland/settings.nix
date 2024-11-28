@@ -2,10 +2,10 @@
 {
   wayland.windowManager.hyprland = {
     enable = true; # enable Hyprland
-    #package = pkgs-unstable.hyprland;
     xwayland.enable = true;
     systemd.enable = true;
     systemd.variables = [ "--all" ];
+    systemd.enableXdgAutostart = true;
 
     settings = {
       "$mod" = "SUPER";
