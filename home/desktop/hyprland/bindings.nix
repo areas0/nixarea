@@ -18,10 +18,10 @@
       "$mod, right, movefocus, r"
       "$mod, up, movefocus, u"
       "$mod, down, movefocus, d"
-      "SUPER_SHIT, left, movewindow, l"
-      "SUPER_SHIT, right, movewindow, r"
-      "SUPER_SHIT, up, movewindow, u"
-      "SUPER_SHIT, down, movewindow, d"
+      "$mod SHIFT, left, movewindow, l"
+      "$mod SHIFT, right, movewindow, r"
+      "$mod SHIFT, up, movewindow, u"
+      "$mod SHIFT, down, movewindow, d"
 
     ]
     ++ (
@@ -72,4 +72,9 @@
     shadow_render_power = 3;
     "col.shadow" = "rgba(1a1a1aee)";
   };
+
+  wayland.windowManager.hyprland.settings.workspace = [
+    "r[1-4], monitor:eDP-1"
+    "r[5-9], monitor:DP-7"
+  ];
 }
