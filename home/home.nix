@@ -136,6 +136,7 @@
     pkgs.postgresql
 
     pkgs.pavucontrol
+    pkgs.jellyfin-media-player
   ];
 
   programs.hyprlock = {
