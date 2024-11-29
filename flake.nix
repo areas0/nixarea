@@ -41,6 +41,7 @@
           system = "x86_64-linux";
           modules = [
             ./hosts/configuration.nix
+            ./hosts/vm-test/configuration.nix
             ./hosts/vm-test/hardware-configuration.nix
             home-manager.nixosModules.home-manager
             {
