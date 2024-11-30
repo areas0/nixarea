@@ -12,9 +12,10 @@
       url = "github:nix-community/nix4nvchad";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixpkgs_zen.url = "github:matthewpi/nixpkgs?ref=zen-browser";
   };
 
-  outputs = inputs@{ nixpkgs, home-manager, nixpkgs-unstable, nixpkgs_teleport_12, nvchad4nix, ... }:
+  outputs = inputs@{ nixpkgs, home-manager, nixpkgs-unstable, nixpkgs_teleport_12, nixpkgs_zen, nvchad4nix, ... }:
     let
       system = "x86_64-linux";
 
@@ -31,6 +32,7 @@
         overlays = [
           # (import ./overlays/discord.nix)
           (import ./overlays/teleport.nix { inherit inputs; })
+          (import ./overlays/zen.nix { inherit inputs; })
           (final: prev: { inherit nixpkgs-unstable; })
         ];
       };

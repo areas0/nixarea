@@ -69,6 +69,22 @@
         "type": "github"
       }
     },
+    "nixpkgs_zen": {
+      "locked": {
+        "lastModified": 1732818136,
+        "narHash": "sha256-n94kw3ro0xujt/FzKz0nm47sX7sC13EwaemvIo28I2c=",
+        "owner": "matthewpi",
+        "repo": "nixpkgs",
+        "rev": "f946c505ed283080fb57efaea72b36d24629926f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "matthewpi",
+        "ref": "zen-browser",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nvchad-starter": {
       "flake": false,
       "locked": {
@@ -113,6 +129,7 @@
         "nixpkgs": "nixpkgs",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nixpkgs_teleport_12": "nixpkgs_teleport_12",
+        "nixpkgs_zen": "nixpkgs_zen",
         "nvchad4nix": "nvchad4nix"
       }
     }

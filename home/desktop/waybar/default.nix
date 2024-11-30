@@ -133,10 +133,10 @@
 
         "clock" = {
           interval = 1;
-          format = "{: %A %d %B |  %I:%M:%S %p}";
+          format = "{: %A %d %B |  %I:%M:%S %p}";
           onClick = "";
           tooltip = false;
-          tooltipFormat = "{:󰣆 %A, %B %d, %Y | %I:%M:%S %p}";
+          # tooltipFormat = "{:󰣆 %A, %B %d, %Y | %I:%M:%S %p}";
         };
       }
     ];
