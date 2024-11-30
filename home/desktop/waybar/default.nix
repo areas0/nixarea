@@ -9,9 +9,8 @@
         position = "top";
 
         modules-left =  [
-              "custom/arch"
               "hyprland/workspaces"
-          ];
+        ];
         modules-center = [
             "hyprland/window"
         ];
