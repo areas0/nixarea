@@ -68,7 +68,7 @@
             phone = "";
             portable = "";
             car = "";
-            default = [ "", "", "" ];
+            default = [ "" "" "" ];
           };
           on-click = "pavucontrol";
         };
@@ -110,7 +110,7 @@
           format-charging = "  {capacity}%";
           format-plugged = "  {capacity}%";
           format-alt = "{time}  {icon}";
-          format-icons = [ "", "", "", "", "" ];
+          format-icons = [ "" "" "" "" "" ];
         };
 
         "battery#bat2" = {
