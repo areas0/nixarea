@@ -1,5 +1,7 @@
 { ... }:
 # Blueman for bluetooth
 {
-  services.blueman-applet.enable = true;
+  services.blueman-applet = {
+    enable = true;
+  };
 }

@@ -23,5 +23,9 @@
       ];
       theme = "robbyrussell";
     };
+    shellAliases = {
+      kns = "kubens";
+      kcx = "kubectx";
+    };
   };
 }

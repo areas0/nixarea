@@ -42,7 +42,7 @@
           language = {
             format = "  {}";
             format-en = "EN";
-            format-ru = "RU";
+            format-fr = "FR";
           };
         };
 

@@ -127,6 +127,10 @@
     # thunar file manager
     pkgs.xfce.thunar
     pkgs.xfce.thunar-archive-plugin
+
+    #1password
+    pkgs._1password-gui
+    pkgs._1password
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage

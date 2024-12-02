@@ -7,7 +7,8 @@
 {
   imports =
     [ # Include the results of the hardware scan.
-	../../modules/bluetooth.nix
+      ../../modules/bluetooth.nix
+      ../../modules/docker.nix
     ];
 
   # Bootloader.
