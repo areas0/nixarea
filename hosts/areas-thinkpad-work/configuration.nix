@@ -27,5 +27,5 @@
   # Enable networking
   networking.networkmanager.enable = true;
 
-
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 }
