@@ -1,6 +1,7 @@
 { ... }:
 {
   imports = [
+    ./hypridle
     ./hyprland
     ./hyprlock
     ./rofi
