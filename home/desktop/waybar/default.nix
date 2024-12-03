@@ -15,7 +15,7 @@
           "hyprland/window"
         ];
         modules-right = [
-          "idle_inhibitor"
+          "tray"
           "pulseaudio"
           "network"
           "cpu"
