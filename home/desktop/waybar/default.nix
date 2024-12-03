@@ -70,6 +70,7 @@
             car = "";
             default = [ "" "" "" ];
           };
+          scroll-step = 1;
           on-click = "pavucontrol";
         };
 
@@ -122,6 +123,7 @@
           tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
           format-alt = "{:%Y-%m-%d}";
         };
+        
       }
     ];
 
