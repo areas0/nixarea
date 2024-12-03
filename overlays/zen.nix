@@ -7,4 +7,5 @@ let
     system = super.system;
     config.allowUnfree = true;
   };
-in { zen-browser = pkgs.zen-browser; }
+in
+{ zen-browser = pkgs.zen-browser; }

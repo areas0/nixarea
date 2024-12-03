@@ -1,7 +1,7 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
-  imports = [ 
+  imports = [
     ../../modules/docker.nix
     ../../modules/bluetooth.nix
   ];
@@ -12,7 +12,8 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/b8b52410-e58d-4a5b-aa11-942d9ca5cc98";
+    {
+      device = "/dev/disk/by-uuid/b8b52410-e58d-4a5b-aa11-942d9ca5cc98";
       fsType = "ext4";
     };
 
@@ -28,7 +29,7 @@
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   virtualisation.virtualbox.guest.enable = true;
 
-  
+
   systemd.services = {
     # TODO: enable when pritunl is built
     # pritunl-client-service = {

@@ -20,7 +20,7 @@
   services.xserver.updateDbusEnvironment = true;
   security.polkit.enable = true;
   security.pam.services = {
-    hyprlock = {};
+    hyprlock = { };
     # gdm.enableGnomeKeyring = true;
   };
   programs.hyprland = {

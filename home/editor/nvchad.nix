@@ -12,7 +12,7 @@
       dockerfile-language-server-nodejs
       emmet-language-server
       nixd
-      (python3.withPackages(ps: with ps; [
+      (python3.withPackages (ps: with ps; [
         python-lsp-server
         flake8
       ]))

@@ -60,11 +60,11 @@
 
   wayland.windowManager.hyprland.settings.decoration = {
     rounding = 10;
-    
+
     blur = {
-        enabled = true;
-        size = 3;
-        passes = 1;
+      enabled = true;
+      size = 3;
+      passes = 1;
     };
 
     #drop_shadow = "yes";

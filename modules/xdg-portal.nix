@@ -2,7 +2,7 @@
 {
   xdg.portal = {
     enable = true;
-  #   config.common.default = "*";
+    #   config.common.default = "*";
     wlr.enable = true;
     xdgOpenUsePortal = true;
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];

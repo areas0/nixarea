@@ -7,4 +7,5 @@ let
     system = super.system;
     config.allowUnfree = true;
   };
-in { teleport = pkgs.teleport; }
+in
+{ teleport = pkgs.teleport; }
