@@ -11,8 +11,7 @@
       ];
 
       wallpaper = [
-        "eDP-1,${../../../assets/xenoblade.jpg}"
-        "DP-7,${../../../assets/xenoblade.jpg}"
+        ",${../../../assets/xenoblade.jpg}"
       ];
     };
   };

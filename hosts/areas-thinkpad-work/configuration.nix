@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, pkgs-unstable, ... }:
 
 {
   imports =
@@ -28,4 +28,12 @@
   networking.networkmanager.enable = true;
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
+
+  systemd.services = {
+    pritunl-client-service = {
+      description = "Pritunl Client Daemon";
+      script = "${pkgs-unstable.pritunl-client}/bin/pritunl-client-service";
+      wantedBy = [ "multi-user.target" ];
+    };
+  };
 }
