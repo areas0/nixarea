@@ -36,4 +36,10 @@
       wantedBy = [ "multi-user.target" ];
     };
   };
+
+  virtualisation = {
+    podman = {
+      enable = true;
+    };
+  };
 }

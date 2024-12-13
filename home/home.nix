@@ -131,6 +131,8 @@
     #1password
     pkgs._1password-gui
     pkgs._1password
+
+    pkgs.buildah
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
