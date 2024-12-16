@@ -1,4 +1,4 @@
-{ config, pkgs, pkgs-unstable, ... }:
+{ config, pkgs, pkgs-unstable, zen, ... }:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -122,7 +122,7 @@
     pkgs.pavucontrol
     pkgs.jellyfin-media-player
 
-    pkgs.zen-browser
+    zen.packages."x86_64-linux".specific
 
     # thunar file manager
     pkgs.xfce.thunar
@@ -130,7 +130,7 @@
 
     #1password
     pkgs._1password-gui
-    pkgs._1password
+    pkgs._1password-cli
 
     pkgs.buildah
   ];

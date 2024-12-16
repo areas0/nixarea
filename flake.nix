@@ -12,10 +12,10 @@
       url = "github:nix-community/nix4nvchad";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixpkgs_zen.url = "github:matthewpi/nixpkgs?ref=zen-browser";
+    zen.url = "github:0xc000022070/zen-browser-flake";
   };
 
-  outputs = inputs@{ nixpkgs, home-manager, nixpkgs-unstable, nixpkgs_teleport_12, nixpkgs_zen, nvchad4nix, ... }:
+  outputs = inputs@{ nixpkgs, home-manager, nixpkgs-unstable, nixpkgs_teleport_12, zen, nvchad4nix, ... }:
     let
       system = "x86_64-linux";
 
@@ -32,7 +32,7 @@
         overlays = [
           # (import ./overlays/discord.nix)
           (import ./overlays/teleport.nix { inherit inputs; })
-          (import ./overlays/zen.nix { inherit inputs; })
+          # (import ./overlays/zen.nix { inherit inputs; })
           (final: prev: { inherit nixpkgs-unstable; })
         ];
       };
@@ -52,7 +52,7 @@
               home-manager.users.areas = import ./home;
 
               home-manager.extraSpecialArgs = {
-                inherit pkgs pkgs-unstable nvchad4nix;
+                inherit pkgs pkgs-unstable nvchad4nix zen;
               };
             }
           ];
@@ -72,7 +72,7 @@
               home-manager.users.areas = import ./home;
 
               home-manager.extraSpecialArgs = {
-                inherit pkgs pkgs-unstable nvchad4nix;
+                inherit pkgs pkgs-unstable nvchad4nix zen;
               };
             }
           ];
