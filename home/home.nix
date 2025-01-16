@@ -122,7 +122,7 @@
     pkgs.pavucontrol
     pkgs.jellyfin-media-player
 
-    zen.packages."x86_64-linux".specific
+    zen.packages."x86_64-linux".default
 
     # thunar file manager
     pkgs.xfce.thunar
@@ -133,6 +133,7 @@
     pkgs._1password-cli
 
     pkgs.buildah
+    pkgs-unstable.warp-terminal
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage

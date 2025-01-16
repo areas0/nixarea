@@ -10,7 +10,7 @@
     settings = {
       "$mod" = "SUPER";
       "$terminal" = "kitty";
-      "$menu" = "rofi -show drun";
+      "$menu" = "rofi -show combi";
       exec-once = [
         "code"
         "waybar"
