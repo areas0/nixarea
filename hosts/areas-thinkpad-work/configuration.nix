@@ -6,18 +6,16 @@
 
 {
   imports =
-    [
-      # Include the results of the hardware scan.
-      ../../modules/bluetooth.nix
-      ../../modules/docker.nix
+    [ # Include the results of the hardware scan.
+      ./hardware-configuration.nix
     ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.initrd.luks.devices."luks-42ec07de-819a-4d15-a3e5-08663f384a75".device = "/dev/disk/by-uuid/42ec07de-819a-4d15-a3e5-08663f384a75";
-  networking.hostName = "areas-thinkpad"; # Define your hostname.
+  boot.initrd.luks.devices."luks-14370851-877b-4e97-b209-9f29f2b01b07".device = "/dev/disk/by-uuid/14370851-877b-4e97-b209-9f29f2b01b07";
+  networking.hostName = "areas-thinkpad-work"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
