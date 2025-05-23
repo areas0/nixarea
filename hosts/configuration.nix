@@ -50,10 +50,12 @@
     proggyfonts
     terminus_font
     terminus_font_ttf
-    terminus-nerdfont
     termsyn
     font-awesome
-    (nerdfonts.override { fonts = [ "Hack" "Noto" "Iosevka" "Terminus" ]; })
+    nerd-fonts.hack
+    nerd-fonts.noto
+    nerd-fonts.iosevka
+    nerd-fonts.terminess-ttf
     siji
   ];
 
@@ -117,7 +119,7 @@
   services.printing.enable = true;
 
   # Enable sound with pipewire.
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -133,7 +135,7 @@
   };
 
   # Enable touchpad support (enabled default in most desktopManager).
-  services.xserver.libinput.enable = true;
+  services.libinput.enable = true;
   programs.zsh.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.

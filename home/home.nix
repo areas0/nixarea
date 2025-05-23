@@ -34,7 +34,6 @@
     pkgs.dig
     pkgs.firefox
     pkgs.helm-ls
-    pkgs.krdc
     pkgs.kubectl
     pkgs.kubernetes-helm
     pkgs.kubectx
@@ -100,12 +99,12 @@
     # Python
     pkgs-unstable.poetry
     pkgs.python310
-    pkgs.ruff-lsp
+    # pkgs.ruff-lsp
 
     pkgs.slack
 
     # Zip
-    pkgs.ark
+    pkgs.kdePackages.ark
 
     # Go
     pkgs.go
@@ -131,6 +130,9 @@
     #1password
     pkgs._1password-gui
     pkgs._1password-cli
+
+    # dotnet
+    pkgs.dotnetCorePackages.dotnet_8.runtime
 
     pkgs.buildah
     pkgs-unstable.warp-terminal
