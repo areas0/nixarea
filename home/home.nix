@@ -72,7 +72,7 @@
     pkgs.nodejs
 
     # Nix formatter
-    pkgs.nixpkgs-fmt
+    pkgs.nixfmt-rfc-style
 
     # Npm
     pkgs.nodePackages.npm
