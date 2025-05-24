@@ -6,13 +6,9 @@
       ipc = "true";
       splash = false;
 
-      preload = [
-        "${../../../assets/xenoblade.jpg}"
-      ];
+      preload = [ "${../../../assets/xenoblade.jpg}" ];
 
-      wallpaper = [
-        ",${../../../assets/xenoblade.jpg}"
-      ];
+      wallpaper = [ ",${../../../assets/xenoblade.jpg}" ];
     };
   };
 }

@@ -1,8 +1,6 @@
 { pkgs, ... }:
 {
-  imports = [
-    ./settings.nix
-  ];
+  imports = [ ./settings.nix ];
 
   programs.hyprlock = {
     enable = true;

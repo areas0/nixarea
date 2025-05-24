@@ -1,8 +1,6 @@
 { pkgs-unstable, ... }:
 {
-  imports = [
-    ./nvchad.nix
-  ];
+  imports = [ ./nvchad.nix ];
 
   programs.neovim = {
     enable = false;

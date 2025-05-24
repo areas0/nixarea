@@ -8,12 +8,8 @@
         layer = "top";
         position = "top";
 
-        modules-left = [
-          "hyprland/workspaces"
-        ];
-        modules-center = [
-          "hyprland/window"
-        ];
+        modules-left = [ "hyprland/workspaces" ];
+        modules-center = [ "hyprland/window" ];
         modules-right = [
           "tray"
           "pulseaudio"
@@ -68,7 +64,11 @@
             phone = "";
             portable = "";
             car = "";
-            default = [ "" "" "" ];
+            default = [
+              ""
+              ""
+              ""
+            ];
           };
           scroll-step = 1;
           on-click = "pavucontrol";
@@ -111,7 +111,13 @@
           format-charging = "  {capacity}%";
           format-plugged = "  {capacity}%";
           format-alt = "{time}  {icon}";
-          format-icons = [ "" "" "" "" "" ];
+          format-icons = [
+            ""
+            ""
+            ""
+            ""
+            ""
+          ];
         };
 
         "battery#bat2" = {
@@ -120,7 +126,9 @@
 
         clock = {
           format = "{:%H:%M | %e %B} ";
-          tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
+          tooltip-format = ''
+            <big>{:%Y %B}</big>
+            <tt><small>{calendar}</small></tt>'';
           format-alt = "{:%Y-%m-%d}";
         };
 

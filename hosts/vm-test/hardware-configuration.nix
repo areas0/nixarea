@@ -1,4 +1,10 @@
-{ config, lib, pkgs, modulesPath, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  modulesPath,
+  ...
+}:
 
 {
   imports = [
@@ -6,16 +12,22 @@
     ../../modules/bluetooth.nix
   ];
 
-  boot.initrd.availableKernelModules = [ "ata_piix" "ohci_pci" "ehci_pci" "ahci" "sd_mod" "sr_mod" ];
+  boot.initrd.availableKernelModules = [
+    "ata_piix"
+    "ohci_pci"
+    "ehci_pci"
+    "ahci"
+    "sd_mod"
+    "sr_mod"
+  ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
 
-  fileSystems."/" =
-    {
-      device = "/dev/disk/by-uuid/b8b52410-e58d-4a5b-aa11-942d9ca5cc98";
-      fsType = "ext4";
-    };
+  fileSystems."/" = {
+    device = "/dev/disk/by-uuid/b8b52410-e58d-4a5b-aa11-942d9ca5cc98";
+    fsType = "ext4";
+  };
 
   swapDevices = [ ];
 
@@ -28,7 +40,6 @@
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   virtualisation.virtualbox.guest.enable = true;
-
 
   systemd.services = {
     # TODO: enable when pritunl is built

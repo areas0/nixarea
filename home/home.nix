@@ -1,4 +1,10 @@
-{ config, pkgs, pkgs-unstable, zen, ... }:
+{
+  config,
+  pkgs,
+  pkgs-unstable,
+  zen,
+  ...
+}:
 
 {
   # Home Manager needs a bit of information about you and the paths it should

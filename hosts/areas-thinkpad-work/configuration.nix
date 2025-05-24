@@ -2,20 +2,26 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, pkgs-unstable, ... }:
+{
+  config,
+  pkgs,
+  pkgs-unstable,
+  ...
+}:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ../../modules/docker.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ../../modules/docker.nix
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.initrd.luks.devices."luks-14370851-877b-4e97-b209-9f29f2b01b07".device = "/dev/disk/by-uuid/14370851-877b-4e97-b209-9f29f2b01b07";
+  boot.initrd.luks.devices."luks-14370851-877b-4e97-b209-9f29f2b01b07".device =
+    "/dev/disk/by-uuid/14370851-877b-4e97-b209-9f29f2b01b07";
   networking.hostName = "areas-thinkpad-work"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 

@@ -2,13 +2,15 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ pkgs, pkgs-unstable, config, ... }:
+{
+  pkgs,
+  pkgs-unstable,
+  config,
+  ...
+}:
 
 {
-  imports =
-    [
-      ../modules/xdg-portal.nix
-    ];
+  imports = [ ../modules/xdg-portal.nix ];
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -35,7 +37,6 @@
   };
 
   services.hypridle.enable = true;
-
 
   fonts.packages = with pkgs; [
     noto-fonts
@@ -81,7 +82,10 @@
     # Nix Package Manager settings
     settings = {
       auto-optimise-store = true;
-      experimental-features = [ "nix-command" "flakes" ];
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
     };
 
     # Garbage collector settings
@@ -142,7 +146,11 @@
   users.users.areas = {
     isNormalUser = true;
     description = "areas";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "docker"
+    ];
     packages = with pkgs; [
       firefox
       vim

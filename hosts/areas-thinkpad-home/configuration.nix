@@ -1,8 +1,6 @@
 { pkgs, ... }:
 {
-  imports = [
-    ../../modules/bluetooth.nix
-  ];
+  imports = [ ../../modules/bluetooth.nix ];
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Bootloader.
@@ -19,14 +17,16 @@
 
   boot.loader.efi.canTouchEfiVariables = true;
 
-
   networking.hostName = "areas-thinkpad"; # Define your hostname.
 
   hardware.opengl = {
     enable = true;
     driSupport = true;
     driSupport32Bit = true;
-    extraPackages = [ pkgs.mesa.drivers pkgs.amdvlk ];
+    extraPackages = [
+      pkgs.mesa.drivers
+      pkgs.amdvlk
+    ];
   };
 
   services.xserver.enable = true;
