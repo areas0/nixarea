@@ -67,7 +67,7 @@
 
       blur = {
         enabled = true;
-        size = 3;
+        size = 5;
         passes = 1;
       };
 
@@ -80,6 +80,14 @@
     workspace = [
       "r[1-4], monitor:eDP-1"
       "r[5-9], monitor:DP-7"
+    ];
+
+    monitor = [
+      "eDP-1, 1920x1200@60, 0x0, 1"
+    ];
+
+    windowrule = [
+      "opacity 0.95, class:code"
     ];
   };
 }
