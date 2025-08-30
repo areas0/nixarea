@@ -8,5 +8,6 @@
     ./anyrun
     ./waybar
     ./hyprpaper
+    ./hyprshell
   ];
 }

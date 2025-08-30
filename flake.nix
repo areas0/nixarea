@@ -16,6 +16,8 @@
       url = "github:anyrun-org/anyrun";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    hyprshell.url = "github:H3rmt/hyprshell?ref=hyprshell-release";
+    hyprshell.inputs.nixpkgs.follows = "nixpkgs-unstable";
   };
 
   outputs =
@@ -27,6 +29,7 @@
       zen,
       nvchad4nix,
       anyrun,
+      hyprshell,
       ...
     }:
     let
@@ -70,6 +73,7 @@
                   nvchad4nix
                   zen
                   anyrun
+                  hyprshell
                   ;
               };
             }
@@ -95,6 +99,7 @@
                   nvchad4nix
                   zen
                   anyrun
+                  hyprshell
                   ;
               };
             }
@@ -121,6 +126,7 @@
                   nvchad4nix
                   zen
                   anyrun
+                  hyprshell
                   ;
               };
             }
