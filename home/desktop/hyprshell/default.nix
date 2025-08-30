@@ -1,4 +1,5 @@
-{ hyprshell, ... } : {
+{ hyprshell, ... }:
+{
   imports = [
     hyprshell.homeModules.hyprshell
   ];
@@ -40,7 +41,7 @@
 
       windows = {
         enable = true;
-        scale = 8.5;            # 0..15
+        scale = 8.5; # 0..15
         items_per_row = 6;
 
         overview = {
@@ -59,7 +60,7 @@
             launch_modifier = "ctrl";
             max_items = 8;
             animate_launch_ms = 250;
-            default_terminal = "kitty";   # or "alacritty", "kitty", etc.
+            default_terminal = "kitty"; # or "alacritty", "kitty", etc.
             show_when_empty = true;
 
             plugins = {
@@ -69,9 +70,15 @@
                 show_execs = true;
                 show_actions_submenu = true;
               };
-              calc = { enable = true; };
-              shell = { enable = true; };
-              terminal = { enable = true; };
+              calc = {
+                enable = true;
+              };
+              shell = {
+                enable = true;
+              };
+              terminal = {
+                enable = true;
+              };
               websearch = {
                 enable = false;
               };
