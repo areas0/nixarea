@@ -12,6 +12,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     zen.url = "github:0xc000022070/zen-browser-flake";
+    anyrun = {
+      url = "github:anyrun-org/anyrun";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -22,6 +26,7 @@
       nixpkgs_teleport_12,
       zen,
       nvchad4nix,
+      anyrun,
       ...
     }:
     let
@@ -65,6 +70,7 @@
                   pkgs-unstable
                   nvchad4nix
                   zen
+                  anyrun
                   ;
               };
             }
@@ -90,6 +96,7 @@
                   pkgs-unstable
                   nvchad4nix
                   zen
+                  anyrun
                   ;
               };
             }
@@ -111,7 +118,13 @@
               home-manager.backupFileExtension = "backup";
 
               home-manager.extraSpecialArgs = {
-                inherit pkgs pkgs-unstable nvchad4nix;
+                inherit
+                  pkgs
+                  pkgs-unstable
+                  nvchad4nix
+                  zen
+                  anyrun
+                  ;
               };
             }
           ];

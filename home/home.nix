@@ -142,6 +142,9 @@
 
     pkgs.buildah
     pkgs-unstable.warp-terminal
+
+    pkgs.wlr-randr
+    pkgs-unstable.code-cursor
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage

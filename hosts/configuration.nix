@@ -191,7 +191,7 @@
   # Open ports in the firewall.
   networking.firewall = {
     enable = true;
-    allowPing = true;
+    allowPing = false;
   };
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];

@@ -5,6 +5,7 @@
     ./hyprland
     ./hyprlock
     ./rofi
+    ./anyrun
     ./waybar
     ./hyprpaper
   ];
