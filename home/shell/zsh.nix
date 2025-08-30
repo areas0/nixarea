@@ -26,6 +26,8 @@
     shellAliases = {
       kns = "kubens";
       kcx = "kubectx";
+      kneat = "kubectl-neat";
+      kvs = "kubectl-view-secret";
     };
   };
 }
