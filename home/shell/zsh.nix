@@ -28,6 +28,7 @@
       kcx = "kubectx";
       kneat = "kubectl-neat";
       kvs = "kubectl-view-secret";
+      cd = "z";
     };
   };
 }
