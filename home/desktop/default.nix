@@ -9,5 +9,6 @@
     ./waybar
     ./hyprpaper
     ./hyprshell
+    ./hyprpanel
   ];
 }
