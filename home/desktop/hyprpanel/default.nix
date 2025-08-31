@@ -1,6 +1,7 @@
 { ... }:
 {
   programs.hyprpanel = {
+    enable = true;
     # Configure and theme almost all options from the GUI.
     # See 'https://hyprpanel.com/configuration/settings.html'.
     # Default: <same as gui>
@@ -20,7 +21,8 @@
       };
 
       bar.launcher.autoDetectIcon = true;
-      bar.workspaces.show_icons = true;
+      bar.workspaces.show_icons = false;
+      bar.workspaces.show_number = true;
 
       menus.clock = {
         time = {

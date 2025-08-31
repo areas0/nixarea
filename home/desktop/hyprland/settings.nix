@@ -13,8 +13,9 @@
       "$menu" = "rofi -show combi";
       exec-once = [
         "code"
-        "waybar"
+        # "waybar"
         "hyprpaper"
+        "hyprpanel"
       ];
       env = [
         "NIXOS_OZONE_WL,1" # for any ozone-based browser & electron apps to run on wayland
