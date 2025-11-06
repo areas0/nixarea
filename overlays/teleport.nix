@@ -4,11 +4,11 @@ let
 in
 self: super:
 let
-  pkgs = import inputs.nixpkgs_teleport_12 {
+  pkgs = import inputs.nixpkgs_teleport_14 {
     system = super.system;
     config.allowUnfree = true;
   };
 in
 {
-  teleport = pkgs.teleport;
+  teleport_15 = pkgs.teleport_15;
 }

@@ -61,7 +61,7 @@
     pkgs.xclip
     pkgs.bc
 
-    pkgs.teleport
+    pkgs.teleport_15
 
     pkgs.pre-commit
 

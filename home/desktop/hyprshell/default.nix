@@ -35,7 +35,7 @@
     # '';
 
     settings = {
-      version = 1;
+      # version = 1;
       layerrules = true;
       kill_bind = "ctrl+shift+alt, h";
 
