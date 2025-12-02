@@ -36,8 +36,7 @@
 
     settings = {
       # version = 1;
-      layerrules = true;
-      kill_bind = "ctrl+shift+alt, h";
+      
 
       windows = {
         enable = true;
@@ -46,7 +45,6 @@
 
         overview = {
           enable = true;
-          strip_html_from_workspace_title = true;
           key = "super_l";
           modifier = "super";
 
@@ -55,11 +53,9 @@
           hide_filtered = false;
 
           launcher = {
-            enable = true;
             width = 700;
             launch_modifier = "ctrl";
             max_items = 8;
-            animate_launch_ms = 250;
             default_terminal = "kitty"; # or "alacritty", "kitty", etc.
             show_when_empty = true;
 
@@ -91,7 +87,7 @@
           modifier = "alt";
           # Choose any of: "same_class" "current_monitor" "current_workspace"
           filter_by = [ "current_monitor" ];
-          show_workspaces = true;
+          switch_workspaces = true;
         };
       };
     };

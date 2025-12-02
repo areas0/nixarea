@@ -33,7 +33,7 @@
   home.packages = [
     pkgs.git
     pkgs.argocd
-    pkgs.argo
+    pkgs.argo-workflows
     pkgs.awscli2
     pkgs.azure-cli
     pkgs.circleci-cli
@@ -69,21 +69,21 @@
     pkgs.vlc
 
     # Node
-    pkgs.nodejs
+    # pkgs.nodejs
 
     # Nix formatter
     pkgs.nixfmt-rfc-style
 
     # Npm
     pkgs.nodePackages.npm
-    pkgs.nodePackages.pnpm
+    # pkgs.nodePackages.pnpm
 
     # yaml formatter
     pkgs.nodePackages.markdownlint-cli
 
     # C/C++
     pkgs.gnumake
-    pkgs.clang-tools_14
+    pkgs.clang-tools
     pkgs.gcc.out
     pkgs.glib.out
 
@@ -125,7 +125,7 @@
     pkgs.postgresql
 
     pkgs.pavucontrol
-    pkgs.jellyfin-media-player
+    # pkgs.jellyfin-media-player
 
     zen.packages."x86_64-linux".default
 
