@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 {
   programs.zsh = {
     enable = true;
@@ -25,9 +25,9 @@
     };
     shellAliases = {
       kns = "kubens";
-      kcx = "kubectx";
-      kneat = "kubectl-neat";
-      kvs = "kubectl-view-secret";
+      kcx = "${pkgs.kubectx}";
+      kneat = "${pkgs.kubectl-neat}";
+      kvs = "${pkgs.kubectl-view-secret}";
       cd = "z";
     };
   };

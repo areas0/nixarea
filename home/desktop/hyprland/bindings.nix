@@ -61,6 +61,10 @@
       border_size = 1;
     };
 
+    render = {
+      cm_fs_passthrough = "true";
+    };
+
     decoration = {
       rounding = 10;
 
@@ -84,6 +88,8 @@
     monitor = [
       "eDP-1, 1920x1200@60, 0x0, 1"
       "DP-3,1920x1080@60.0,1920x0,1"
+      # cm, hdredid, sdrbrightness, 1.25, sdrsaturation, 1.0,
+      "desc:Samsung Electric Company Odyssey G60SD HNAX701148, 2560x1440@360.00Hz, auto, 1.0, bitdepth, 10, vrr, 1"
     ];
 
     windowrule = [

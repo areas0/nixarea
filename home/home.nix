@@ -180,6 +180,7 @@
   #
   home.sessionVariables = {
     EDITOR = "vim";
+    SHELL  = "zsh";
   };
 
   # Let Home Manager install and manage itself.

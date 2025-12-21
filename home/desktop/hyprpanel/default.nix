@@ -19,11 +19,10 @@
           };
         };
       };
-
+      
       bar.launcher.autoDetectIcon = true;
       bar.workspaces.show_icons = false;
-      bar.workspaces.show_number = true;
-
+      bar.workspaces.show_numbered = true;
       menus.clock = {
         time = {
           military = true;
