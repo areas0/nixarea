@@ -52,6 +52,10 @@
           (final: prev: { inherit nixpkgs-unstable; })
         ];
       };
+
+      extraGamingPackages = with pkgs; [
+        mangohud protonup-qt lutris bottles heroic
+      ];
     in
     {
       nixosConfigurations = {
@@ -89,6 +93,36 @@
             ./hosts/areas-thinkpad-work/hardware-configuration.nix
             home-manager.nixosModules.home-manager
             {
+              home-manager.useUserPackages = true;
+              home-manager.users.areas = import ./home;
+
+              home-manager.extraSpecialArgs = {
+                inherit
+                  pkgs
+                  pkgs-unstable
+                  nvchad4nix
+                  zen
+                  anyrun
+                  hyprshell
+                  ;
+              };
+            }
+          ];
+        };
+
+
+        areas-workstation = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = { 
+            inherit pkgs-unstable extraGamingPackages;
+          };
+          modules = [
+            ./hosts/configuration.nix
+            ./hosts/areas-workstation/configuration.nix
+            ./hosts/areas-workstation/hardware-configuration.nix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.users.areas = import ./home;
 

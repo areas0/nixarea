@@ -125,7 +125,7 @@
     pkgs.postgresql
 
     pkgs.pavucontrol
-    # pkgs.jellyfin-media-player
+    pkgs-unstable.jellyfin-media-player
 
     zen.packages."x86_64-linux".default
 
