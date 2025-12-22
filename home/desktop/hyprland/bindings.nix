@@ -12,7 +12,8 @@
       "$mod, D, exec, $menu"
       "$mod, P, pseudo, # dwindle"
       "$mod, J, togglesplit, # dwindle"
-      "$mod, F, overview:toggle, "
+      "$mod, X, overview:toggle, "
+      "ALT, SPACE, exec, $menu"
 
       # rule to switch to focus to existing window of zen-browser or launch it if not running
       "$mod, Z, exec, bash -c 'hyprctl dispatch focuswindow class:zen-beta'"
