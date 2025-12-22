@@ -146,8 +146,13 @@
     pkgs.wlr-randr
     pkgs-unstable.code-cursor
 
+    # screenshot tools
     pkgs.grim
     pkgs.slurp
+
+    # proton apps
+    pkgs-unstable.protonmail-desktop
+    pkgs-unstable.protonvpn-gui
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage

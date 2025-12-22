@@ -2,9 +2,11 @@
 {
   programs.git = {
     enable = true;
-    userName = "areas0";
-    userEmail = "areas0@outlook.com";
-    extraConfig = {
+    settings = {
+      user = {
+        name = "areas0";
+        email = "areas0@outlook.com";
+      };
       init.defaultBranch = "main";
       push.merge = true;
       commit.verbose = true;
