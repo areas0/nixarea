@@ -7,6 +7,10 @@
     systemd.variables = [ "--all" ];
     systemd.enableXdgAutostart = true;
 
+    plugins = with pkgs; [
+      hyprlandPlugins.hyprspace
+    ];
+
     settings = {
       "$mod" = "SUPER";
       "$terminal" = "kitty";

@@ -12,7 +12,11 @@
       "$mod, D, exec, $menu"
       "$mod, P, pseudo, # dwindle"
       "$mod, J, togglesplit, # dwindle"
-      "$mod, F, exec, firefox"
+      "$mod, F, overview:toggle, "
+
+      # rule to switch to focus to existing window of zen-browser or launch it if not running
+      "$mod, Z, exec, bash -c 'hyprctl dispatch focuswindow class:zen-beta'"
+      "$mod, S, exec, bash -c 'hyprctl dispatch focuswindow class:slack'"
 
       "$mod, left, movefocus, l"
       "$mod, right, movefocus, r"
@@ -94,6 +98,7 @@
 
     windowrule = [
       "opacity 0.95, class:code"
+      "opacity 0.95, class:zen-beta"
     ];
   };
 }
