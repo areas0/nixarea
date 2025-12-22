@@ -145,6 +145,9 @@
 
     pkgs.wlr-randr
     pkgs-unstable.code-cursor
+
+    pkgs.grim
+    pkgs.slurp
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage

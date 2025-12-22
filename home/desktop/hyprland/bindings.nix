@@ -27,6 +27,8 @@
       "$mod SHIFT, up, movewindow, u"
       "$mod SHIFT, down, movewindow, d"
 
+      "$mod SHIFT, S, exec, bash -c 'grim -g \"$(slurp)\"'"
+
     ]
     ++ (
       # workspaces
