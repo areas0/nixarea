@@ -4,7 +4,7 @@
     hyprshell.homeModules.hyprshell
   ];
   programs.hyprshell = {
-    enable = true;
+    enable = false;
 
     # Optional: override systemd service behavior
     systemd = {

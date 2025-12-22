@@ -1,7 +1,7 @@
 { pkgs, anyrun, ... }:
 {
   programs.anyrun = {
-    enable = true;
+    enable = false;
     package = pkgs.anyrun;
     config = {
       closeOnClick = true;
