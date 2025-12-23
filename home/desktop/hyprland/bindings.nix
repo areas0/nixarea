@@ -69,7 +69,8 @@
     };
 
     render = {
-      cm_fs_passthrough = "true";
+      cm_fs_passthrough = 2;
+      cm_auto_hdr = 2;
     };
 
     decoration = {
@@ -96,12 +97,34 @@
       "eDP-1, 1920x1200@60, 0x0, 1"
       "DP-3,1920x1080@60.0,1920x0,1"
       # cm, hdredid, sdrbrightness, 1.25, sdrsaturation, 1.0,
-      "desc:Samsung Electric Company Odyssey G60SD HNAX701148, 2560x1440@360.00Hz, auto, 1.0, bitdepth, 10, vrr, 1"
+      # "desc:Samsung Electric Company Odyssey G60SD HNAX701148, 2560x1440@360.00Hz, auto, 1.0, bitdepth, 10, vrr, 1, cm, hdredid, sdr_min_luminance, 0.005, sdr_max_luminance, 300"
+    ];
+
+    monitorv2 = [
+      {
+        output = "DP-2";
+        mode = "2560x1440@360.00Hz";
+        position = "auto";
+        scale = 1;
+        sdr_min_luminance= 0;
+        sdr_max_luminance= 200;
+        cm = "auto";
+        supports_hdr = 0;
+        bitdepth = 8;
+        vrr = 1;
+        sdr_eotf = 1;
+        supports_wide_color = 0;
+        sdrbrightness= 1.1;
+        sdrsaturation= 1.0;
+      }
     ];
 
     windowrule = [
       "opacity 0.95, class:code"
-      "opacity 0.95, class:zen-beta"
+      # "opacity 0.999, class:zen-beta"
     ];
+    experimental = {
+      xx_color_management_v4 = true;
+    };
   };
 }

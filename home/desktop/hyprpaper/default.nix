@@ -1,4 +1,4 @@
-{ ... }:
+{ additionalConfig, ... }:
 {
   services.hyprpaper = {
     enable = true;
@@ -6,9 +6,9 @@
       ipc = "true";
       splash = false;
 
-      preload = [ "${../../../assets/xenoblade.jpg}" ];
+      preload = [ "${additionalConfig.wallpaper}" ];
 
-      wallpaper = [ ",${../../../assets/xenoblade.jpg}" ];
+      wallpaper = [ ",${additionalConfig.wallpaper}" ];
     };
   };
 }

@@ -3,6 +3,7 @@
   pkgs,
   pkgs-unstable,
   zen,
+  additionalConfig,
   ...
 }:
 
@@ -128,6 +129,7 @@
     pkgs-unstable.jellyfin-media-player
 
     zen.packages."x86_64-linux".default
+    pkgs.fladder
 
     # thunar file manager
     pkgs.xfce.thunar
@@ -153,7 +155,8 @@
     # proton apps
     pkgs-unstable.protonmail-desktop
     pkgs-unstable.protonvpn-gui
-  ];
+
+  ] ++ additionalConfig.additionalPackages;
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.

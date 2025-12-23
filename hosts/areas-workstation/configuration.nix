@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, pkgs-unstable, ... }:
 
 {
   imports =
@@ -56,8 +56,17 @@
 
   services.xserver.videoDrivers = ["nvidia"];
 
+  services.xserver.desktopManager.gnome.enable = true;
+
+  # services.desktopManager.plasma6.enable = true;
+
+  # services.displayManager.sddm.enable = true;
+
+  # services.displayManager.sddm.wayland.enable = true;
+
   programs.steam.enable = true;
   programs.steam.gamescopeSession.enable = true;
+  programs.steam.extraCompatPackages = [pkgs-unstable.proton-ge-bin];
   programs.gamemode.enable = true;
 
   # Configure network proxy if necessary

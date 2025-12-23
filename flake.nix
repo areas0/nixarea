@@ -49,6 +49,7 @@
           # (import ./overlays/discord.nix)
           (import ./overlays/teleport.nix { inherit inputs; })
           # (import ./overlays/zen.nix { inherit inputs; })
+          (import ./overlays/fladder.nix)
           (final: prev: { inherit nixpkgs-unstable; })
         ];
       };
@@ -56,6 +57,21 @@
       extraGamingPackages = with pkgs; [
         mangohud protonup-qt lutris bottles heroic
       ];
+
+      workConfig = {
+        wallpaper = "${./assets/xenoblade.jpg}";
+        additionalPackages = [];
+      };
+
+      personalConfig = {
+        wallpaper = "${./assets/oshinoko.png}";
+        additionalPackages = [ 
+            pkgs-unstable.wine64Packages.waylandFull
+            pkgs-unstable.gamescope-wsi
+            pkgs-unstable.gamescope
+            pkgs-unstable.heroic
+         ];
+      };
     in
     {
       nixosConfigurations = {
@@ -105,6 +121,7 @@
                   anyrun
                   hyprshell
                   ;
+                  additionalConfig = workConfig;
               };
             }
           ];
@@ -134,6 +151,7 @@
                   anyrun
                   hyprshell
                   ;
+                  additionalConfig = personalConfig;
               };
             }
           ];
