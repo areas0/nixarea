@@ -55,22 +55,26 @@
       };
 
       extraGamingPackages = with pkgs; [
-        mangohud protonup-qt lutris bottles heroic
+        mangohud
+        protonup-qt
+        lutris
+        bottles
+        heroic
       ];
 
       workConfig = {
         wallpaper = "${./assets/xenoblade.jpg}";
-        additionalPackages = [];
+        additionalPackages = [ ];
       };
 
       personalConfig = {
         wallpaper = "${./assets/oshinoko.png}";
-        additionalPackages = [ 
-            pkgs-unstable.wine64Packages.waylandFull
-            pkgs-unstable.gamescope-wsi
-            pkgs-unstable.gamescope
-            pkgs-unstable.heroic
-         ];
+        additionalPackages = [
+          pkgs-unstable.wine64Packages.waylandFull
+          pkgs-unstable.gamescope-wsi
+          pkgs-unstable.gamescope
+          pkgs-unstable.heroic
+        ];
       };
     in
     {
@@ -121,16 +125,15 @@
                   anyrun
                   hyprshell
                   ;
-                  additionalConfig = workConfig;
+                additionalConfig = workConfig;
               };
             }
           ];
         };
 
-
         areas-workstation = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          specialArgs = { 
+          specialArgs = {
             inherit pkgs-unstable extraGamingPackages;
           };
           modules = [
@@ -151,7 +154,7 @@
                   anyrun
                   hyprshell
                   ;
-                  additionalConfig = personalConfig;
+                additionalConfig = personalConfig;
               };
             }
           ];

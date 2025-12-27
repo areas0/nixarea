@@ -106,16 +106,16 @@
         mode = "2560x1440@360.00Hz";
         position = "auto";
         scale = 1;
-        sdr_min_luminance= 0;
-        sdr_max_luminance= 200;
+        sdr_min_luminance = 0;
+        sdr_max_luminance = 200;
         cm = "auto";
         supports_hdr = 0;
         bitdepth = 8;
         vrr = 1;
         sdr_eotf = 1;
         supports_wide_color = 0;
-        sdrbrightness= 1.1;
-        sdrsaturation= 1.0;
+        sdrbrightness = 1.1;
+        sdrsaturation = 1.0;
       }
     ];
 

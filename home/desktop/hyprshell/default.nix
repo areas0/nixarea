@@ -36,7 +36,6 @@
 
     settings = {
       # version = 1;
-      
 
       windows = {
         enable = true;

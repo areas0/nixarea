@@ -2,7 +2,13 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ pkgs, pkgs-unstable, config, extraGamingPackages, ... }:
+{
+  pkgs,
+  pkgs-unstable,
+  config,
+  extraGamingPackages,
+  ...
+}:
 {
   imports = [ ../modules/xdg-portal.nix ];
 
@@ -11,7 +17,12 @@
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Enable networking
-  networking.networkmanager.enable = true;
+  networking.networkmanager = {
+    enable = true;
+    plugins = with pkgs; [
+      networkmanager-openvpn
+    ];
+  };
 
   services.xserver.updateDbusEnvironment = true;
   security.polkit.enable = true;
@@ -105,7 +116,7 @@
   services.xserver.enable = true;
 
   # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
+  services.displayManager.gdm.enable = true;
   # services.xserver.desktopManager.gnome.enable = true;
 
   # Configure keymap in X11
@@ -163,12 +174,15 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    vim
-    wget
-    curl
-    kitty
-  ] ++ extraGamingPackages;
+  environment.systemPackages =
+    with pkgs;
+    [
+      vim
+      wget
+      curl
+      kitty
+    ]
+    ++ extraGamingPackages;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

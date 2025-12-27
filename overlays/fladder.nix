@@ -44,19 +44,19 @@ in
 
     installPhase = ''
       runHook preInstall
-      
+
       # Copy the entire bundle structure
       mkdir -p $out
       cp -r ./* $out/
-      
+
       # Ensure the main binary is executable
       if [ -f "$out/Fladder" ]; then
         chmod +x "$out/Fladder"
       fi
-      
+
       # Get library paths from NixOS
       LIBRARY_PATH=${super.lib.makeLibraryPath buildInputs}
-      
+
       # Fix RPATH for all shared libraries in lib/ directory
       if [ -d "$out/lib" ]; then
         find "$out/lib" -type f \( -name "*.so" -o -name "*.so.*" \) | while read lib; do
@@ -65,12 +65,12 @@ in
           fi
         done
       fi
-      
+
       # Fix RPATH for the main binary
       if [ -f "$out/Fladder" ]; then
         patchelf --set-rpath "\$ORIGIN/lib:$LIBRARY_PATH" "$out/Fladder" 2>/dev/null || true
       fi
-      
+
       # Create a wrapper script in bin/
       mkdir -p $out/bin
       cat > $out/bin/fladder <<EOF
@@ -79,7 +79,7 @@ in
       exec "$out/Fladder" "\$@"
       EOF
       chmod +x $out/bin/fladder
-      
+
       runHook postInstall
     '';
 
@@ -87,7 +87,7 @@ in
       description = "A simple cross-platform Jellyfin client";
       homepage = "https://github.com/DonutWare/Fladder";
       license = licenses.gpl3;
-      maintainers = [];
+      maintainers = [ ];
       platforms = platforms.linux;
     };
   };

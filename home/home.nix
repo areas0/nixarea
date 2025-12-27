@@ -156,7 +156,8 @@
     pkgs-unstable.protonmail-desktop
     pkgs-unstable.protonvpn-gui
 
-  ] ++ additionalConfig.additionalPackages;
+  ]
+  ++ additionalConfig.additionalPackages;
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
@@ -191,7 +192,7 @@
   #
   home.sessionVariables = {
     EDITOR = "vim";
-    SHELL  = "zsh";
+    SHELL = "zsh";
   };
 
   # Let Home Manager install and manage itself.
