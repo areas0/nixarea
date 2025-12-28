@@ -54,13 +54,17 @@
         ];
       };
 
-      extraGamingPackages = with pkgs; [
-        mangohud
-        protonup-qt
-        lutris
-        bottles
-        heroic
-      ];
+      extraGamingPackages =
+        with pkgs;
+        [
+          mangohud
+          protonup-qt
+          lutris
+          bottles
+          heroic
+          retroarch-full
+          ryubing
+        ];
 
       workConfig = {
         wallpaper = "${./assets/xenoblade.jpg}";
