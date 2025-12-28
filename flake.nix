@@ -81,31 +81,6 @@
     in
     {
       nixosConfigurations = {
-        vm-test = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = [
-            ./hosts/configuration.nix
-            ./hosts/vm-test/configuration.nix
-            ./hosts/vm-test/hardware-configuration.nix
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useUserPackages = true;
-              home-manager.users.areas = import ./home;
-
-              home-manager.extraSpecialArgs = {
-                inherit
-                  pkgs
-                  pkgs-unstable
-                  nvchad4nix
-                  zen
-                  anyrun
-                  hyprshell
-                  ;
-              };
-            }
-          ];
-        };
-
         areas-thinkpad-work = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = { inherit pkgs-unstable; };
