@@ -30,15 +30,17 @@
     hyprlock = { };
     # gdm.enableGnomeKeyring = true;
   };
-  programs.hyprland = {
-    enable = true;
-    portalPackage = pkgs.xdg-desktop-portal-hyprland;
-    package = pkgs.hyprland;
-  };
+  programs = {
+    hyprland = {
+      enable = true;
+      portalPackage = pkgs.xdg-desktop-portal-hyprland;
+      package = pkgs.hyprland;
+    };
 
-  programs.hyprlock = {
-    enable = true;
-    package = pkgs.hyprlock;
+    hyprlock = {
+      enable = true;
+      package = pkgs.hyprlock;
+    };
   };
 
   services.hypridle.enable = true;
@@ -174,15 +176,19 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages =
-    with pkgs;
-    [
-      vim
-      wget
-      curl
-      kitty
-    ]
-    ++ extraGamingPackages;
+  environment = {
+    systemPackages =
+      with pkgs;
+      [
+        vim
+        wget
+        curl
+        kitty
+      ]
+      ++ extraGamingPackages;
+
+    shells = with pkgs; [ zsh ];
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

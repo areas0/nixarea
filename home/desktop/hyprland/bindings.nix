@@ -15,6 +15,9 @@
       "$mod, X, overview:toggle, "
       "ALT, SPACE, exec, $menu"
 
+      # shortcut to set current window to fullscreen
+      "$mod, F, fullscreen"
+
       # rule to switch to focus to existing window of zen-browser or launch it if not running
       "$mod, Z, exec, bash -c 'hyprctl dispatch focuswindow class:zen-beta'"
       "$mod, S, exec, bash -c 'hyprctl dispatch focuswindow class:slack'"
@@ -117,11 +120,28 @@
         sdrbrightness = 1.1;
         sdrsaturation = 1.0;
       }
+      {
+        output = "DP-3";
+        mode = "1920x1080@144.00Hz";
+        position = "1920x0";
+        scale = 1;
+        sdr_min_luminance = 0;
+        sdr_max_luminance = 200;
+        cm = "auto";
+        supports_hdr = 0;
+        bitdepth = 8;
+        vrr = 1;
+        sdr_eotf = 1;
+        supports_wide_color = 0;
+        sdrbrightness = 1.1;
+        sdrsaturation = 1.0;
+        transform = 3;
+      }
     ];
 
     windowrule = [
       "opacity 0.95, class:code"
-      # "opacity 0.999, class:zen-beta"
+      "opacity 0.9, class:zen-beta"
     ];
     experimental = {
       xx_color_management_v4 = true;

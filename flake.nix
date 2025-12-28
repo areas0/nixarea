@@ -74,6 +74,8 @@
           pkgs-unstable.gamescope-wsi
           pkgs-unstable.gamescope
           pkgs-unstable.heroic
+
+          pkgs-unstable.feishin
         ];
       };
     in

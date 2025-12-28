@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, pkgs-unstable, ... }:
 {
   programs.zsh = {
     enable = true;
@@ -10,6 +10,9 @@
       # append = true;
       expireDuplicatesFirst = true;
     };
+    initContent = ''
+      eval "$(${pkgs-unstable.kubectl-cnpg}/bin/kubectl-cnpg completion zsh)"
+    '';
     oh-my-zsh = {
       enable = true;
       plugins = [
@@ -20,6 +23,10 @@
         "kubectl"
         "kubectx"
         "fzf"
+        "argocd"
+        "docker-compose"
+        "golang"
+        "operator-sdk"
       ];
       theme = "robbyrussell";
     };

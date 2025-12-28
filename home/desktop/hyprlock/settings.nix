@@ -10,6 +10,9 @@
     background = [
       {
         monitor = "";
+        path = "screenshot";
+        blur_passes = 2;
+        blur_size = 5;
         color = "rgba(17, 17, 17, 1.0)";
       }
     ];
@@ -48,7 +51,7 @@
       }
       {
         monitor = "";
-        text = "cmd[update:3600000] date +'%a %b %d'";
+        text = "cmd[update:3600000] date +'%a %d %b %Y'";
         font_size = 20;
         color = "rgb(b6c4ff)";
 

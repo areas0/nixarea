@@ -63,6 +63,7 @@
     pkgs.bc
 
     pkgs.teleport_15
+    pkgs-unstable.kubectl-cnpg
 
     pkgs.pre-commit
 

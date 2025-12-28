@@ -20,7 +20,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Use latest kernel.
-  # boot.kernelPackages = pkgs.linuxPackages_default;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   boot.initrd.luks.devices."luks-07cc5a0f-351f-432c-85d9-8cdde83524d8".device =
     "/dev/disk/by-uuid/07cc5a0f-351f-432c-85d9-8cdde83524d8";
@@ -63,6 +63,12 @@
   services.xserver.videoDrivers = [ "nvidia" ];
 
   services.desktopManager.gnome.enable = true;
+
+  programs.dconf.profiles.user.databases = [
+    {
+      settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
+    }
+  ];
 
   # services.desktopManager.plasma6.enable = true;
 
