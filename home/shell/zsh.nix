@@ -32,9 +32,9 @@
     };
     shellAliases = {
       kns = "kubens";
-      kcx = "${pkgs.kubectx}";
-      kneat = "${pkgs.kubectl-neat}";
-      kvs = "${pkgs.kubectl-view-secret}";
+      kcx = "${pkgs.kubectx.pname}";
+      kneat = "${pkgs.kubectl-neat.pname}";
+      kvs = "${pkgs.kubectl-view-secret.meta.mainProgram}";
       cd = "z";
     };
   };
