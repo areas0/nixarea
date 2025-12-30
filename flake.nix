@@ -18,6 +18,12 @@
     };
     hyprshell.url = "github:H3rmt/hyprshell?ref=hyprshell-release";
     hyprshell.inputs.nixpkgs.follows = "nixpkgs-unstable";
+
+    nix-citizen.url = "github:LovingMelody/nix-citizen";
+
+    # Optional - updates underlying without waiting for nix-citizen to update
+    nix-gaming.url = "github:fufexan/nix-gaming";
+    nix-citizen.inputs.nix-gaming.follows = "nix-gaming";
   };
 
   outputs =
@@ -30,6 +36,8 @@
       nvchad4nix,
       anyrun,
       hyprshell,
+      nix-citizen,
+      nix-gaming,
       ...
     }:
     let
@@ -54,17 +62,15 @@
         ];
       };
 
-      extraGamingPackages =
-        with pkgs;
-        [
-          mangohud
-          protonup-qt
-          lutris
-          bottles
-          heroic
-          retroarch-full
-          ryubing
-        ];
+      extraGamingPackages = with pkgs; [
+        mangohud
+        protonup-qt
+        lutris
+        bottles
+        heroic
+        retroarch-full
+        ryubing
+      ];
 
       workConfig = {
         wallpaper = "${./assets/xenoblade.jpg}";
@@ -78,6 +84,11 @@
           pkgs-unstable.gamescope-wsi
           pkgs-unstable.gamescope
           pkgs-unstable.heroic
+          # citra
+          pkgs-unstable.azahar
+
+          # nix-citizen.packages.${system}.rsi-launcher
+          # nix-citizen.packages.${system}.star-citizen
 
           pkgs-unstable.feishin
         ];
@@ -121,6 +132,23 @@
             ./hosts/configuration.nix
             ./hosts/areas-workstation/configuration.nix
             ./hosts/areas-workstation/hardware-configuration.nix
+            nix-citizen.nixosModules.default
+            {
+                # Cachix setup
+                nix.settings = {
+                    substituters = ["https://nix-citizen.cachix.org"];
+                    trusted-public-keys = ["nix-citizen.cachix.org-1:lPMkWc2X8XD4/7YPEEwXKKBg+SVbYTVrAaLA2wQTKCo="];
+                };
+                programs.rsi-launcher = {
+                    # Enables the star citizen module
+                    enable = true;
+                    # Additional commands before the game starts
+                    preCommands = ''
+                        export DXVK_HUD=compiler;
+                        export MANGO_HUD=1;
+                    '';
+                };
+            }
             home-manager.nixosModules.home-manager
             {
               home-manager.useUserPackages = true;

@@ -75,6 +75,7 @@
 
     # Nix formatter
     pkgs.nixfmt-rfc-style
+    pkgs.nixfmt-tree
 
     # Npm
     pkgs.nodePackages.npm
@@ -106,7 +107,7 @@
 
     # Python
     pkgs-unstable.poetry
-    pkgs.python310
+    pkgs.python313
     # pkgs.ruff-lsp
 
     pkgs.slack
@@ -126,7 +127,11 @@
     # Postgres
     pkgs.postgresql
 
+    # Media players and sound tools
     pkgs.pavucontrol
+    pkgs.easyeffects
+    pkgs.pwvucontrol
+
     pkgs-unstable.jellyfin-media-player
 
     zen.packages."x86_64-linux".default
