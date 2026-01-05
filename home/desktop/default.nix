@@ -10,5 +10,6 @@
     ./hyprpaper
     ./hyprshell
     ./hyprpanel
+    ./hyprsunset
   ];
 }

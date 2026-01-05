@@ -72,8 +72,8 @@
     };
 
     render = {
-      cm_fs_passthrough = 2;
-      cm_auto_hdr = 2;
+      cm_fs_passthrough = 1;
+      cm_auto_hdr = 1;
     };
 
     decoration = {
@@ -100,26 +100,26 @@
       "eDP-1, 1920x1200@60, 0x0, 1"
       # "DP-3,1920x1080@60.0,1920x0,1"
       # cm, hdredid, sdrbrightness, 1.25, sdrsaturation, 1.0,
-      # "desc:Samsung Electric Company Odyssey G60SD HNAX701148, 2560x1440@360.00Hz, auto, 1.0, bitdepth, 10, vrr, 1, cm, hdredid, sdr_min_luminance, 0.005, sdr_max_luminance, 300"
+      "desc:Samsung Electric Company Odyssey G60SD HNAX701148, 2560x1440@360.00Hz, auto, 1.0, bitdepth, 10, vrr, 1, cm, hdredid"
     ];
 
     monitorv2 = [
-      {
-        output = "DP-2";
-        mode = "2560x1440@360.00Hz";
-        position = "auto";
-        scale = 1;
-        sdr_min_luminance = 0;
-        sdr_max_luminance = 200;
-        cm = "auto";
-        supports_hdr = 0;
-        bitdepth = 8;
-        vrr = 1;
-        sdr_eotf = 1;
-        supports_wide_color = 0;
-        sdrbrightness = 1.1;
-        sdrsaturation = 1.0;
-      }
+      # {
+      #   output = "DP-2";
+      #   mode = "2560x1440@360.00Hz";
+      #   position = "auto";
+      #   scale = 1;
+      #   sdr_min_luminance = 0;
+      #   sdr_max_luminance = 200;
+      #   cm = "hdredid";
+      #   supports_hdr = 1;
+      #   bitdepth = 10;
+      #   vrr = 1;
+      #   sdr_eotf = 1;
+      #   supports_wide_color = 1;
+      #   sdrbrightness = 1.1;
+      #   sdrsaturation = 1.0;
+      # }
       {
         output = "DP-3";
         mode = "1920x1080@143.98100Hz";
