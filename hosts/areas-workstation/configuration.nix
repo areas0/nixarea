@@ -62,7 +62,7 @@
 
   services.xserver.videoDrivers = [ "nvidia" ];
 
-  services.desktopManager.gnome.enable = true;
+  services.desktopManager.gnome.enable = false;
 
   programs.dconf.profiles.user.databases = [
     {
@@ -76,18 +76,24 @@
 
   # services.displayManager.sddm.wayland.enable = true;
 
+  services = {
+    desktopManager.plasma6.enable = true;
+
+    displayManager.sddm.enable = true;
+
+    displayManager.sddm.wayland.enable = true;
+  };
+
   programs.steam.enable = true;
   programs.steam.gamescopeSession.enable = true;
   programs.steam.extraCompatPackages = [ pkgs-unstable.proton-ge-bin ];
   programs.gamemode.enable = true;
-
 
   services.pipewire.extraConfig.pipewire."90-highrez" = {
     "context.properties" = {
       "default.clock.rate" = 96000;
     };
   };
-
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
