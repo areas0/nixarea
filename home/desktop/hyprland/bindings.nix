@@ -101,6 +101,8 @@
 
     monitor = [
       "eDP-1, 1920x1200@60, 0x0, 1"
+      "desc:Iiyama North America PL2770H 0x30393235, 1920x1080@144, 1920x0, 1"
+      "desc: BNQ BenQ LCD 89L03574019, 2560x1440@59.95, 3840x0, 1"
       # "DP-3,1920x1080@60.0,1920x0,1"
       # cm, hdredid, sdrbrightness, 1.25, sdrsaturation, 1.0,
       # "desc:Samsung Electric Company Odyssey G60SD HNAX701148, 2560x1440@360.00Hz, auto, 1.0, bitdepth, 10, vrr, 1, cm, hdr, sdrbrightness, 1.1, sdrsaturation, 1.0, sdrminluminance, 0, sdrmaxluminance, 200"

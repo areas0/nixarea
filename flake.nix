@@ -98,7 +98,7 @@
       nixosConfigurations = {
         areas-thinkpad-work = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          specialArgs = { inherit pkgs-unstable; };
+          specialArgs = { inherit pkgs-unstable; extraGamingPackages = []; };
           modules = [
             ./hosts/configuration.nix
             ./hosts/areas-thinkpad-work/configuration.nix
