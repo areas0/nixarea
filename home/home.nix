@@ -106,7 +106,7 @@
     pkgs.openssl
 
     # Python
-    pkgs-unstable.poetry
+    # pkgs-unstable.poetry
     pkgs.python313
     # pkgs.ruff-lsp
 

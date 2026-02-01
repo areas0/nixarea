@@ -6,5 +6,6 @@
     ./fzf.nix
     ./kitty.nix
     ./starship.nix
+    ./k9s.nix
   ];
 }
