@@ -49,6 +49,23 @@ in
   programs.k9s = {
     enable = true;
     package = pkgs-unstable.k9s;
+
+    aliases = {
+      dp  = "deployments";
+      sec = "v1/secrets";
+      jo  = "jobs";
+      cr  = "clusterroles";
+      crb = "clusterrolebindings";
+      ro  = "roles";
+      rb  = "rolebindings";
+      np  = "networkpolicies";
+
+      # custom aliases for padoa clusters
+      med = "pod postgres-operator.crunchydata.com/role=master,pg.stackinfo.padoa.fr/medical=true";
+      fargo = "pod postgres-operator.crunchydata.com/role=master,pg.stackinfo.padoa.fr/fargo=true";
+      stats = "pod postgres-operator.crunchydata.com/role=master,pg.stackinfo.padoa.fr/stats=true";
+    };
+
     plugins = {
       ### Custom CNPG Plugin for K9s ###
       cnpg-backup = {
