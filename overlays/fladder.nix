@@ -1,11 +1,11 @@
 self: super:
 let
-  version = "0.9.0";
+  version = "0.10.0";
 
   bundleSrc = super.fetchzip {
     url = "https://github.com/DonutWare/Fladder/releases/download/v${version}/Fladder-Linux-${version}.zip";
     stripRoot = false;
-    sha256 = "sha256-IoNShrjpcHDqW0vjU3WECNRefmlS1FOpP6YrOPgUycE=";
+    sha256 = "sha256-AODY7z0Ma0VO3IvvFWvn8GflgEp7VDZlfoGwRh7obz8=";
   };
 in
 {
@@ -38,6 +38,7 @@ in
       xorg.libXi
       xorg.libxcb
       libepoxy
+      lz4
     ];
 
     dontBuild = true;
