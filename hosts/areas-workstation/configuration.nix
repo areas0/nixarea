@@ -6,6 +6,7 @@
   config,
   pkgs,
   pkgs-unstable,
+  nixpkgs-nvidia,
   ...
 }:
 
@@ -13,6 +14,7 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
+    ../../modules/bluetooth.nix
   ];
 
   # Bootloader.
@@ -57,7 +59,15 @@
     nvidiaSettings = true;
 
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
-    package = config.boot.kernelPackages.nvidiaPackages.beta;
+    package =
+      let
+        nvidia-fixed-pkgs = import nixpkgs-nvidia {
+          system = "x86_64-linux";
+          config.allowUnfree = true;
+        };
+        fixedKernelPackages = nvidia-fixed-pkgs.linuxKernel.packagesFor config.boot.kernelPackages.kernel;
+      in
+      fixedKernelPackages.nvidiaPackages.beta;
   };
 
   services.xserver.videoDrivers = [ "nvidia" ];

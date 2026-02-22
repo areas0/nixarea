@@ -24,6 +24,9 @@
     # Optional - updates underlying without waiting for nix-citizen to update
     nix-gaming.url = "github:fufexan/nix-gaming";
     nix-citizen.inputs.nix-gaming.follows = "nix-gaming";
+
+    # temporary fix
+    nixpkgs-nvidia.url = "github:NixOS/nixpkgs/ab9ad415916a0fb89d1f539a9291d9737e95148e";
   };
 
   outputs =
@@ -38,6 +41,7 @@
       hyprshell,
       nix-citizen,
       nix-gaming,
+      nixpkgs-nvidia,
       ...
     }:
     let
@@ -78,7 +82,7 @@
       };
 
       personalConfig = {
-        wallpaper = "${./assets/oshinoko.png}";
+        wallpaper = "${./assets/oshinoko-2.png}";
         additionalPackages = [
           pkgs-unstable.wine64Packages.waylandFull
           pkgs-unstable.gamescope-wsi
@@ -98,7 +102,10 @@
       nixosConfigurations = {
         areas-thinkpad-work = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          specialArgs = { inherit pkgs-unstable; extraGamingPackages = []; };
+          specialArgs = {
+            inherit pkgs-unstable;
+            extraGamingPackages = [ ];
+          };
           modules = [
             ./hosts/configuration.nix
             ./hosts/areas-thinkpad-work/configuration.nix
@@ -126,7 +133,7 @@
         areas-workstation = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = {
-            inherit pkgs-unstable extraGamingPackages;
+            inherit pkgs-unstable extraGamingPackages nixpkgs-nvidia;
           };
           modules = [
             ./hosts/configuration.nix

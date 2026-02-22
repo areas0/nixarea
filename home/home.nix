@@ -41,13 +41,15 @@
     pkgs.dig
     pkgs.firefox
     pkgs.helm-ls
-    pkgs.kubectl
-    pkgs.kubernetes-helm
-    pkgs.kubectx
-    pkgs.kubectl-neat
-    pkgs.kubectl-node-shell
-    pkgs.kubectl-view-secret
-    pkgs.kube-linter
+
+    pkgs-unstable.kubectl
+    pkgs-unstable.kubernetes-helm
+    pkgs-unstable.kubectx
+    pkgs-unstable.kubectl-neat
+    pkgs-unstable.kubectl-node-shell
+    pkgs-unstable.kubectl-view-secret
+    pkgs-unstable.kube-linter
+
     pkgs.postgresql
     pkgs.terraform-docs
     pkgs-unstable.pritunl-client

@@ -1,7 +1,6 @@
 { pkgs-unstable, ... }:
 let
 
-
   cnpg-repo = pkgs-unstable.fetchFromGitHub {
     owner = "cloudnative-pg";
     repo = "cloudnative-pg";
@@ -33,16 +32,16 @@ let
         value = {
           source = "${k9s-repo}/plugins/${p}.yaml";
         };
-      }) additionalPlugins.officials
+      }) additionalPlugins.officials)
+      ++ [
+        {
+          name = "${additionalPlugins.dir}/cnpg.yaml";
+          value = {
+            source = "${cnpg-repo}/docs/src/samples/k9s/plugins.yml";
+          };
+        }
+      ]
     )
-    ++ [
-      {
-        name = "${additionalPlugins.dir}/cnpg.yaml";
-        value = {
-          source = "${cnpg-repo}/docs/src/samples/k9s/plugins.yml";
-        };
-      }
-    ])
   );
 in
 {
@@ -51,14 +50,14 @@ in
     package = pkgs-unstable.k9s;
 
     aliases = {
-      dp  = "deployments";
+      dp = "deployments";
       sec = "v1/secrets";
-      jo  = "jobs";
-      cr  = "clusterroles";
+      jo = "jobs";
+      cr = "clusterroles";
       crb = "clusterrolebindings";
-      ro  = "roles";
-      rb  = "rolebindings";
-      np  = "networkpolicies";
+      ro = "roles";
+      rb = "rolebindings";
+      np = "networkpolicies";
 
       # custom aliases for padoa clusters
       med = "pod postgres-operator.crunchydata.com/role=master,pg.stackinfo.padoa.fr/medical=true";
