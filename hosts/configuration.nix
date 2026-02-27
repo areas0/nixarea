@@ -33,13 +33,13 @@
   programs = {
     hyprland = {
       enable = true;
-      portalPackage = pkgs.xdg-desktop-portal-hyprland;
-      package = pkgs.hyprland;
+      portalPackage = pkgs-unstable.xdg-desktop-portal-hyprland;
+      package = pkgs-unstable.hyprland;
     };
 
     hyprlock = {
       enable = true;
-      package = pkgs.hyprlock;
+      package = pkgs-unstable.hyprlock;
     };
   };
 

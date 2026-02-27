@@ -12,7 +12,6 @@
       "$mod, D, exec, $menu"
       "$mod, P, pseudo, # dwindle"
       "$mod, J, togglesplit, # dwindle"
-      "$mod, X, overview:toggle, "
       "ALT, SPACE, exec, $menu"
 
       # shortcut to set current window to fullscreen
@@ -145,11 +144,8 @@
     ];
 
     windowrule = [
-      "opacity 0.95, class:code"
-      "opacity 0.99, class:zen-beta"
+      "opacity 0.95, match:class code"
+      "opacity 0.99, match:class zen-beta"
     ];
-    experimental = {
-      xx_color_management_v4 = true;
-    };
   };
 }

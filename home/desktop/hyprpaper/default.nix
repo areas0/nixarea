@@ -1,7 +1,8 @@
-{ additionalConfig, ... }:
+{ additionalConfig, pkgs-unstable, ... }:
 {
   services.hyprpaper = {
     enable = true;
+    package = pkgs-unstable.hyprpaper;
     settings = {
       ipc = "true";
       splash = false;

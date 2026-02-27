@@ -1,15 +1,12 @@
 { pkgs, pkgs-unstable, ... }:
 {
   wayland.windowManager.hyprland = {
-    enable = true; # enable Hyprland
+    enable = true;
+    package = pkgs-unstable.hyprland;
     xwayland.enable = true;
     systemd.enable = true;
     systemd.variables = [ "--all" ];
     systemd.enableXdgAutostart = true;
-
-    plugins = with pkgs; [
-      hyprlandPlugins.hyprspace
-    ];
 
     settings = {
       "$mod" = "SUPER";
