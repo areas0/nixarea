@@ -2,9 +2,8 @@
 {
   wayland.windowManager.hyprland.settings = {
     bind = [
-      "$mod, Q, killActive"
-      "$mod, RETURN, exec, $terminal"
       "$mod SHIFT, Q, killactive"
+      "$mod, RETURN, exec, $terminal"
       "$mod SHIFT, E, exec, hyprlock"
       "$mod SHIFT, I, exit"
       "$mod, E, exec, $fileManager"
@@ -13,6 +12,7 @@
       "$mod, P, pseudo, # dwindle"
       "$mod, J, togglesplit, # dwindle"
       "ALT, SPACE, exec, $menu"
+      "$mod, C, exec, cliphist list | rofi -dmenu | cliphist decode | wl-copy"
 
       # shortcut to set current window to fullscreen
       "$mod, F, fullscreen"
@@ -30,11 +30,16 @@
       "$mod SHIFT, up, movewindow, u"
       "$mod SHIFT, down, movewindow, d"
 
-      "$mod SHIFT, S, exec, bash -c 'grim -g \"$(slurp)\"'"
+      "$mod SHIFT, S, exec, bash -c 'grim -g \"$(slurp)\" - | tee ~/Pictures/Screenshots/$(date +%Y%m%d_%H%M%S).png | wl-copy'"
+      "$mod SHIFT, P, exec, bash -c 'grim - | tee ~/Pictures/Screenshots/$(date +%Y%m%d_%H%M%S).png | wl-copy'"
 
       ", XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+"
-
       ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+      ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+      ", XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+
+      ", XF86MonBrightnessUp, exec, brightnessctl s +5%"
+      ", XF86MonBrightnessDown, exec, brightnessctl s 5%-"
     ]
     ++ (
       # workspaces
@@ -52,6 +57,11 @@
         ) 9
       )
     );
+    bindl = [
+      ", XF86AudioPlay, exec, playerctl play-pause"
+      ", XF86AudioNext, exec, playerctl next"
+      ", XF86AudioPrev, exec, playerctl previous"
+    ];
     bindm = [
       "ALT, mouse:272, movewindow"
       "ALT, mouse:273, resizewindow"
@@ -86,11 +96,6 @@
         size = 5;
         passes = 1;
       };
-
-      #drop_shadow = "yes";
-      #shadow_range = 4;
-      #shadow_render_power = 3;
-      #"col.shadow" = "rgba(1a1a1aee)";
     };
 
     workspace = [
@@ -142,6 +147,12 @@
         transform = 3;
       }
     ];
+
+    misc = {
+      disable_hyprland_logo = true;
+      disable_splash_rendering = true;
+      force_default_wallpaper = 0;
+    };
 
     windowrule = [
       "opacity 0.95, match:class code"

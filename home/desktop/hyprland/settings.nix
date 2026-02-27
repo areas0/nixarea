@@ -1,4 +1,4 @@
-{ pkgs, pkgs-unstable, ... }:
+{ pkgs-unstable, ... }:
 {
   wayland.windowManager.hyprland = {
     enable = true;
@@ -11,12 +11,13 @@
     settings = {
       "$mod" = "SUPER";
       "$terminal" = "kitty";
+      "$fileManager" = "thunar";
       "$menu" = "rofi -show combi";
       exec-once = [
         "code"
         # "waybar"
-        "hyprpaper"
         "hyprpanel"
+        "wl-paste --watch cliphist store"
       ];
       env = [
         "NIXOS_OZONE_WL,1" # for any ozone-based browser & electron apps to run on wayland

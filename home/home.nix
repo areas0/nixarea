@@ -61,7 +61,7 @@
     pkgs.gnugrep
     pkgs.ranger
     pkgs.unzip
-    pkgs.xclip
+    pkgs.wl-clipboard
     pkgs.bc
 
     pkgs.teleport_15
@@ -126,9 +126,6 @@
     pkgs.cargo
     pkgs.rustc
 
-    # Postgres
-    pkgs.postgresql
-
     # Media players and sound tools
     pkgs.pavucontrol
     pkgs.easyeffects
@@ -159,6 +156,14 @@
     # screenshot tools
     pkgs.grim
     pkgs.slurp
+
+    # media/brightness controls
+    pkgs.brightnessctl
+    pkgs.playerctl
+
+    # clipboard history
+    pkgs.cliphist
+    pkgs.wtype
 
     # proton apps
     pkgs-unstable.protonmail-desktop
