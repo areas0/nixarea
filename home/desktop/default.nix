@@ -11,5 +11,6 @@
     ./hyprshell
     ./hyprpanel
     ./hyprsunset
+    ./walker
   ];
 }

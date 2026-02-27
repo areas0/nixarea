@@ -12,7 +12,8 @@
       "$mod, P, pseudo, # dwindle"
       "$mod, J, togglesplit, # dwindle"
       "ALT, SPACE, exec, $menu"
-      "$mod, C, exec, cliphist list | rofi -dmenu | cliphist decode | wl-copy"
+      "$mod, C, exec, walker -s clipboard"
+      "$mod, W, exec, walker -s windows"
 
       # shortcut to set current window to fullscreen
       "$mod, F, fullscreen"

@@ -12,7 +12,7 @@
       "$mod" = "SUPER";
       "$terminal" = "kitty";
       "$fileManager" = "thunar";
-      "$menu" = "rofi -show combi";
+      "$menu" = "walker";
       exec-once = [
         "code"
         # "waybar"

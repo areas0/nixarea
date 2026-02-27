@@ -19,6 +19,12 @@
     hyprshell.url = "github:H3rmt/hyprshell?ref=hyprshell-release";
     hyprshell.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
+    elephant.url = "github:abenz1267/elephant";
+    walker = {
+      url = "github:abenz1267/walker";
+      inputs.elephant.follows = "elephant";
+    };
+
     nix-citizen.url = "github:LovingMelody/nix-citizen";
 
     # Optional - updates underlying without waiting for nix-citizen to update
@@ -42,6 +48,8 @@
       nix-citizen,
       nix-gaming,
       nixpkgs-nvidia,
+      elephant,
+      walker,
       ...
     }:
     let
@@ -123,6 +131,7 @@
                   zen
                   anyrun
                   hyprshell
+                  walker
                   ;
                 additionalConfig = workConfig;
               };
@@ -180,6 +189,7 @@
                   zen
                   anyrun
                   hyprshell
+                  walker
                   ;
                 additionalConfig = personalConfig;
               };
@@ -208,6 +218,7 @@
                   zen
                   anyrun
                   hyprshell
+                  walker
                   ;
               };
             }
