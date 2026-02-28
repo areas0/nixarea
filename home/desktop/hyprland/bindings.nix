@@ -2,51 +2,93 @@
 {
   wayland.windowManager.hyprland.settings = {
     bind = [
-      "$mod SHIFT, Q, killactive"
+      "$mod SHIFT, Q, hy3:killactive"
       "$mod, RETURN, exec, $terminal"
       "$mod SHIFT, E, exec, hyprlock"
       "$mod SHIFT, I, exit"
-      "$mod, E, exec, $fileManager"
-      "$mod, V, togglefloating"
+
+      # file manager (relocated from $mod+E)
+      "$mod, T, exec, $fileManager"
+
+      # launchers
       "$mod, D, exec, $menu"
-      "$mod, P, pseudo, # dwindle"
-      "$mod, J, togglesplit, # dwindle"
       "ALT, SPACE, exec, $menu"
       "$mod, C, exec, walker -s clipboard"
-      "$mod, W, exec, walker -s windows"
+      "$mod SHIFT, W, exec, walker -s windows"
 
-      # shortcut to set current window to fullscreen
       "$mod, F, fullscreen"
 
-      # rule to switch to focus to existing window of zen-browser or launch it if not running
+      # toggle floating (relocated from $mod+V)
+      "$mod SHIFT, SPACE, togglefloating"
+
+      # app focus shortcuts
       "$mod, Z, exec, bash -c 'hyprctl dispatch focuswindow class:zen-beta'"
       "$mod, S, exec, bash -c 'hyprctl dispatch focuswindow class:slack'"
 
       ''$mod SHIFT, B, exec, bash -c 'CONFIG="''${XDG_CONFIG_HOME:-$HOME/.config}/hyprpanel/config.json"; STATE="''${XDG_RUNTIME_DIR:-/tmp}/hyprpanel-bar-position"; CUR=$(cat "$STATE" 2>/dev/null || echo top); if [ "$CUR" = "top" ]; then NEXT=bottom; else NEXT=top; fi; [ -L "$CONFIG" ] && cp --remove-destination "$(readlink -f "$CONFIG")" "$CONFIG" && chmod u+w "$CONFIG"; jq --arg loc "$NEXT" ".\"theme.bar.location\" = \$loc" "$CONFIG" > "$CONFIG.tmp" && mv -f "$CONFIG.tmp" "$CONFIG"; hyprpanel restart; echo "$NEXT" > "$STATE"' ''
 
-      "$mod, left, movefocus, l"
-      "$mod, right, movefocus, r"
-      "$mod, up, movefocus, u"
-      "$mod, down, movefocus, d"
-      "$mod SHIFT, left, movewindow, l"
-      "$mod SHIFT, right, movewindow, r"
-      "$mod SHIFT, up, movewindow, u"
-      "$mod SHIFT, down, movewindow, d"
+      # hy3 layout management
+      "$mod, V, hy3:makegroup, v, toggle"
+      "$mod, B, hy3:makegroup, h, toggle"
+      "$mod, W, hy3:makegroup, tab, toggle"
+      "$mod, E, hy3:changegroup, opposite"
 
+      # hy3 tree navigation (i3 focus parent/child)
+      "$mod, A, hy3:changefocus, raise"
+      "$mod SHIFT, A, hy3:changefocus, lower"
+
+      # hy3 tab navigation
+      "$mod, Tab, hy3:focustab, r, wrap"
+      "$mod SHIFT, Tab, hy3:focustab, l, wrap"
+
+      # equalize sibling sizes
+      "$mod, equal, hy3:equalize"
+
+      # hy3 focus (arrow keys)
+      "$mod, left, hy3:movefocus, l"
+      "$mod, right, hy3:movefocus, r"
+      "$mod, up, hy3:movefocus, u"
+      "$mod, down, hy3:movefocus, d"
+
+      # hy3 focus (hjkl)
+      "$mod, H, hy3:movefocus, l"
+      "$mod, J, hy3:movefocus, d"
+      "$mod, K, hy3:movefocus, u"
+      "$mod, L, hy3:movefocus, r"
+
+      # hy3 move window (arrow keys)
+      "$mod SHIFT, left, hy3:movewindow, l"
+      "$mod SHIFT, right, hy3:movewindow, r"
+      "$mod SHIFT, up, hy3:movewindow, u"
+      "$mod SHIFT, down, hy3:movewindow, d"
+
+      # hy3 move window (hjkl)
+      "$mod SHIFT, H, hy3:movewindow, l"
+      "$mod SHIFT, J, hy3:movewindow, d"
+      "$mod SHIFT, K, hy3:movewindow, u"
+      "$mod SHIFT, L, hy3:movewindow, r"
+
+      # screenshots
       "$mod SHIFT, S, exec, bash -c 'grim -g \"$(slurp)\" - | tee ~/Pictures/Screenshots/$(date +%Y%m%d_%H%M%S).png | wl-copy'"
       "$mod SHIFT, P, exec, bash -c 'grim - | tee ~/Pictures/Screenshots/$(date +%Y%m%d_%H%M%S).png | wl-copy'"
 
+      # audio
       ", XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+"
       ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
       ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
       ", XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
 
+      # brightness
       ", XF86MonBrightnessUp, exec, brightnessctl s +5%"
       ", XF86MonBrightnessDown, exec, brightnessctl s 5%-"
+
+      # resize submap
+      "$mod, R, submap, resize"
+
+      # game mode submap
+      "$mod, F9, submap, gamemode"
     ]
     ++ (
-      # workspaces
-      # binds $mod + [shift +] {1..9} to [move to] workspace {1..9}
       builtins.concatLists (
         builtins.genList (
           i:
@@ -55,7 +97,7 @@
           in
           [
             "$mod, code:1${toString i}, workspace, ${toString ws}"
-            "$mod SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
+            "$mod SHIFT, code:1${toString i}, hy3:movetoworkspace, ${toString ws}, follow"
           ]
         ) 9
       )
@@ -160,6 +202,85 @@
     windowrule = [
       "opacity 0.95, match:class code"
       "opacity 0.99, match:class zen-beta"
+
+      # --- Gaming: Steam games ---
+      "immediate on, match:class ^(steam_app)"
+      "fullscreen on, match:class ^(steam_app)"
+      "no_blur on, match:class ^(steam_app)"
+      "no_shadow on, match:class ^(steam_app)"
+      "no_anim on, match:class ^(steam_app)"
+
+      # --- Gaming: Steam client ---
+      "float on, match:class ^(steam)$"
+      "float on, match:class ^(steam)$, match:title ^(Friends)"
+      "float on, match:class ^(steam)$, match:title ^(Steam Settings)"
+
+      # --- Gaming: Gamescope ---
+      "immediate on, match:class ^(gamescope)"
+      "fullscreen on, match:class ^(gamescope)"
+      "no_blur on, match:class ^(gamescope)"
+      "no_shadow on, match:class ^(gamescope)"
+      "no_anim on, match:class ^(gamescope)"
+
+      # --- Gaming: Launchers (float) ---
+      "float on, match:class ^(lutris)"
+      "float on, match:class ^(com.usebottles.bottles)"
+      "float on, match:class ^(heroic)"
+      "float on, match:class ^(net.davidotek.pupgui2)"
+
+      # --- Gaming: Emulators ---
+      "immediate on, match:class ^(retroarch)"
+      "no_blur on, match:class ^(retroarch)"
+      "no_shadow on, match:class ^(retroarch)"
+
+      "immediate on, match:class ^(Ryujinx|ryubing)"
+      "no_blur on, match:class ^(Ryujinx|ryubing)"
+      "no_shadow on, match:class ^(Ryujinx|ryubing)"
+
+      "immediate on, match:class ^(azahar|citra)"
+      "no_blur on, match:class ^(azahar|citra)"
+      "no_shadow on, match:class ^(azahar|citra)"
+
+      # --- Gaming: Star Citizen ---
+      "float on, match:class ^(rsi)"
+      "immediate on, match:class ^(star_citizen|starcitizen)"
+      "no_blur on, match:class ^(star_citizen|starcitizen)"
+      "no_shadow on, match:class ^(star_citizen|starcitizen)"
+      "no_anim on, match:class ^(star_citizen|starcitizen)"
+
+      # --- Gaming: Wine/Proton fallback ---
+      "no_blur on, match:class \\.exe$"
+      "no_shadow on, match:class \\.exe$"
     ];
   };
+
+  wayland.windowManager.hyprland.extraConfig = ''
+    # resize submap (i3-style resize mode)
+    submap = resize
+    binde = , right, resizeactive, 30 0
+    binde = , left, resizeactive, -30 0
+    binde = , up, resizeactive, 0 -30
+    binde = , down, resizeactive, 0 30
+    binde = , l, resizeactive, 30 0
+    binde = , h, resizeactive, -30 0
+    binde = , k, resizeactive, 0 -30
+    binde = , j, resizeactive, 0 30
+    bind = , escape, submap, reset
+    bind = , Return, submap, reset
+    submap = reset
+
+    # game mode submap: disables compositor keybinds for gaming
+    submap = gamemode
+    bind = $mod, F9, submap, reset
+    bind = , XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+
+    bind = , XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+    bind = , XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+    bind = , XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
+    bindl = , XF86AudioPlay, exec, playerctl play-pause
+    bindl = , XF86AudioNext, exec, playerctl next
+    bindl = , XF86AudioPrev, exec, playerctl previous
+    bindm = ALT, mouse:272, movewindow
+    bindm = ALT, mouse:273, resizewindow
+    submap = reset
+  '';
 }
