@@ -1,4 +1,17 @@
 { ... }:
+let
+  colors = {
+    bg = "#000000";
+    bg_alt = "#090909";
+    bg_surface = "#111111";
+    bg_raised = "#1A1A1A";
+    icon_fg = "#21252b";
+    hover = "#333333";
+    muted = "#444444";
+    dimmed = "#CCCCCC";
+    fg = "#FFFFFF";
+  };
+in
 {
   programs.hyprpanel = {
     enable = true;
@@ -49,275 +62,275 @@
       };
 
       theme.bar.menus = {
-        background = "#000000";
-        text = "#CCCCCC";
-        border.color = "#333333";
+        background = colors.bg;
+        text = colors.dimmed;
+        border.color = colors.hover;
         tooltip = {
-          text = "#FFFFFF";
-          background = "#000000";
+          text = colors.fg;
+          background = colors.bg;
         };
         dropdownmenu = {
-          divider = "#111111";
-          text = "#FFFFFF";
-          background = "#000000";
+          divider = colors.bg_surface;
+          text = colors.fg;
+          background = colors.bg;
         };
         slider = {
-          puck = "#CCCCCC";
-          backgroundhover = "#444444";
-          background = "#CCCCCC";
-          primary = "#FFFFFF";
+          puck = colors.dimmed;
+          backgroundhover = colors.muted;
+          background = colors.dimmed;
+          primary = colors.fg;
         };
         progressbar = {
-          background = "#444444";
-          foreground = "#FFFFFF";
+          background = colors.muted;
+          foreground = colors.fg;
         };
         iconbuttons = {
-          active = "#FFFFFF";
-          passive = "#FFFFFF";
+          active = colors.fg;
+          passive = colors.fg;
         };
         buttons = {
-          text = "#000000";
-          disabled = "#CCCCCC";
-          active = "#FFFFFF";
-          default = "#FFFFFF";
+          text = colors.bg;
+          disabled = colors.dimmed;
+          active = colors.fg;
+          default = colors.fg;
         };
         switch = {
-          puck = "#CCCCCC";
-          disabled = "#444444";
-          enabled = "#FFFFFF";
+          puck = colors.dimmed;
+          disabled = colors.muted;
+          enabled = colors.fg;
         };
         icons = {
-          active = "#FFFFFF";
-          passive = "#CCCCCC";
+          active = colors.fg;
+          passive = colors.dimmed;
         };
         listitems = {
-          active = "#ffffff";
-          passive = "#FFFFFF";
+          active = colors.fg;
+          passive = colors.fg;
         };
-        label = "#FFFFFF";
-        feinttext = "#444444";
-        dimtext = "#CCCCCC";
-        cards = "#111111";
+        label = colors.fg;
+        feinttext = colors.muted;
+        dimtext = colors.dimmed;
+        cards = colors.bg_surface;
         popover = {
-          text = "#FFFFFF";
-          background = "#000000";
-          border = "#000000";
+          text = colors.fg;
+          background = colors.bg;
+          border = colors.bg;
         };
         check_radio_button = {
-          background = "#000000";
-          active = "#ffffff";
+          background = colors.bg;
+          active = colors.fg;
         };
       };
-      theme.bar.background = "#000000";
+      theme.bar.background = colors.bg;
       theme.bar.buttons = {
         media = {
-          icon = "#090909";
-          text = "#FFFFFF";
-          background = "#090909";
-          icon_background = "#ffffff";
-          border = "#FFFFFF";
+          icon = colors.bg_alt;
+          text = colors.fg;
+          background = colors.bg_alt;
+          icon_background = colors.fg;
+          border = colors.fg;
         };
-        icon = "#242438";
-        text = "#FFFFFF";
-        hover = "#333333";
-        background = "#1A1A1A";
+        icon = colors.icon_fg;
+        text = colors.fg;
+        hover = colors.hover;
+        background = colors.bg_raised;
         notifications = {
-          total = "#FFFFFF";
-          icon = "#090909";
-          background = "#090909";
-          icon_background = "#ffffff";
-          border = "#FFFFFF";
+          total = colors.fg;
+          icon = colors.bg_alt;
+          background = colors.bg_alt;
+          icon_background = colors.fg;
+          border = colors.fg;
         };
         clock = {
-          icon = "#000000";
-          text = "#FFFFFF";
-          background = "#090909";
-          icon_background = "#ffffff";
-          border = "#FFFFFF";
+          icon = colors.bg;
+          text = colors.fg;
+          background = colors.bg_alt;
+          icon_background = colors.fg;
+          border = colors.fg;
         };
         battery = {
-          icon = "#090909";
-          text = "#FFFFFF";
-          background = "#090909";
-          icon_background = "#ffffff";
-          border = "#FFFFFF";
+          icon = colors.bg_alt;
+          text = colors.fg;
+          background = colors.bg_alt;
+          icon_background = colors.fg;
+          border = colors.fg;
         };
         systray = {
-          background = "#090909";
-          border = "#444444";
-          customIcon = "#FFFFFF";
+          background = colors.bg_alt;
+          border = colors.muted;
+          customIcon = colors.fg;
         };
         bluetooth = {
-          icon = "#090909";
-          text = "#FFFFFF";
-          background = "#090909";
-          icon_background = "#ffffff";
-          border = "#FFFFFF";
+          icon = colors.bg_alt;
+          text = colors.fg;
+          background = colors.bg_alt;
+          icon_background = colors.fg;
+          border = colors.fg;
         };
         network = {
-          icon = "#090909";
-          text = "#FFFFFF";
-          background = "#090909";
-          icon_background = "#ffffff";
-          border = "#FFFFFF";
+          icon = colors.bg_alt;
+          text = colors.fg;
+          background = colors.bg_alt;
+          icon_background = colors.fg;
+          border = colors.fg;
         };
         volume = {
-          icon = "#090909";
-          text = "#FFFFFF";
-          background = "#090909";
-          icon_background = "#ffffff";
-          border = "#FFFFFF";
+          icon = colors.bg_alt;
+          text = colors.fg;
+          background = colors.bg_alt;
+          icon_background = colors.fg;
+          border = colors.fg;
         };
         windowtitle = {
-          icon = "#090909";
-          text = "#FFFFFF";
-          background = "#090909";
-          icon_background = "#ffffff";
-          border = "#FFFFFF";
+          icon = colors.bg_alt;
+          text = colors.fg;
+          background = colors.bg_alt;
+          icon_background = colors.fg;
+          border = colors.fg;
         };
         workspaces = {
-          active = "#FFFFFF";
-          occupied = "#FFFFFF";
-          available = "#FFFFFF";
-          hover = "#444444";
-          background = "#090909";
-          numbered_active_highlighted_text_color = "#21252b";
-          numbered_active_underline_color = "#ffffff";
-          border = "#FFFFFF";
+          active = colors.fg;
+          occupied = colors.fg;
+          available = colors.fg;
+          hover = colors.muted;
+          background = colors.bg_alt;
+          numbered_active_highlighted_text_color = colors.icon_fg;
+          numbered_active_underline_color = colors.fg;
+          border = colors.fg;
         };
         dashboard = {
-          icon = "#000000";
-          background = "#ffffff";
-          border = "#FFFFFF";
+          icon = colors.bg;
+          background = colors.fg;
+          border = colors.fg;
         };
         style = "split";
-        icon_background = "#FFFFFF";
-        borderColor = "#FFFFFF";
+        icon_background = colors.fg;
+        borderColor = colors.fg;
         modules = {
           ram = {
-            icon = "#21252b";
-            icon_background = "#ffffff";
-            text = "#ffffff";
-            background = "#090909";
-            border = "#ffffff";
+            icon = colors.icon_fg;
+            icon_background = colors.fg;
+            text = colors.fg;
+            background = colors.bg_alt;
+            border = colors.fg;
           };
           storage = {
-            icon_background = "#ffffff";
-            icon = "#21252b";
-            text = "#ffffff";
-            background = "#090909";
-            border = "#ffffff";
+            icon_background = colors.fg;
+            icon = colors.icon_fg;
+            text = colors.fg;
+            background = colors.bg_alt;
+            border = colors.fg;
           };
           updates = {
-            icon_background = "#FFFFFF";
-            text = "#FFFFFF";
-            icon = "#21252b";
-            background = "#090909";
-            border = "#FFFFFF";
+            icon_background = colors.fg;
+            text = colors.fg;
+            icon = colors.icon_fg;
+            background = colors.bg_alt;
+            border = colors.fg;
           };
           netstat = {
-            background = "#090909";
-            text = "#ffffff";
-            icon = "#21252b";
-            icon_background = "#ffffff";
-            border = "#ffffff";
+            background = colors.bg_alt;
+            text = colors.fg;
+            icon = colors.icon_fg;
+            icon_background = colors.fg;
+            border = colors.fg;
           };
           weather = {
-            icon = "#090909";
-            text = "#FFFFFF";
-            icon_background = "#FFFFFF";
-            background = "#090909";
-            border = "#FFFFFF";
+            icon = colors.bg_alt;
+            text = colors.fg;
+            icon_background = colors.fg;
+            background = colors.bg_alt;
+            border = colors.fg;
           };
           power = {
-            icon = "#21252b";
-            icon_background = "#ffffff";
-            background = "#090909";
-            border = "#ffffff";
+            icon = colors.icon_fg;
+            icon_background = colors.fg;
+            background = colors.bg_alt;
+            border = colors.fg;
           };
           cpu = {
-            icon = "#21252b";
-            icon_background = "#ffffff";
-            text = "#ffffff";
-            background = "#090909";
-            border = "#ffffff";
+            icon = colors.icon_fg;
+            icon_background = colors.fg;
+            text = colors.fg;
+            background = colors.bg_alt;
+            border = colors.fg;
           };
           kbLayout = {
-            icon_background = "#ffffff";
-            icon = "#21252b";
-            background = "#090909";
-            text = "#ffffff";
-            border = "#ffffff";
+            icon_background = colors.fg;
+            icon = colors.icon_fg;
+            background = colors.bg_alt;
+            text = colors.fg;
+            border = colors.fg;
           };
           submap = {
-            background = "#090909";
-            text = "#FFFFFF";
-            border = "#FFFFFF";
-            icon = "#21252b";
-            icon_background = "#FFFFFF";
+            background = colors.bg_alt;
+            text = colors.fg;
+            border = colors.fg;
+            icon = colors.icon_fg;
+            icon_background = colors.fg;
           };
           hyprsunset = {
-            icon_background = "#ffffff";
-            background = "#090909";
-            icon = "#21252b";
-            text = "#ffffff";
-            border = "#ffffff";
+            icon_background = colors.fg;
+            background = colors.bg_alt;
+            icon = colors.icon_fg;
+            text = colors.fg;
+            border = colors.fg;
           };
           hypridle = {
-            icon = "#21252b";
-            background = "#090909";
-            icon_background = "#ffffff";
-            text = "#ffffff";
-            border = "#ffffff";
+            icon = colors.icon_fg;
+            background = colors.bg_alt;
+            icon_background = colors.fg;
+            text = colors.fg;
+            border = colors.fg;
           };
           cava = {
-            text = "#FFFFFF";
-            background = "#090909";
-            icon = "#21252b";
-            icon_background = "#FFFFFF";
-            border = "#FFFFFF";
+            text = colors.fg;
+            background = colors.bg_alt;
+            icon = colors.icon_fg;
+            icon_background = colors.fg;
+            border = colors.fg;
           };
           microphone = {
-            border = "#ffffff";
-            background = "#090909";
-            text = "#ffffff";
-            icon = "#090909";
-            icon_background = "#ffffff";
+            border = colors.fg;
+            background = colors.bg_alt;
+            text = colors.fg;
+            icon = colors.bg_alt;
+            icon_background = colors.fg;
           };
           worldclock = {
-            text = "#FFFFFF";
-            background = "#090909";
-            icon = "#000000";
-            icon_background = "#ffffff";
-            border = "#FFFFFF";
+            text = colors.fg;
+            background = colors.bg_alt;
+            icon = colors.bg;
+            icon_background = colors.fg;
+            border = colors.fg;
           };
         };
       };
-      theme.bar.border.color = "#FFFFFF";
+      theme.bar.border.color = colors.fg;
       theme.osd = {
-        label = "#FFFFFF";
-        icon = "#000000";
-        bar_overflow_color = "#FFFFFF";
-        bar_empty_color = "#444444";
-        bar_color = "#FFFFFF";
-        icon_container = "#FFFFFF";
-        bar_container = "#000000";
+        label = colors.fg;
+        icon = colors.bg;
+        bar_overflow_color = colors.fg;
+        bar_empty_color = colors.muted;
+        bar_color = colors.fg;
+        icon_container = colors.fg;
+        bar_container = colors.bg;
       };
       theme.notification = {
         close_button = {
-          label = "#000000";
-          background = "#FFFFFF";
+          label = colors.bg;
+          background = colors.fg;
         };
-        labelicon = "#FFFFFF";
-        text = "#FFFFFF";
-        time = "#CCCCCC";
-        border = "#444444";
-        label = "#FFFFFF";
+        labelicon = colors.fg;
+        text = colors.fg;
+        time = colors.dimmed;
+        border = colors.muted;
+        label = colors.fg;
         actions = {
-          text = "#000000";
-          background = "#FFFFFF";
+          text = colors.bg;
+          background = colors.fg;
         };
-        background = "#1a1a1a";
+        background = colors.bg_raised;
       };
     };
   };
