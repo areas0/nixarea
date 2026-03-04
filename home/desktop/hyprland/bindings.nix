@@ -139,9 +139,16 @@
       blur = {
         enabled = true;
         size = 5;
-        passes = 1;
+        passes = 3;
       };
     };
+
+    layerrule = [
+      "blur on, match:namespace ^bar-"
+      "blur_popups on, match:namespace ^bar-"
+      "ignore_alpha 0.3, match:namespace ^bar-"
+      "xray on, match:namespace ^bar-"
+    ];
 
     workspace = [
       "r[1-4], monitor:eDP-1"

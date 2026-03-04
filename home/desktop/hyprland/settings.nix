@@ -18,6 +18,7 @@
         "code"
         "hyprpanel"
         "wl-paste --watch cliphist store"
+        "sleep 2 && pkill -x swww-daemon; sleep 0.5; systemctl --user restart hyprpaper.service"
       ];
       env = [
         "NIXOS_OZONE_WL,1"

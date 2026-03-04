@@ -41,12 +41,12 @@ let
   '';
 
   colors = {
-    bg = "#000000";
-    bg_alt = "#090909";
-    bg_surface = "#111111";
-    bg_raised = "#1A1A1A";
+    bg = "rgba(0, 0, 0, 0.35)";
+    bg_alt = "rgba(9, 9, 9, 0.4)";
+    bg_surface = "rgba(17, 17, 17, 0.5)";
+    bg_raised = "rgba(26, 26, 26, 0.55)";
     icon_fg = "#21252b";
-    hover = "#333333";
+    hover = "rgba(51, 51, 51, 0.5)";
     muted = "#444444";
     dimmed = "#CCCCCC";
     fg = "#FFFFFF";
