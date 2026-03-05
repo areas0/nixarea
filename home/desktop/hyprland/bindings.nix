@@ -2,24 +2,29 @@
 {
   wayland.windowManager.hyprland.settings = {
     bind = [
-      "$mod SHIFT, Q, hy3:killactive"
+      "$mod SHIFT, Q, killactive"
       "$mod, RETURN, exec, $terminal"
       "$mod SHIFT, E, exec, hyprlock"
       "$mod SHIFT, I, exit"
-
-      # file manager (relocated from $mod+E)
-      "$mod, T, exec, $fileManager"
+      "$mod, E, exec, $fileManager"
+      "$mod, V, togglefloating"
 
       # launchers
       "$mod, D, exec, $menu"
       "ALT, SPACE, exec, $menu"
       "$mod, C, exec, walker -s clipboard"
-      "$mod SHIFT, W, exec, walker -s windows"
+      "$mod, W, exec, walker -s windows"
 
       "$mod, F, fullscreen"
 
-      # toggle floating (relocated from $mod+V)
-      "$mod SHIFT, SPACE, togglefloating"
+      # dwindle layout
+      "$mod, P, pseudo"
+      "$mod, O, togglesplit"
+
+      # window groups
+      "$mod, G, togglegroup"
+      "$mod, Tab, changegroupactive, f"
+      "$mod SHIFT, Tab, changegroupactive, b"
 
       # app focus shortcuts
       "$mod, Z, exec, bash -c 'hyprctl dispatch focuswindow class:zen-beta'"
@@ -27,46 +32,29 @@
 
       ''$mod SHIFT, B, exec, bash -c 'CONFIG="''${XDG_CONFIG_HOME:-$HOME/.config}/hyprpanel/config.json"; STATE="''${XDG_RUNTIME_DIR:-/tmp}/hyprpanel-bar-position"; CUR=$(cat "$STATE" 2>/dev/null || echo top); if [ "$CUR" = "top" ]; then NEXT=bottom; else NEXT=top; fi; [ -L "$CONFIG" ] && cp --remove-destination "$(readlink -f "$CONFIG")" "$CONFIG" && chmod u+w "$CONFIG"; jq --arg loc "$NEXT" ".\"theme.bar.location\" = \$loc" "$CONFIG" > "$CONFIG.tmp" && mv -f "$CONFIG.tmp" "$CONFIG"; hyprpanel restart; echo "$NEXT" > "$STATE"' ''
 
-      # hy3 layout management
-      "$mod, V, hy3:makegroup, v, toggle"
-      "$mod, B, hy3:makegroup, h, toggle"
-      "$mod, W, hy3:makegroup, tab, toggle"
-      "$mod, E, hy3:changegroup, opposite"
+      # focus (arrow keys)
+      "$mod, left, movefocus, l"
+      "$mod, right, movefocus, r"
+      "$mod, up, movefocus, u"
+      "$mod, down, movefocus, d"
 
-      # hy3 tree navigation (i3 focus parent/child)
-      "$mod, A, hy3:changefocus, raise"
-      "$mod SHIFT, A, hy3:changefocus, lower"
+      # focus (hjkl)
+      "$mod, H, movefocus, l"
+      "$mod, J, movefocus, d"
+      "$mod, K, movefocus, u"
+      "$mod, L, movefocus, r"
 
-      # hy3 tab navigation
-      "$mod, Tab, hy3:focustab, r, wrap"
-      "$mod SHIFT, Tab, hy3:focustab, l, wrap"
+      # move window (arrow keys)
+      "$mod SHIFT, left, movewindow, l"
+      "$mod SHIFT, right, movewindow, r"
+      "$mod SHIFT, up, movewindow, u"
+      "$mod SHIFT, down, movewindow, d"
 
-      # equalize sibling sizes
-      "$mod, equal, hy3:equalize"
-
-      # hy3 focus (arrow keys)
-      "$mod, left, hy3:movefocus, l"
-      "$mod, right, hy3:movefocus, r"
-      "$mod, up, hy3:movefocus, u"
-      "$mod, down, hy3:movefocus, d"
-
-      # hy3 focus (hjkl)
-      "$mod, H, hy3:movefocus, l"
-      "$mod, J, hy3:movefocus, d"
-      "$mod, K, hy3:movefocus, u"
-      "$mod, L, hy3:movefocus, r"
-
-      # hy3 move window (arrow keys)
-      "$mod SHIFT, left, hy3:movewindow, l"
-      "$mod SHIFT, right, hy3:movewindow, r"
-      "$mod SHIFT, up, hy3:movewindow, u"
-      "$mod SHIFT, down, hy3:movewindow, d"
-
-      # hy3 move window (hjkl)
-      "$mod SHIFT, H, hy3:movewindow, l"
-      "$mod SHIFT, J, hy3:movewindow, d"
-      "$mod SHIFT, K, hy3:movewindow, u"
-      "$mod SHIFT, L, hy3:movewindow, r"
+      # move window (hjkl)
+      "$mod SHIFT, H, movewindow, l"
+      "$mod SHIFT, J, movewindow, d"
+      "$mod SHIFT, K, movewindow, u"
+      "$mod SHIFT, L, movewindow, r"
 
       # screenshots
       "$mod SHIFT, S, exec, bash -c 'grim -g \"$(slurp)\" - | tee ~/Pictures/Screenshots/$(date +%Y%m%d_%H%M%S).png | wl-copy'"
@@ -97,7 +85,7 @@
           in
           [
             "$mod, code:1${toString i}, workspace, ${toString ws}"
-            "$mod SHIFT, code:1${toString i}, hy3:movetoworkspace, ${toString ws}, follow"
+            "$mod SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
           ]
         ) 9
       )
