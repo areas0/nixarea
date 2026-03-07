@@ -102,6 +102,7 @@
   services.pipewire.extraConfig.pipewire."90-highrez" = {
     "context.properties" = {
       "default.clock.rate" = 96000;
+      "default.clock.allowed-rates" = [ 44100 48000 96000 ];
     };
   };
 
