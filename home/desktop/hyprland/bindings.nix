@@ -111,8 +111,8 @@
     };
 
     general = {
-      gaps_in = 5;
-      gaps_out = 1;
+      gaps_in = 2;
+      gaps_out = 0;
       border_size = 1;
     };
 
@@ -122,7 +122,7 @@
     };
 
     decoration = {
-      rounding = 10;
+      rounding = 4;
 
       blur = {
         enabled = true;
