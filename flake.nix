@@ -80,7 +80,7 @@
         lutris
         bottles
         heroic
-        retroarch-full
+        # retroarch-full
         ryubing
       ];
 

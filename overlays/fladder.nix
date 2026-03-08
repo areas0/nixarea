@@ -1,11 +1,11 @@
 self: super:
 let
-  version = "0.10.1";
+  version = "0.10.2";
 
   bundleSrc = super.fetchzip {
     url = "https://github.com/DonutWare/Fladder/releases/download/v${version}/Fladder-Linux-${version}.zip";
     stripRoot = false;
-    sha256 = "sha256-cPl9j1kKvWsoeKeMcaF0rr/5Tag7bDKg/DgVDf1BZYU=";
+    sha256 = "sha256-KpSAxqZxtTHwlKZ9rjEURXovSkgv7PdxC7McMfvNbSM=";
   };
 in
 {

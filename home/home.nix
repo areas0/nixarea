@@ -36,7 +36,7 @@
     pkgs.argocd
     pkgs.argo-workflows
     pkgs.awscli2
-    pkgs.azure-cli
+    pkgs-unstable.azure-cli
     pkgs.circleci-cli
     pkgs.dig
     pkgs.firefox
