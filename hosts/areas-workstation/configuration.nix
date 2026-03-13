@@ -61,13 +61,13 @@
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
     package =
       let
-        nvidia-fixed-pkgs = import nixpkgs-nvidia {
+        nvidia-unstable-pkgs = import pkgs-unstable {
           system = "x86_64-linux";
           config.allowUnfree = true;
         };
-        fixedKernelPackages = nvidia-fixed-pkgs.linuxKernel.packagesFor config.boot.kernelPackages.kernel;
+        fixedKernelPackages = pkgs-unstable.linuxKernel.packagesFor config.boot.kernelPackages.kernel;
       in
-      fixedKernelPackages.nvidiaPackages.beta;
+      fixedKernelPackages.nvidiaPackages.latest;
   };
 
   services.xserver.videoDrivers = [ "nvidia" ];
