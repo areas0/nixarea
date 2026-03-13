@@ -1,6 +1,5 @@
 {
   nvchad4nix,
-  config,
   pkgs,
   pkgs-unstable,
   ...
