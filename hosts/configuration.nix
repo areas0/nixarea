@@ -109,7 +109,6 @@
     # registry.unstable.flake = pkgs-unstable;
 
     extraOptions = ''
-      experimental-features = nix-command flakes
       keep-outputs = true
       keep-derivations = true
     '';
@@ -159,12 +158,7 @@
       "wheel"
       "docker"
     ];
-    packages = with pkgs; [
-      firefox
-      vim
-      tree
-      zsh
-    ];
+    packages = [ ];
     shell = pkgs.zsh;
   };
 

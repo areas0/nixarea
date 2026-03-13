@@ -6,7 +6,6 @@
   config,
   pkgs,
   pkgs-unstable,
-  nixpkgs-nvidia,
   ...
 }:
 
@@ -61,10 +60,6 @@
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
     package =
       let
-        nvidia-unstable-pkgs = import pkgs-unstable {
-          system = "x86_64-linux";
-          config.allowUnfree = true;
-        };
         fixedKernelPackages = pkgs-unstable.linuxKernel.packagesFor config.boot.kernelPackages.kernel;
       in
       fixedKernelPackages.nvidiaPackages.latest;

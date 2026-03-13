@@ -39,7 +39,6 @@
     pkgs-unstable.azure-cli
     pkgs.circleci-cli
     pkgs.dig
-    pkgs.firefox
     pkgs.helm-ls
 
     pkgs-unstable.kubectl

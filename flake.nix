@@ -52,9 +52,7 @@
         inherit system;
         config.allowUnfree = true;
         overlays = [
-          # (import ./overlays/discord.nix)
           (import ./overlays/teleport.nix { inherit inputs; })
-          # (import ./overlays/zen.nix { inherit inputs; })
           (import ./overlays/fladder.nix)
           (final: prev: { inherit nixpkgs-unstable; })
         ];
