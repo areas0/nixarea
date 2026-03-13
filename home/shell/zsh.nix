@@ -7,7 +7,6 @@
       enable = true;
     };
     history = {
-      # append = true;
       expireDuplicatesFirst = true;
     };
     initContent = ''

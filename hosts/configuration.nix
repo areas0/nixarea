@@ -1,7 +1,3 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 {
   pkgs,
   pkgs-unstable,
@@ -12,11 +8,6 @@
 {
   imports = [ ../modules/xdg-portal.nix ];
 
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-  # Enable networking
   networking.networkmanager = {
     enable = true;
     plugins = with pkgs; [
@@ -28,7 +19,6 @@
   security.polkit.enable = true;
   security.pam.services = {
     hyprlock = { };
-    # gdm.enableGnomeKeyring = true;
   };
   programs = {
     hyprland = {
@@ -68,10 +58,8 @@
     siji
   ];
 
-  # Set your time zone.
   time.timeZone = "Europe/Paris";
 
-  # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
   i18n.extraLocaleSettings = {
@@ -87,7 +75,6 @@
   };
 
   nix = {
-    # Nix Package Manager settings
     settings = {
       auto-optimise-store = true;
       experimental-features = [
@@ -96,40 +83,29 @@
       ];
     };
 
-    # Garbage collector settings
     gc = {
       automatic = true;
       dates = "weekly";
       options = "--delete-older-than 7d";
     };
 
-    # Enable nixFlakes on system
     package = pkgs.nixVersions.latest;
-    # registry.nixpkgs.flake = pkgs;
-    # registry.unstable.flake = pkgs-unstable;
 
     extraOptions = ''
       keep-outputs = true
       keep-derivations = true
     '';
   };
-  # Enable the X11 windowing system.
+
   services.xserver.enable = true;
 
-  # Enable the GNOME Desktop Environment.
-  # services.displayManager.gdm.enable = true;
-  # services.xserver.desktopManager.gnome.enable = true;
-
-  # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
     variant = "intl";
   };
 
-  # Enable CUPS to print documents.
   services.printing.enable = true;
 
-  # Enable sound with pipewire.
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -137,19 +113,11 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
   };
 
-  # Enable touchpad support (enabled default in most desktopManager).
   services.libinput.enable = true;
   programs.zsh.enable = true;
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.areas = {
     isNormalUser = true;
     description = "areas";
@@ -162,14 +130,10 @@
     shell = pkgs.zsh;
   };
 
-  # Install firefox.
   programs.firefox.enable = true;
 
-  # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
   environment = {
     systemPackages =
       with pkgs;
@@ -184,26 +148,8 @@
     shells = with pkgs; [ zsh ];
   };
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
-
-  # Open ports in the firewall.
   networking.firewall = {
     enable = true;
     allowPing = false;
   };
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
 }

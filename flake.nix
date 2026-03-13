@@ -64,7 +64,6 @@
         lutris
         bottles
         heroic
-        # retroarch-full
         ryubing
       ];
 
@@ -80,12 +79,7 @@
           pkgs-unstable.gamescope-wsi
           pkgs-unstable.gamescope
           pkgs-unstable.heroic
-          # citra
           pkgs-unstable.azahar
-
-          # nix-citizen.packages.${system}.rsi-launcher
-          # nix-citizen.packages.${system}.star-citizen
-
           pkgs-unstable.feishin
         ];
       };
@@ -141,9 +135,7 @@
               };
 
               programs.rsi-launcher = {
-                # Enables the star citizen module
                 enable = true;
-                # Additional commands before the game starts
                 preCommands = ''
                   export DXVK_HUD=compiler;
                   export DXVK_HDR=1;
@@ -153,9 +145,6 @@
                 '';
                 enforceWaylandDrv = false;
                 includeOverlay = true;
-
-                # location = "$HOME/Games/new-citizens";
-
                 enableNTsync = true;
               };
             }
