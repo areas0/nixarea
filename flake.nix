@@ -58,6 +58,45 @@
         ];
       };
 
+      mkHost =
+        {
+          hostConfig,
+          hardwareConfig,
+          extraSpecialArgs ? { },
+          extraModules ? [ ],
+          additionalConfig,
+        }:
+        nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = { inherit pkgs-unstable; } // extraSpecialArgs;
+          modules =
+            [
+              ./hosts/configuration.nix
+              hostConfig
+              hardwareConfig
+            ]
+            ++ extraModules
+            ++ [
+              home-manager.nixosModules.home-manager
+              {
+                home-manager.useUserPackages = true;
+                home-manager.users.areas = import ./home;
+                home-manager.backupFileExtension = "backup";
+
+                home-manager.extraSpecialArgs = {
+                  inherit
+                    pkgs
+                    pkgs-unstable
+                    nvchad4nix
+                    zen
+                    walker
+                    additionalConfig
+                    ;
+                };
+              }
+            ];
+        };
+
       extraGamingPackages = with pkgs; [
         mangohud
         protonup-qt
@@ -86,116 +125,30 @@
     in
     {
       nixosConfigurations = {
-        areas-thinkpad-work = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          specialArgs = {
-            inherit pkgs-unstable;
-            extraGamingPackages = [ ];
-          };
-          modules = [
-            ./hosts/configuration.nix
-            ./hosts/areas-thinkpad-work/configuration.nix
-            ./hosts/areas-thinkpad-work/hardware-configuration.nix
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useUserPackages = true;
-              home-manager.users.areas = import ./home;
-              home-manager.backupFileExtension = "backup";
-
-              home-manager.extraSpecialArgs = {
-                inherit
-                  pkgs
-                  pkgs-unstable
-                  nvchad4nix
-                  zen
-                  walker
-                  ;
-                additionalConfig = workConfig;
-              };
-            }
-          ];
+        areas-thinkpad-work = mkHost {
+          hostConfig = ./hosts/areas-thinkpad-work/configuration.nix;
+          hardwareConfig = ./hosts/areas-thinkpad-work/hardware-configuration.nix;
+          extraSpecialArgs = { extraGamingPackages = [ ]; };
+          additionalConfig = workConfig;
         };
 
-        areas-workstation = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          specialArgs = {
-            inherit pkgs-unstable extraGamingPackages;
-          };
-          modules = [
-            ./hosts/configuration.nix
-            ./hosts/areas-workstation/configuration.nix
-            ./hosts/areas-workstation/hardware-configuration.nix
+        areas-workstation = mkHost {
+          hostConfig = ./hosts/areas-workstation/configuration.nix;
+          hardwareConfig = ./hosts/areas-workstation/hardware-configuration.nix;
+          extraSpecialArgs = { inherit extraGamingPackages; };
+          extraModules = [
             ./modules/docker.nix
             nix-citizen.nixosModules.default
-            {
-              # Cachix setup
-              nix.settings = {
-                substituters = [ "https://nix-citizen.cachix.org" ];
-                trusted-public-keys = [ "nix-citizen.cachix.org-1:lPMkWc2X8XD4/7YPEEwXKKBg+SVbYTVrAaLA2wQTKCo=" ];
-              };
-
-              programs.rsi-launcher = {
-                enable = true;
-                preCommands = ''
-                  export DXVK_HUD=compiler;
-                  export DXVK_HDR=1;
-                  export ENABLE_HDR_WSI=1;
-                  export PROTON_ENABLE_HDR=1;
-                  export MANGO_HUD=0;
-                '';
-                enforceWaylandDrv = false;
-                includeOverlay = true;
-                enableNTsync = true;
-              };
-            }
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useUserPackages = true;
-              home-manager.users.areas = import ./home;
-              home-manager.backupFileExtension = "backup";
-
-              home-manager.extraSpecialArgs = {
-                inherit
-                  pkgs
-                  pkgs-unstable
-                  nvchad4nix
-                  zen
-                  walker
-                  ;
-                additionalConfig = personalConfig;
-              };
-            }
+            ./hosts/areas-workstation/star-citizen.nix
           ];
+          additionalConfig = personalConfig;
         };
 
-        areas-thinkpad-home = nixpkgs.lib.nixosSystem {
-          specialArgs = {
-            inherit pkgs-unstable;
-            extraGamingPackages = [ ];
-          };
-          system = "x86_64-linux";
-          modules = [
-            ./hosts/configuration.nix
-            ./hosts/areas-thinkpad-home/configuration.nix
-            ./hosts/areas-thinkpad-home/hardware-configuration.nix
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useUserPackages = true;
-              home-manager.users.areas = import ./home;
-              home-manager.backupFileExtension = "backup";
-
-              home-manager.extraSpecialArgs = {
-                inherit
-                  pkgs
-                  pkgs-unstable
-                  nvchad4nix
-                  zen
-                  walker
-                  ;
-                additionalConfig = personalConfig;
-              };
-            }
-          ];
+        areas-thinkpad-home = mkHost {
+          hostConfig = ./hosts/areas-thinkpad-home/configuration.nix;
+          hardwareConfig = ./hosts/areas-thinkpad-home/hardware-configuration.nix;
+          extraSpecialArgs = { extraGamingPackages = [ ]; };
+          additionalConfig = personalConfig;
         };
       };
     };
