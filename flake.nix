@@ -200,7 +200,10 @@
         };
 
         areas-thinkpad-home = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit pkgs-unstable; };
+          specialArgs = {
+            inherit pkgs-unstable;
+            extraGamingPackages = [ ];
+          };
           system = "x86_64-linux";
           modules = [
             ./hosts/configuration.nix
@@ -222,6 +225,7 @@
                   hyprshell
                   walker
                   ;
+                additionalConfig = personalConfig;
               };
             }
           ];
