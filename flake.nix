@@ -12,13 +12,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     zen.url = "github:0xc000022070/zen-browser-flake";
-    anyrun = {
-      url = "github:anyrun-org/anyrun";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    hyprshell.url = "github:H3rmt/hyprshell?ref=hyprshell-release";
-    hyprshell.inputs.nixpkgs.follows = "nixpkgs-unstable";
-
     elephant.url = "github:abenz1267/elephant";
     walker = {
       url = "github:abenz1267/walker";
@@ -31,8 +24,6 @@
     nix-gaming.url = "github:fufexan/nix-gaming";
     nix-citizen.inputs.nix-gaming.follows = "nix-gaming";
 
-    # temporary fix
-    nixpkgs-nvidia.url = "github:NixOS/nixpkgs/ab9ad415916a0fb89d1f539a9291d9737e95148e";
   };
 
   outputs =
@@ -43,19 +34,14 @@
       nixpkgs_teleport_14,
       zen,
       nvchad4nix,
-      anyrun,
-      hyprshell,
       nix-citizen,
       nix-gaming,
-      nixpkgs-nvidia,
       elephant,
       walker,
       ...
     }:
     let
       system = "x86_64-linux";
-
-      lib = nixpkgs.lib;
 
       pkgs-unstable = import inputs.nixpkgs-unstable {
         inherit system;
@@ -130,8 +116,6 @@
                   pkgs-unstable
                   nvchad4nix
                   zen
-                  anyrun
-                  hyprshell
                   walker
                   ;
                 additionalConfig = workConfig;
@@ -143,7 +127,7 @@
         areas-workstation = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           specialArgs = {
-            inherit pkgs-unstable extraGamingPackages nixpkgs-nvidia;
+            inherit pkgs-unstable extraGamingPackages;
           };
           modules = [
             ./hosts/configuration.nix
@@ -189,8 +173,6 @@
                   pkgs-unstable
                   nvchad4nix
                   zen
-                  anyrun
-                  hyprshell
                   walker
                   ;
                 additionalConfig = personalConfig;
@@ -221,8 +203,6 @@
                   pkgs-unstable
                   nvchad4nix
                   zen
-                  anyrun
-                  hyprshell
                   walker
                   ;
                 additionalConfig = personalConfig;
