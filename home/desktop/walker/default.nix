@@ -1,4 +1,4 @@
-{ walker, ... }:
+{ config, walker, ... }:
 {
   imports = [ walker.homeManagerModules.default ];
 
@@ -89,11 +89,11 @@
 
     themes.custom = {
       style = ''
-        @define-color window_bg_color #1f1f28;
-        @define-color accent_bg_color #54546d;
-        @define-color theme_fg_color #f2ecbc;
-        @define-color error_bg_color #C34043;
-        @define-color error_fg_color #DCD7BA;
+        @define-color window_bg_color ${config.lib.stylix.colors.withHashtag.base00};
+        @define-color accent_bg_color ${config.lib.stylix.colors.withHashtag.base0D};
+        @define-color theme_fg_color ${config.lib.stylix.colors.withHashtag.base05};
+        @define-color error_bg_color ${config.lib.stylix.colors.withHashtag.base08};
+        @define-color error_fg_color ${config.lib.stylix.colors.withHashtag.base05};
 
         * {
           all: unset;

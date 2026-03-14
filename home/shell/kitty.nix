@@ -1,11 +1,11 @@
-{ ... }:
+{ lib, ... }:
 {
   programs.kitty = {
-    enable = true; # required for the default Hyprland config
+    enable = true;
 
     settings = {
-      background_opacity = "0.5";
-      background_blur = "1";
+      background_opacity = lib.mkForce "0.5";
+      background_blur = lib.mkForce "1";
     };
   };
 }

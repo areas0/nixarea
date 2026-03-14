@@ -8,6 +8,10 @@
 {
   imports = [ ../modules/xdg-portal.nix ];
 
+  stylix = {
+    enable = true;
+  };
+
   networking.networkmanager = {
     enable = true;
     plugins = with pkgs; [

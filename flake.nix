@@ -24,6 +24,11 @@
     nix-gaming.url = "github:fufexan/nix-gaming";
     nix-citizen.inputs.nix-gaming.follows = "nix-gaming";
 
+    stylix = {
+      url = "github:nix-community/stylix/release-25.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
   outputs =
@@ -38,6 +43,7 @@
       nix-gaming,
       elephant,
       walker,
+      stylix,
       ...
     }:
     let
@@ -58,44 +64,21 @@
         ];
       };
 
-      mkHost =
-        {
-          hostConfig,
-          hardwareConfig,
-          extraSpecialArgs ? { },
-          extraModules ? [ ],
-          additionalConfig,
-        }:
-        nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          specialArgs = { inherit pkgs-unstable; } // extraSpecialArgs;
-          modules =
-            [
-              ./hosts/configuration.nix
-              hostConfig
-              hardwareConfig
-            ]
-            ++ extraModules
-            ++ [
-              home-manager.nixosModules.home-manager
-              {
-                home-manager.useUserPackages = true;
-                home-manager.users.areas = import ./home;
-                home-manager.backupFileExtension = "backup";
+      mkMatugenScheme = import ./lib/matugen.nix { inherit pkgs pkgs-unstable; };
 
-                home-manager.extraSpecialArgs = {
-                  inherit
-                    pkgs
-                    pkgs-unstable
-                    nvchad4nix
-                    zen
-                    walker
-                    additionalConfig
-                    ;
-                };
-              }
-            ];
-        };
+      mkHost = import ./lib/mkHost.nix {
+        inherit
+          nixpkgs
+          stylix
+          home-manager
+          pkgs
+          pkgs-unstable
+          nvchad4nix
+          zen
+          walker
+          mkMatugenScheme
+          ;
+      };
 
       extraGamingPackages = with pkgs; [
         mangohud
@@ -112,7 +95,7 @@
       };
 
       personalConfig = {
-        wallpaper = "${./assets/oshinoko-2.png}";
+        wallpaper = "${./assets/oshinoko.png}";
         additionalPackages = [
           pkgs-unstable.wine64Packages.waylandFull
           pkgs-unstable.gamescope-wsi

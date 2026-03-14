@@ -1,4 +1,7 @@
-{ ... }:
+{ config, lib, ... }:
+let
+  c = config.lib.stylix.colors;
+in
 {
   programs.hyprlock.settings = {
     general = {
@@ -7,45 +10,37 @@
       no_fade_in = true;
     };
 
-    background = [
+    background = lib.mkForce [
       {
         monitor = "";
         path = "screenshot";
         blur_passes = 2;
         blur_size = 5;
-        color = "rgba(17, 17, 17, 1.0)";
+        color = "rgb(${c.base00})";
       }
     ];
 
-    input-field = [
+    input-field = lib.mkForce [
       {
-        # monitor = "eDP-1";
-
         size = "300, 50";
-
         outline_thickness = 1;
-
-        outer_color = "rgb(b6c4ff)";
-        inner_color = "rgb(dce1ff)";
-        font_color = "rgb(354479)";
-
+        outer_color = "rgb(${c.base0D})";
+        inner_color = "rgb(${c.base02})";
+        font_color = "rgb(${c.base05})";
         fade_on_empty = false;
-        placeholder_text = ''<span foreground="##354479">Password...</span>'';
-
+        placeholder_text = ''<span foreground="#${c.base04}">Password...</span>'';
         dots_spacing = 0.2;
         dots_center = true;
       }
     ];
 
-    label = [
+    label = lib.mkForce [
       {
         monitor = "";
         text = "$TIME";
         font_size = 50;
-        color = "rgb(b6c4ff)";
-
+        color = "rgb(${c.base0D})";
         position = "0, 150";
-
         valign = "center";
         halign = "center";
       }
@@ -53,10 +48,8 @@
         monitor = "";
         text = "cmd[update:3600000] date +'%a %d %b %Y'";
         font_size = 20;
-        color = "rgb(b6c4ff)";
-
+        color = "rgb(${c.base0D})";
         position = "0, 50";
-
         valign = "center";
         halign = "center";
       }
