@@ -28,7 +28,7 @@ in
         inner_color = "rgb(${c.base02})";
         font_color = "rgb(${c.base05})";
         fade_on_empty = false;
-        placeholder_text = ''<span foreground="#${c.base04}">Password...</span>'';
+        placeholder_text = ''<span foreground="##${c.base04}">Password...</span>'';
         dots_spacing = 0.2;
         dots_center = true;
       }
