@@ -6,6 +6,21 @@
   ...
 }:
 
+let
+  matugen-wrapped = pkgs.writeShellScriptBin "matugen" ''
+    args=()
+    has_index=false
+    for arg in "$@"; do
+      [[ "$arg" == "--source-color-index" ]] && has_index=true
+      args+=("$arg")
+      if [[ "$arg" == "image" ]] && ! $has_index; then
+        args+=("--source-color-index" "0")
+        has_index=true
+      fi
+    done
+    exec ${pkgs-unstable.matugen}/bin/matugen "''${args[@]}"
+  '';
+in
 {
   home.username = "areas";
   home.homeDirectory = "/home/areas";
@@ -136,6 +151,8 @@
     pkgs.playerctl
     pkgs.cliphist
     pkgs.wtype
+
+    matugen-wrapped
 
     # Proton apps
     pkgs-unstable.protonmail-desktop

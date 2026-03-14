@@ -1,4 +1,4 @@
-{ pkgs, pkgs-unstable, ... }:
+{ pkgs, pkgs-unstable, additionalConfig, ... }:
 let
   toggleBarPosition = pkgs.writeShellScript "toggle-bar-position" ''
     # Only toggle if the Odyssey OLED is connected
@@ -80,6 +80,19 @@ in
             ];
           };
         };
+      };
+
+      wallpaper = {
+        enable = true;
+        image = "${additionalConfig.wallpaper}";
+      };
+
+      theme.matugen = {
+        enable = true;
+        theme = "dark";
+        scheme = "tonal-spot";
+        variation = "standard_1";
+        contrast = 0.0;
       };
 
       bar.launcher.autoDetectIcon = true;
