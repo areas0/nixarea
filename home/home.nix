@@ -1,7 +1,6 @@
 {
   pkgs,
   pkgs-unstable,
-  zen,
   additionalConfig,
   ...
 }:
@@ -127,8 +126,7 @@ in
     pkgs-unstable.jellyfin-media-player
     pkgs.fladder
 
-    # Browsers
-    zen.packages."x86_64-linux".default
+    # Browsers (Zen is managed via programs.zen-browser)
 
     # File manager
     pkgs.xfce.thunar

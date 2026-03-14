@@ -38,6 +38,7 @@ nixpkgs.lib.nixosSystem {
       {
         home-manager.useUserPackages = true;
         home-manager.users.areas = import ../home;
+        home-manager.sharedModules = [ zen.homeModules.default ];
         home-manager.backupFileExtension = "backup";
 
         home-manager.extraSpecialArgs = {

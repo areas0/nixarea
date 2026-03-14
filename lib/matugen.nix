@@ -10,6 +10,7 @@ let
         --type scheme-tonal-spot \
         --contrast 0.0 \
         --source-color-index 0 \
+        --lightness-dark -0.5 \
         -j strip | jq '.colors' > $out
     '';
 in
@@ -20,10 +21,10 @@ let
   hex = name: builtins.substring 1 6 c.${name}.default.color;
 in
 {
-  slug = "material-you";
-  scheme = "Material You";
+  slug = "material-you-amoled";
+  scheme = "Material You AMOLED";
   author = "matugen";
-  base00 = hex "surface";
+  base00 = "000000";
   base01 = hex "surface_container";
   base02 = hex "surface_container_high";
   base03 = hex "outline";
