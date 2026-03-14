@@ -1,4 +1,4 @@
-{ pkgs, pkgs-unstable, ... }:
+{ pkgs, pkgs-unstable, config, ... }:
 {
   programs.vscode = {
     enable = true;
@@ -11,4 +11,7 @@
       ms-kubernetes-tools.vscode-kubernetes-tools
     ];
   };
+
+  home.file.".cursor/extensions/stylix.stylix".source =
+    config.home.file.".vscode/extensions/stylix.stylix".source;
 }
