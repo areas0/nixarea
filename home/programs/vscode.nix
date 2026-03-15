@@ -1,4 +1,9 @@
-{ pkgs, pkgs-unstable, config, ... }:
+{
+  pkgs,
+  pkgs-unstable,
+  config,
+  ...
+}:
 {
   programs.vscode = {
     enable = true;

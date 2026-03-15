@@ -1,4 +1,9 @@
-{ pkgs, pkgs-unstable, additionalConfig, ... }:
+{
+  pkgs,
+  pkgs-unstable,
+  additionalConfig,
+  ...
+}:
 let
   toggleBarPosition = pkgs.writeShellScript "toggle-bar-position" ''
     # Only toggle if the Odyssey OLED is connected

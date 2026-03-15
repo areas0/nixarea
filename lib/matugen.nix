@@ -1,18 +1,31 @@
 { pkgs, pkgs-unstable }:
 
+{
+  schemeType ? "scheme-tonal-spot",
+  contrast ? 0.0,
+  lightnessDark ? -0.5,
+  amoled ? true,
+}:
+
 let
-  matugenJson = wallpaper:
-    pkgs.runCommand "matugen-colors.json" {
-      nativeBuildInputs = [ pkgs-unstable.matugen pkgs.jq ];
-    } ''
-      matugen image ${wallpaper} \
-        --mode dark \
-        --type scheme-tonal-spot \
-        --contrast 0.0 \
-        --source-color-index 0 \
-        --lightness-dark -0.5 \
-        -j strip | jq '.colors' > $out
-    '';
+  matugenJson =
+    wallpaper:
+    pkgs.runCommand "matugen-colors.json"
+      {
+        nativeBuildInputs = [
+          pkgs-unstable.matugen
+          pkgs.jq
+        ];
+      }
+      ''
+        matugen image ${wallpaper} \
+          --mode dark \
+          --type ${schemeType} \
+          --contrast ${toString contrast} \
+          --source-color-index 0 \
+          --lightness-dark ${toString lightnessDark} \
+          -j strip | jq '.colors' > $out
+      '';
 in
 
 wallpaper:
@@ -21,10 +34,10 @@ let
   hex = name: builtins.substring 1 6 c.${name}.default.color;
 in
 {
-  slug = "material-you-amoled";
-  scheme = "Material You AMOLED";
+  slug = "material-you" + (if amoled then "-amoled" else "");
+  scheme = "Material You" + (if amoled then " AMOLED" else "");
   author = "matugen";
-  base00 = "000000";
+  base00 = if amoled then "000000" else hex "surface";
   base01 = hex "surface_container";
   base02 = hex "surface_container_high";
   base03 = hex "outline";

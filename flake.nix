@@ -66,6 +66,13 @@
 
       mkMatugenScheme = import ./lib/matugen.nix { inherit pkgs pkgs-unstable; };
 
+      defaultTheme = {
+        schemeType = "scheme-tonal-spot";
+        contrast = 0.0;
+        lightnessDark = -0.5;
+        amoled = true;
+      };
+
       mkHost = import ./lib/mkHost.nix {
         inherit
           nixpkgs
@@ -91,11 +98,18 @@
 
       workConfig = {
         wallpaper = "${./assets/xenoblade.jpg}";
+        theme = defaultTheme;
         additionalPackages = [ ];
       };
 
       personalConfig = {
         wallpaper = "${./assets/oshinoko.png}";
+        theme = {
+          schemeType = "scheme-vibrant";
+          contrast = 0.0;
+          lightnessDark = 0.0;
+          amoled = true;
+        };
         additionalPackages = [
           pkgs-unstable.wine64Packages.waylandFull
           pkgs-unstable.gamescope-wsi
@@ -111,7 +125,9 @@
         areas-thinkpad-work = mkHost {
           hostConfig = ./hosts/areas-thinkpad-work/configuration.nix;
           hardwareConfig = ./hosts/areas-thinkpad-work/hardware-configuration.nix;
-          extraSpecialArgs = { extraGamingPackages = [ ]; };
+          extraSpecialArgs = {
+            extraGamingPackages = [ ];
+          };
           additionalConfig = workConfig;
         };
 
@@ -130,7 +146,9 @@
         areas-thinkpad-home = mkHost {
           hostConfig = ./hosts/areas-thinkpad-home/configuration.nix;
           hardwareConfig = ./hosts/areas-thinkpad-home/hardware-configuration.nix;
-          extraSpecialArgs = { extraGamingPackages = [ ]; };
+          extraSpecialArgs = {
+            extraGamingPackages = [ ];
+          };
           additionalConfig = personalConfig;
         };
       };

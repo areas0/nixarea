@@ -17,7 +17,12 @@
         "bluez5.enable-sbc-xq" = true;
         "bluez5.enable-msbc" = true;
         "bluez5.enable-hw-volume" = true;
-        "bluez5.codecs" = [ "ldac" "aac" "sbc_xq" "sbc" ];
+        "bluez5.codecs" = [
+          "ldac"
+          "aac"
+          "sbc_xq"
+          "sbc"
+        ];
         "bluez5.default.rate" = 96000;
       };
     };

@@ -1,0 +1,116 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+WALLPAPER="${1:-}"
+SCHEME_TYPE="${2:-all}"
+CONTRAST="${3:-0.0}"
+LIGHTNESS="${4:--0.5}"
+
+TYPES=(
+  scheme-tonal-spot
+  scheme-content
+  scheme-expressive
+  scheme-fidelity
+  scheme-fruit-salad
+  scheme-monochrome
+  scheme-neutral
+  scheme-rainbow
+  scheme-vibrant
+)
+
+BASE16_NAMES=(
+  "base00:surface"
+  "base01:surface_container"
+  "base02:surface_container_high"
+  "base03:outline"
+  "base04:on_surface_variant"
+  "base05:on_surface"
+  "base06:on_secondary_container"
+  "base07:on_primary_container"
+  "base08:error"
+  "base09:tertiary"
+  "base0A:secondary"
+  "base0B:primary"
+  "base0C:inverse_primary"
+  "base0D:primary"
+  "base0E:tertiary"
+  "base0F:outline_variant"
+)
+
+usage() {
+  echo "Usage: matugen-preview <wallpaper> [scheme-type|all] [contrast] [lightness-dark]"
+  echo ""
+  echo "  wallpaper       Path to wallpaper image"
+  echo "  scheme-type     One of: ${TYPES[*]}"
+  echo "                  Or 'all' to compare every scheme (default)"
+  echo "  contrast        -1.0 to 1.0 (default: 0.0)"
+  echo "  lightness-dark  -inf to 1.0 (default: -0.5)"
+  echo ""
+  echo "Examples:"
+  echo "  matugen-preview ~/wallpaper.png                    # compare all schemes"
+  echo "  matugen-preview ~/wallpaper.png scheme-expressive  # single scheme"
+  echo "  matugen-preview ~/wallpaper.png all 0.5 -0.8       # all schemes, high contrast, darker"
+  exit 1
+}
+
+[[ -z "$WALLPAPER" ]] && usage
+[[ ! -f "$WALLPAPER" ]] && echo "Error: file '$WALLPAPER' not found" && exit 1
+
+color_block() {
+  local hex="$1"
+  local r=$((16#${hex:0:2}))
+  local g=$((16#${hex:2:2}))
+  local b=$((16#${hex:4:2}))
+  printf "\033[48;2;%d;%d;%dm    \033[0m" "$r" "$g" "$b"
+}
+
+render_scheme() {
+  local type="$1"
+  local json
+  json=$(matugen image "$WALLPAPER" \
+    --mode dark \
+    --type "$type" \
+    --contrast "$CONTRAST" \
+    --lightness-dark "$LIGHTNESS" \
+    -j strip 2>/dev/null)
+
+  if [[ -z "$json" ]]; then
+    echo "  (failed to generate)"
+    return
+  fi
+
+  local amoled_hex="000000"
+
+  for entry in "${BASE16_NAMES[@]}"; do
+    local base="${entry%%:*}"
+    local color_name="${entry##*:}"
+    local hex
+    hex=$(echo "$json" | jq -r ".colors.${color_name}.default.color" 2>/dev/null | tr -d '#')
+
+    if [[ "$base" == "base00" ]]; then
+      color_block "$amoled_hex"
+      printf " %s  #%s (amoled)  " "$base" "$amoled_hex"
+      color_block "$hex"
+      printf " #%s (%s)\n" "$hex" "$color_name"
+    else
+      color_block "$hex"
+      printf " %s  #%s  (%s)\n" "$base" "$hex" "$color_name"
+    fi
+  done
+}
+
+if [[ "$SCHEME_TYPE" == "all" ]]; then
+  echo "Wallpaper: $WALLPAPER"
+  echo "Contrast: $CONTRAST | Lightness-dark: $LIGHTNESS"
+  echo ""
+  for type in "${TYPES[@]}"; do
+    echo "━━━ $type ━━━"
+    render_scheme "$type"
+    echo ""
+  done
+else
+  echo "━━━ $SCHEME_TYPE ━━━"
+  echo "Contrast: $CONTRAST | Lightness-dark: $LIGHTNESS"
+  echo ""
+  render_scheme "$SCHEME_TYPE"
+fi
