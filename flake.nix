@@ -12,11 +12,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     zen.url = "github:0xc000022070/zen-browser-flake";
-    elephant.url = "github:abenz1267/elephant";
-    walker = {
-      url = "github:abenz1267/walker";
-      inputs.elephant.follows = "elephant";
-    };
 
     nix-citizen.url = "github:LovingMelody/nix-citizen";
 
@@ -51,8 +46,6 @@
       nvchad4nix,
       nix-citizen,
       nix-gaming,
-      elephant,
-      walker,
       stylix,
       noctalia,
       noctalia-qs,
@@ -94,7 +87,6 @@
           pkgs-unstable
           nvchad4nix
           zen
-          walker
           noctalia
           mkMatugenScheme
           ;

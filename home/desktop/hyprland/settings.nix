@@ -12,7 +12,6 @@
       "$mod" = "SUPER";
       "$terminal" = "kitty";
       "$fileManager" = "thunar";
-      "$menu" = "walker";
       "$noctalia" = "noctalia-shell ipc call";
 
       exec-once = [

@@ -6,6 +6,5 @@
     ./hyprlock
     ./noctalia
     ./hyprsunset
-    ./walker
   ];
 }

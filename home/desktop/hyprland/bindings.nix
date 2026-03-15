@@ -10,11 +10,11 @@
       "$mod, V, togglefloating"
       "$mod, F, fullscreen"
 
-      # launchers
-      "$mod, D, exec, $menu"
-      "ALT, SPACE, exec, $menu"
-      "$mod, C, exec, walker -s clipboard"
-      "$mod, W, exec, walker -s windows"
+      # launcher
+      "$mod, D, exec, $noctalia launcher toggle"
+      "ALT, SPACE, exec, $noctalia launcher toggle"
+      "$mod, W, exec, $noctalia launcher windows"
+      "$mod, C, exec, $noctalia launcher clipboard"
 
       # dwindle layout
       "$mod, P, pseudo"

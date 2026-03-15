@@ -6,7 +6,6 @@
   pkgs-unstable,
   nvchad4nix,
   zen,
-  walker,
   noctalia,
   mkMatugenScheme,
 }:
@@ -53,7 +52,6 @@ nixpkgs.lib.nixosSystem {
           pkgs-unstable
           nvchad4nix
           zen
-          walker
           additionalConfig
           ;
       };
