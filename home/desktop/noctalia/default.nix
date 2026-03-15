@@ -132,6 +132,9 @@ in
 
       general = {
         enableBlurBehind = true;
+        lockScreenBlur = 0.6;
+        lockScreenTint = 0.3;
+        lockOnSuspend = true;
       };
 
       ui = {
@@ -161,7 +164,14 @@ in
       };
 
       nightLight.enabled = false;
-      idle.enabled = false;
+
+      idle = {
+        enabled = true;
+        lockTimeout = 900;
+        screenOffTimeout = 1200;
+        suspendTimeout = 0;
+        resumeScreenOffCommand = "hyprctl dispatch dpms on";
+      };
     };
 
     plugins = {

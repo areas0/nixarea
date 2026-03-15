@@ -4,7 +4,7 @@
     bind = [
       "$mod SHIFT, Q, killactive"
       "$mod, RETURN, exec, $terminal"
-      "$mod SHIFT, E, exec, hyprlock"
+      "$mod SHIFT, E, exec, $noctalia lockScreen lock"
       "$mod SHIFT, I, exit"
       "$mod, E, exec, $fileManager"
       "$mod, V, togglefloating"

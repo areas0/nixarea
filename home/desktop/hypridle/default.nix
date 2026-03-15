@@ -1,7 +1,8 @@
+# Deprecated: idle management is now handled by Noctalia shell
 { ... }:
 {
   services.hypridle = {
-    enable = true;
+    enable = false;
 
     settings = {
       general = {

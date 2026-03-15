@@ -1,9 +1,10 @@
+# Deprecated: lock screen is now handled by Noctalia shell
 { pkgs-unstable, ... }:
 {
   imports = [ ./settings.nix ];
 
   programs.hyprlock = {
-    enable = true;
+    enable = false;
     package = pkgs-unstable.hyprlock;
   };
 }
