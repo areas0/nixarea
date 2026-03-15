@@ -33,17 +33,18 @@
       };
 
       providers = {
+        # Order = result priority: windows first, then app shortcuts, then the rest
         default = [
+          "windows"
           "desktopapplications"
           "calc"
           "runner"
           "websearch"
           "clipboard"
-          "windows"
         ];
         empty = [
-          "desktopapplications"
           "windows"
+          "desktopapplications"
         ];
         max_results = 50;
         sets.windows = {

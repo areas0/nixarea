@@ -95,7 +95,13 @@ in
       menus.dashboard.stats.enable_gpu = true;
 
       theme.bar.transparent = true;
+      theme.bar.opacity = 40;
       theme.bar.location = "top";
+
+      theme.bar.menus.opacity = 85;
+
+      theme.notification.opacity = 75;
+      theme.osd.opacity = 75;
 
       theme.font = {
         name = "CaskaydiaCove NF";
