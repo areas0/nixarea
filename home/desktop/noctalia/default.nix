@@ -167,8 +167,8 @@ in
 
       idle = {
         enabled = true;
-        lockTimeout = 900;
-        screenOffTimeout = 1200;
+        lockTimeout = 180;
+        screenOffTimeout = 360;
         suspendTimeout = 0;
         resumeScreenOffCommand = "hyprctl dispatch dpms on";
       };
