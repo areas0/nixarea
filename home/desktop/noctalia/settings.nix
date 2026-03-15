@@ -41,6 +41,7 @@
     };
 
     location = {
+      name = "Paris";
       useFahrenheit = false;
       use12hourFormat = false;
     };

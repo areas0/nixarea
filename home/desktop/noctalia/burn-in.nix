@@ -11,30 +11,16 @@ let
       exit 0
     fi
 
-    CONFIG="''${XDG_CONFIG_HOME:-$HOME/.config}/noctalia/settings.json"
-    STATE_FILE="''${XDG_RUNTIME_DIR:-/tmp}/noctalia-bar-position"
-
-    CURRENT="top"
-    if [ -f "$STATE_FILE" ]; then
-      CURRENT=$(cat "$STATE_FILE")
-    fi
-
+    CURRENT=$(noctalia-shell ipc call state all | ${pkgs.jq}/bin/jq -r '.settings.bar.position')
     if [ "$CURRENT" = "top" ]; then
       NEXT="bottom"
     else
       NEXT="top"
     fi
 
-    if [ -L "$CONFIG" ]; then
-      cp --remove-destination "$(readlink -f "$CONFIG")" "$CONFIG"
-      chmod u+w "$CONFIG"
-    fi
-
-    ${pkgs.jq}/bin/jq --arg pos "$NEXT" '.bar.position = $pos' "$CONFIG" > "$CONFIG.tmp" \
-      && mv -f "$CONFIG.tmp" "$CONFIG"
-
-    noctalia-shell ipc call state reload
-    echo "$NEXT" > "$STATE_FILE"
+    for SCREEN in $(hyprctl monitors -j | ${pkgs.jq}/bin/jq -r '.[].name'); do
+      noctalia-shell ipc call bar setPosition "$NEXT" "$SCREEN"
+    done
   '';
 in
 {
