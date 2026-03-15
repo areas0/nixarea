@@ -69,7 +69,9 @@ in
         density = "spacious";
         fontScale = 1.2;
         floating = true;
-        showCapsule = false;
+        backgroundOpacity = lib.mkForce 0.5;
+        capsuleOpacity = lib.mkForce 0.7;
+        showCapsule = true;
         widgets = {
           left = [
             {
@@ -128,14 +130,25 @@ in
         viewMode = "list";
       };
 
+      general = {
+        enableBlurBehind = true;
+      };
+
+      ui = {
+        translucentWidgets = true;
+        panelBackgroundOpacity = lib.mkForce 0.6;
+      };
+
       notifications = {
         enabled = true;
         location = "top_right";
+        backgroundOpacity = lib.mkForce 0.7;
       };
 
       osd = {
         enabled = true;
         location = "top_right";
+        backgroundOpacity = lib.mkForce 0.7;
       };
 
       location = {
