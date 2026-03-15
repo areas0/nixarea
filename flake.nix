@@ -29,6 +29,16 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    noctalia = {
+      url = "github:noctalia-dev/noctalia-shell";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.noctalia-qs.follows = "noctalia-qs";
+    };
+    noctalia-qs = {
+      url = "github:noctalia-dev/noctalia-qs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
   };
 
   outputs =
@@ -44,6 +54,8 @@
       elephant,
       walker,
       stylix,
+      noctalia,
+      noctalia-qs,
       ...
     }:
     let
@@ -83,6 +95,7 @@
           nvchad4nix
           zen
           walker
+          noctalia
           mkMatugenScheme
           ;
       };

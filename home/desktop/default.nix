@@ -4,7 +4,7 @@
     ./hypridle
     ./hyprland
     ./hyprlock
-    ./hyprpanel
+    ./noctalia
     ./hyprsunset
     ./walker
   ];

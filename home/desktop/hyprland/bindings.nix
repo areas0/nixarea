@@ -29,8 +29,6 @@
       "$mod, Z, exec, bash -c 'hyprctl dispatch focuswindow class:zen-beta'"
       "$mod, S, exec, bash -c 'hyprctl dispatch focuswindow class:slack'"
 
-      ''$mod SHIFT, B, exec, bash -c 'CONFIG="''${XDG_CONFIG_HOME:-$HOME/.config}/hyprpanel/config.json"; STATE="''${XDG_RUNTIME_DIR:-/tmp}/hyprpanel-bar-position"; CUR=$(cat "$STATE" 2>/dev/null || echo top); if [ "$CUR" = "top" ]; then NEXT=bottom; else NEXT=top; fi; [ -L "$CONFIG" ] && cp --remove-destination "$(readlink -f "$CONFIG")" "$CONFIG" && chmod u+w "$CONFIG"; jq --arg loc "$NEXT" ".\"theme.bar.location\" = \$loc" "$CONFIG" > "$CONFIG.tmp" && mv -f "$CONFIG.tmp" "$CONFIG"; hyprpanel restart; echo "$NEXT" > "$STATE"' ''
-
       # focus (arrow keys)
       "$mod, left, movefocus, l"
       "$mod, right, movefocus, r"
@@ -60,14 +58,14 @@
       "$mod SHIFT, P, exec, bash -c 'grim - | tee ~/Pictures/Screenshots/$(date +%Y%m%d_%H%M%S).png | wl-copy'"
 
       # audio
-      ", XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+"
-      ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
-      ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+      ", XF86AudioRaiseVolume, exec, $noctalia volume increase"
+      ", XF86AudioLowerVolume, exec, $noctalia volume decrease"
+      ", XF86AudioMute, exec, $noctalia volume muteOutput"
       ", XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
 
       # brightness
-      ", XF86MonBrightnessUp, exec, brightnessctl s +5%"
-      ", XF86MonBrightnessDown, exec, brightnessctl s 5%-"
+      ", XF86MonBrightnessUp, exec, $noctalia brightness increase"
+      ", XF86MonBrightnessDown, exec, $noctalia brightness decrease"
 
       # resize submap
       "$mod, R, submap, resize"

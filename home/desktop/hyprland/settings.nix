@@ -13,10 +13,11 @@
       "$terminal" = "kitty";
       "$fileManager" = "thunar";
       "$menu" = "walker";
+      "$noctalia" = "noctalia-shell ipc call";
 
       exec-once = [
         "code"
-        "hyprpanel"
+        "noctalia-shell"
         "wl-paste --watch cliphist store"
       ];
 
@@ -122,10 +123,10 @@
       ];
 
       layerrule = [
-        "blur on, match:namespace ^bar-"
-        "blur_popups on, match:namespace ^bar-"
-        "ignore_alpha 0.3, match:namespace ^bar-"
-        "xray on, match:namespace ^bar-"
+        "blur on, match:namespace ^noctalia"
+        "blur_popups on, match:namespace ^noctalia"
+        "ignore_alpha 0.3, match:namespace ^noctalia"
+        "xray on, match:namespace ^noctalia"
       ];
 
       windowrule = [

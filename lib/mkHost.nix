@@ -7,6 +7,7 @@
   nvchad4nix,
   zen,
   walker,
+  noctalia,
   mkMatugenScheme,
 }:
 
@@ -40,7 +41,10 @@ nixpkgs.lib.nixosSystem {
     {
       home-manager.useUserPackages = true;
       home-manager.users.areas = import ../home;
-      home-manager.sharedModules = [ zen.homeModules.default ];
+      home-manager.sharedModules = [
+        zen.homeModules.default
+        noctalia.homeModules.default
+      ];
       home-manager.backupFileExtension = "backup";
 
       home-manager.extraSpecialArgs = {
