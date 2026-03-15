@@ -7,6 +7,9 @@
 }:
 let
   c = config.lib.stylix.colors.withHashtag;
+  isLaptop = additionalConfig.isLaptop or false;
+
+  officialPlugins = "https://github.com/noctalia-dev/noctalia-plugins";
 
   toggleBarPosition = pkgs.writeShellScript "toggle-bar-position" ''
     ODYSSEY_CONNECTED=$(hyprctl monitors -j | ${pkgs.jq}/bin/jq '[.[] | select(.description | test("Odyssey"))] | length')
@@ -79,22 +82,34 @@ in
               labelMode = "number";
             }
             { id = "SystemMonitor"; }
+            { id = "plugin:network-indicator"; }
+            { id = "AudioVisualizer"; }
+            { id = "ActiveWindow"; }
           ];
           center = [
             { id = "MediaMini"; }
           ];
-          right = [
-            { id = "Volume"; }
-            { id = "Bluetooth"; }
-            { id = "Tray"; }
-            { id = "NotificationHistory"; }
-            {
-              id = "Clock";
-              formatHorizontal = "HH:mm";
-              formatVertical = "HH mm";
-              useMonospacedFont = true;
-            }
-          ];
+          right =
+            [ { id = "Volume"; } ]
+            ++ lib.optionals isLaptop [
+              { id = "Brightness"; }
+              { id = "Battery"; }
+            ]
+            ++ [
+              { id = "VPN"; }
+              { id = "Network"; }
+              { id = "Bluetooth"; }
+              { id = "plugin:privacy-indicator"; }
+              { id = "plugin:openhue"; }
+              { id = "Tray"; }
+              { id = "NotificationHistory"; }
+              {
+                id = "Clock";
+                formatHorizontal = "HH:mm";
+                formatVertical = "HH mm";
+                useMonospacedFont = true;
+              }
+            ];
         };
       };
 
@@ -134,6 +149,46 @@ in
 
       nightLight.enabled = false;
       idle.enabled = false;
+    };
+
+    plugins = {
+      sources = [
+        {
+          enabled = true;
+          name = "Official Noctalia Plugins";
+          url = officialPlugins;
+        }
+      ];
+      states = {
+        privacy-indicator = {
+          enabled = true;
+          sourceUrl = officialPlugins;
+        };
+        polkit-agent = {
+          enabled = true;
+          sourceUrl = officialPlugins;
+        };
+        keybind-cheatsheet = {
+          enabled = true;
+          sourceUrl = officialPlugins;
+        };
+        vscode-provider = {
+          enabled = true;
+          sourceUrl = officialPlugins;
+        };
+        file-search = {
+          enabled = true;
+          sourceUrl = officialPlugins;
+        };
+        openhue = {
+          enabled = true;
+          sourceUrl = officialPlugins;
+        };
+        network-indicator = {
+          enabled = true;
+          sourceUrl = officialPlugins;
+        };
+      };
     };
   };
 

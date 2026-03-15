@@ -104,6 +104,7 @@
       workConfig = {
         wallpaper = "${./assets/xenoblade.jpg}";
         theme = defaultTheme;
+        isLaptop = true;
         additionalPackages = [ ];
       };
 
@@ -115,6 +116,7 @@
           lightnessDark = 0.0;
           amoled = true;
         };
+        isLaptop = false;
         additionalPackages = [
           pkgs-unstable.wine64Packages.waylandFull
           pkgs-unstable.gamescope-wsi
@@ -154,7 +156,7 @@
           extraSpecialArgs = {
             extraGamingPackages = [ ];
           };
-          additionalConfig = personalConfig;
+          additionalConfig = personalConfig // { isLaptop = true; };
         };
       };
     };

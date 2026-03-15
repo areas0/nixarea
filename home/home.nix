@@ -156,6 +156,7 @@ in
     pkgs-unstable.protonmail-desktop
     pkgs-unstable.protonvpn-gui
 
+    pkgs-unstable.openhue-cli
   ]
   ++ additionalConfig.additionalPackages;
 
