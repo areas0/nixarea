@@ -16,6 +16,10 @@
       "$mod, W, exec, $noctalia launcher windows"
       "$mod, C, exec, $noctalia launcher clipboard"
 
+      # desktop widgets
+      "$mod, period, exec, $noctalia desktopWidgets edit"
+      "$mod SHIFT, period, exec, $noctalia desktopWidgets toggle"
+
       # dwindle layout
       "$mod, P, pseudo"
       "$mod, O, togglesplit"

@@ -6,6 +6,7 @@ in
   imports = [
     ./bar.nix
     ./burn-in.nix
+    ./desktop-widgets.nix
     ./plugins.nix
     ./settings.nix
   ];
