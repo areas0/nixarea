@@ -12,7 +12,7 @@
     extraPackages = with pkgs; [
       nodePackages.bash-language-server
       docker-compose-language-service
-      dockerfile-language-server-nodejs
+      dockerfile-language-server
       emmet-language-server
       nixd
       (python3.withPackages (

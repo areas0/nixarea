@@ -129,6 +129,8 @@
       ];
 
       windowrule = [
+        "idle_inhibit fullscreen, match:fullscreen 1"
+
         "opacity 0.95, match:class code"
         "opacity 0.99, match:class zen-beta"
 
