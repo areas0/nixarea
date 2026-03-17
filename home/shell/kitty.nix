@@ -5,7 +5,7 @@
 
     settings = {
       background_opacity = lib.mkForce "0.5";
-      background_blur = lib.mkForce "1";
+      background_blur = lib.mkForce "0";
     };
   };
 }
