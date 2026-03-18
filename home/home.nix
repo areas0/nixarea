@@ -163,6 +163,19 @@ in
   home.sessionVariables = {
     EDITOR = "vim";
     SHELL = "zsh";
+    BROWSER = "zen-browser";
+  };
+
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+      "x-scheme-handler/http" = "zen-beta.desktop";
+      "x-scheme-handler/https" = "zen-beta.desktop";
+      "x-scheme-handler/about" = "zen-beta.desktop";
+      "x-scheme-handler/unknown" = "zen-beta.desktop";
+      "text/html" = "zen-beta.desktop";
+      "application/xhtml+xml" = "zen-beta.desktop";
+    };
   };
 
   programs.home-manager.enable = true;

@@ -34,10 +34,16 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    git-hooks = {
+      url = "github:cachix/git-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
   outputs =
     inputs@{
+      self,
       nixpkgs,
       home-manager,
       nixpkgs-unstable,
@@ -49,6 +55,7 @@
       stylix,
       noctalia,
       noctalia-qs,
+      git-hooks,
       ...
     }:
     let
@@ -128,6 +135,22 @@
       };
     in
     {
+      formatter.${system} = pkgs.nixfmt-rfc-style;
+
+      checks.${system} = {
+        pre-commit = git-hooks.lib.${system}.run {
+          src = ./.;
+          hooks = {
+            nixfmt-rfc-style.enable = true;
+            commitizen.enable = true;
+          };
+        };
+      };
+
+      devShells.${system}.default = pkgs.mkShell {
+        shellHook = self.checks.${system}.pre-commit.shellHook;
+      };
+
       nixosConfigurations = {
         areas-thinkpad-work = mkHost {
           hostConfig = ./hosts/areas-thinkpad-work/configuration.nix;
@@ -156,7 +179,9 @@
           extraSpecialArgs = {
             extraGamingPackages = [ ];
           };
-          additionalConfig = personalConfig // { isLaptop = true; };
+          additionalConfig = personalConfig // {
+            isLaptop = true;
+          };
         };
       };
     };
