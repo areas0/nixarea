@@ -7,6 +7,29 @@ let
     stripRoot = false;
     sha256 = "sha256-KpSAxqZxtTHwlKZ9rjEURXovSkgv7PdxC7McMfvNbSM=";
   };
+
+  iconSvg = super.fetchurl {
+    url = "https://raw.githubusercontent.com/DonutWare/Fladder/v${version}/assets/Icon.svg";
+    sha256 = "sha256-ag6H70nN64V3FmSRDzeFWdMdD1hpuHiDuVpT+21JHQU=";
+  };
+
+  desktopEntry = super.makeDesktopItem {
+    name = "fladder";
+    desktopName = "Fladder";
+    comment = "A simple cross-platform Jellyfin client";
+    exec = "fladder %U";
+    icon = "fladder";
+    terminal = false;
+    type = "Application";
+    categories = [
+      "AudioVideo"
+      "Video"
+      "Player"
+      "Network"
+    ];
+    startupWMClass = "fladder";
+    mimeTypes = [ "x-scheme-handler/jellyfin" ];
+  };
 in
 {
   fladder = super.stdenv.mkDerivation rec {
@@ -19,6 +42,7 @@ in
       patchelf
       file
       autoPatchelfHook
+      copyDesktopItems
     ];
 
     buildInputs = with super; [
@@ -40,6 +64,8 @@ in
       libepoxy
       lz4
     ];
+
+    desktopItems = [ desktopEntry ];
 
     dontBuild = true;
 
@@ -80,6 +106,10 @@ in
       exec "$out/Fladder" "\$@"
       EOF
       chmod +x $out/bin/fladder
+
+      # Install the icon
+      mkdir -p $out/share/icons/hicolor/scalable/apps
+      cp ${iconSvg} $out/share/icons/hicolor/scalable/apps/fladder.svg
 
       runHook postInstall
     '';
