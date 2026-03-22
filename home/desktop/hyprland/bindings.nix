@@ -24,10 +24,13 @@
       "$mod, P, pseudo"
       "$mod, O, togglesplit"
 
+      # workspace overview
+      "$mod, Tab, exec, $noctalia plugin:workspace-overview toggle"
+
       # window groups
       "$mod, G, togglegroup"
-      "$mod, Tab, changegroupactive, f"
-      "$mod SHIFT, Tab, changegroupactive, b"
+      "$mod ALT, Tab, changegroupactive, f"
+      "$mod ALT SHIFT, Tab, changegroupactive, b"
 
       # app focus shortcuts
       "$mod, Z, exec, bash -c 'hyprctl dispatch focuswindow class:zen-beta'"

@@ -26,6 +26,7 @@ in
       // mkPlugin "vscode-provider"
       // mkPlugin "file-search"
       // mkPlugin "openhue"
-      // mkPlugin "network-indicator";
+      // mkPlugin "network-indicator"
+      // mkPlugin "workspace-overview";
   };
 }
