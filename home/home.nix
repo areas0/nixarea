@@ -157,6 +157,8 @@ in
     pkgs-unstable.protonvpn-gui
 
     pkgs-unstable.openhue-cli
+
+    pkgs.galaxy-buds-client
   ]
   ++ additionalConfig.additionalPackages;
 

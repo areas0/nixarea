@@ -4,6 +4,7 @@ let
 in
 {
   imports = [
+    ./activation.nix
     ./bar.nix
     ./burn-in.nix
     ./desktop-widgets.nix
