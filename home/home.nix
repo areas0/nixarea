@@ -159,6 +159,8 @@ in
     pkgs-unstable.openhue-cli
 
     pkgs.galaxy-buds-client
+
+    pkgs.fastfetch
   ]
   ++ additionalConfig.additionalPackages;
 
