@@ -25,6 +25,9 @@ nixpkgs.lib.nixosSystem {
   }
   // extraSpecialArgs;
   modules = [
+    # nixos-25.11 renamed unixodbc → unixODBC but nix-gaming's wine overlay
+    # still references the old name
+    { nixpkgs.overlays = [ (final: prev: { unixodbc = prev.unixODBC; }) ]; }
     ../hosts/configuration.nix
     hostConfig
     hardwareConfig
