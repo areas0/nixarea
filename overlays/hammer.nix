@@ -2,13 +2,14 @@
 # gh release download hammer-0.1.0 -R padoa/sre-toolchain -p 'hammer-linux-amd64' -D /tmp/hammer-dl --clobber
 # # Prefetch into nix store (fetchurl will find it cached by hash)
 # nix-prefetch-url file:///tmp/hammer-dl/hammer-linux-amd64
+# nix hash file /tmp/hammer-dl/hammer-linux-amd64
 # rm -rf /tmp/hammer-dl
 # # Rebuild
 # sudo nixos-rebuild switch --flake .#$(hostname)
 final: prev:
 let
-  version = "0.1.0";
-  hash = "sha256-US/VjP2wOy2+q4I3vHX8DfLo4MDXGtGy/SkfGXBxmaM=";
+  version = "1.1.0";
+  hash = "sha256-FA/r2MQHKWWJNs4NvAtK0z87jQqSybmeNR+dq9d82fc=";
 
   hammerBin = prev.fetchurl {
     url = "https://github.com/padoa/sre-toolchain/releases/download/hammer-${version}/hammer-linux-amd64";
