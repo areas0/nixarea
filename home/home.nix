@@ -1,6 +1,7 @@
 {
   pkgs,
   pkgs-unstable,
+  claude-code,
   additionalConfig,
   ...
 }:
@@ -140,6 +141,7 @@ in
     # Terminals / Editors
     pkgs-unstable.warp-terminal
     pkgs-unstable.code-cursor
+    claude-code.packages.x86_64-linux.default
 
     # Wayland utilities
     pkgs.wlr-randr

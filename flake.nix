@@ -39,6 +39,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    claude-code = {
+      url = "github:sadjow/claude-code-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
   outputs =
@@ -56,6 +61,7 @@
       noctalia,
       noctalia-qs,
       git-hooks,
+      claude-code,
       ...
     }:
     let
@@ -82,7 +88,7 @@
         schemeType = "scheme-tonal-spot";
         contrast = 0.0;
         lightnessDark = -0.5;
-        amoled = true;
+        amoled = false;
       };
 
       mkHost = import ./lib/mkHost.nix {
@@ -95,6 +101,7 @@
           nvchad4nix
           zen
           noctalia
+          claude-code
           mkMatugenScheme
           ;
       };
@@ -109,7 +116,7 @@
       ];
 
       workConfig = {
-        wallpaper = "${./assets/xenoblade.jpg}";
+        wallpaper = "${./assets/oshinoko-2.png}";
         theme = defaultTheme;
         isLaptop = true;
         additionalPackages = [ ];

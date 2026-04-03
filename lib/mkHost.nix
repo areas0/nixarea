@@ -7,6 +7,7 @@
   nvchad4nix,
   zen,
   noctalia,
+  claude-code,
   mkMatugenScheme,
 }:
 
@@ -55,6 +56,7 @@ nixpkgs.lib.nixosSystem {
           pkgs-unstable
           nvchad4nix
           zen
+          claude-code
           additionalConfig
           ;
       };
