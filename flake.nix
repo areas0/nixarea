@@ -78,6 +78,7 @@
         overlays = [
           (import ./overlays/teleport.nix { inherit inputs; })
           (import ./overlays/fladder.nix)
+          (import ./overlays/hammer.nix)
           (final: prev: { inherit nixpkgs-unstable; })
         ];
       };
