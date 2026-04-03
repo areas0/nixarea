@@ -35,6 +35,9 @@
       kneat = "${pkgs-unstable.kubectl-neat.pname}";
       kvs = "${pkgs-unstable.kubectl-view-secret.meta.mainProgram}";
       cd = "z";
+      ks = "kubectl stack";
+      ksc = "kubectl stack client";
+      ksx = "kubectl stack ctx";
     };
   };
 }
