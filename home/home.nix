@@ -160,7 +160,7 @@ in
 
     pkgs-unstable.openhue-cli
 
-    pkgs.galaxy-buds-client
+    pkgs-unstable.galaxy-buds-client
 
     pkgs.fastfetch
   ]
