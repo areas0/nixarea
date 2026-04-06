@@ -12,8 +12,8 @@ in
     density = "spacious";
     fontScale = 1.2;
     floating = true;
-    backgroundOpacity = lib.mkForce 0.5;
-    capsuleOpacity = lib.mkForce 0.7;
+    backgroundOpacity = lib.mkForce 0.6;
+    capsuleOpacity = lib.mkForce 0.8;
     showCapsule = true;
 
     widgets = {
@@ -35,27 +35,28 @@ in
       center = [
         { id = "MediaMini"; }
       ];
-      right =
-        [ { id = "Volume"; } ]
-        ++ lib.optionals isLaptop [
-          { id = "Brightness"; }
-          { id = "Battery"; }
-        ]
-        ++ [
-          { id = "VPN"; }
-          { id = "Network"; }
-          { id = "Bluetooth"; }
-          { id = "plugin:privacy-indicator"; }
-          { id = "plugin:openhue"; }
-          { id = "Tray"; }
-          { id = "NotificationHistory"; }
-          {
-            id = "Clock";
-            formatHorizontal = "HH:mm";
-            formatVertical = "HH mm";
-            useMonospacedFont = true;
-          }
-        ];
+      right = [
+        { id = "Volume"; }
+      ]
+      ++ lib.optionals isLaptop [
+        { id = "Brightness"; }
+        { id = "Battery"; }
+      ]
+      ++ [
+        { id = "VPN"; }
+        { id = "Network"; }
+        { id = "Bluetooth"; }
+        { id = "plugin:privacy-indicator"; }
+        { id = "plugin:openhue"; }
+        { id = "Tray"; }
+        { id = "NotificationHistory"; }
+        {
+          id = "Clock";
+          formatHorizontal = "HH:mm";
+          formatVertical = "HH mm";
+          useMonospacedFont = true;
+        }
+      ];
     };
   };
 }

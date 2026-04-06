@@ -46,11 +46,11 @@ in
   base06 = hex "on_secondary_container";
   base07 = hex "on_primary_container";
   base08 = hex "error";
-  base09 = hex "tertiary";
+  base09 = hex "on_tertiary_container";
   base0A = hex "secondary";
-  base0B = hex "primary";
+  base0B = hex "on_primary_container";
   base0C = hex "inverse_primary";
   base0D = hex "primary";
   base0E = hex "tertiary";
-  base0F = hex "outline_variant";
+  base0F = hex "surface_container_highest";
 }

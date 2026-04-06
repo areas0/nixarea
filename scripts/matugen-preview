@@ -28,13 +28,13 @@ BASE16_NAMES=(
   "base06:on_secondary_container"
   "base07:on_primary_container"
   "base08:error"
-  "base09:tertiary"
+  "base09:on_tertiary_container"
   "base0A:secondary"
-  "base0B:primary"
+  "base0B:on_primary_container"
   "base0C:inverse_primary"
   "base0D:primary"
   "base0E:tertiary"
-  "base0F:outline_variant"
+  "base0F:surface_container_highest"
 )
 
 usage() {

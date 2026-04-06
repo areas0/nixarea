@@ -10,7 +10,7 @@
 
     ui = {
       translucentWidgets = true;
-      panelBackgroundOpacity = lib.mkForce 0.6;
+      panelBackgroundOpacity = lib.mkForce 0.7;
     };
 
     wallpaper = {
@@ -31,13 +31,13 @@
     notifications = {
       enabled = true;
       location = "top_right";
-      backgroundOpacity = lib.mkForce 0.7;
+      backgroundOpacity = lib.mkForce 0.8;
     };
 
     osd = {
       enabled = true;
       location = "top_right";
-      backgroundOpacity = lib.mkForce 0.7;
+      backgroundOpacity = lib.mkForce 0.8;
     };
 
     location = {

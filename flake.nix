@@ -86,8 +86,8 @@
 
       defaultTheme = {
         schemeType = "scheme-tonal-spot";
-        contrast = 0.0;
-        lightnessDark = -0.5;
+        contrast = 0.3;
+        lightnessDark = -0.3;
         amoled = false;
       };
 
@@ -126,7 +126,7 @@
         wallpaper = "${./assets/oshinoko-2.png}";
         theme = {
           schemeType = "scheme-vibrant";
-          contrast = 0.0;
+          contrast = 0.3;
           lightnessDark = 0.0;
           amoled = true;
         };
