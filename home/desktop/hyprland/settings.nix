@@ -17,7 +17,7 @@
 
       exec-once = [
         "code"
-        "noctalia-shell"
+        "env QT_QPA_PLATFORMTHEME= noctalia-shell"
         "wl-paste --watch cliphist store"
       ];
 

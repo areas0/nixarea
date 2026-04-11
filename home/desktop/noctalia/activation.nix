@@ -52,6 +52,7 @@ let
     done
 
     # Launch in an independent user scope so it survives the HM activation service exiting
+    unset QT_QPA_PLATFORMTHEME
     systemd-run --user --scope --unit=noctalia-restart-"$$" "${noctaliaExe}"  >/dev/null 2>&1 &
   '';
 in
