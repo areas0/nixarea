@@ -5,7 +5,7 @@ let
     owner = "cloudnative-pg";
     repo = "cloudnative-pg";
     rev = "v1.28.0";
-    sha256 = "sha256-WIcT4LfoIZ8BctwrUgn+mLbqwJ2NZx6Sc5sJeT9fsut=";
+    sha256 = "sha256-uIIy4zSf6ply859aHVvlujqBWpN18FLZh+Vye3fbSoY=";
   };
 
   k9s-repo = pkgs-unstable.fetchFromGitHub {
