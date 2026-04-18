@@ -1,1 +1,2 @@
 *.swp
+.pre-commit-config.yaml

@@ -15,16 +15,12 @@
 
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "areas-thinkpad";
+  networking.hostName = "areas-thinkpad-home";
 
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
-    extraPackages = [
-      pkgs.mesa.drivers
-      pkgs.amdvlk
-    ];
+    enable32Bit = true;
+    extraPackages = [ pkgs.amdvlk ];
   };
 
   services.xserver.enable = true;

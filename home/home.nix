@@ -26,12 +26,7 @@ in
   home.homeDirectory = "/home/areas";
   home.stateVersion = "24.05";
 
-  nixpkgs = {
-    config = {
-      allowUnfree = true;
-      allowUnfreePredicate = (_: true);
-    };
-  };
+  nixpkgs.config.allowUnfree = true;
 
   home.packages = [
     # DevOps / Cloud
@@ -53,6 +48,8 @@ in
     pkgs-unstable.kubectl-view-secret
     pkgs-unstable.kube-linter
     pkgs-unstable.kubectl-cnpg
+
+    pkgs-unstable.talosctl
 
     # CLI tools
     pkgs.postgresql
@@ -169,7 +166,7 @@ in
   home.sessionVariables = {
     EDITOR = "vim";
     SHELL = "zsh";
-    BROWSER = "zen-browser";
+    BROWSER = "zen-beta";
   };
 
   xdg.mimeApps = {
