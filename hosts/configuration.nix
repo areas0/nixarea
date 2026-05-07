@@ -20,6 +20,27 @@
     ];
   };
 
+  # Workaround for nixpkgs#511100 — Linux 7.0 dropped aes_generic but the
+  # default cryptoModules list still references it. Backport merged in
+  # release-25.11 (nixpkgs#510953); remove this once the nixos-25.11 channel
+  # picks it up.
+  # boot.initrd.luks.cryptoModules = [
+  #   "aes"
+  #   "blowfish"
+  #   "twofish"
+  #   "serpent"
+  #   "cbc"
+  #   "xts"
+  #   "lrw"
+  #   "sha1"
+  #   "sha256"
+  #   "sha512"
+  #   "af_alg"
+  #   "algif_skcipher"
+  #   "cryptd"
+  #   "input_leds"
+  # ];
+
   services.xserver.updateDbusEnvironment = true;
   security.polkit.enable = true;
   security.pam.services = {
@@ -95,11 +116,6 @@
     };
 
     package = pkgs.nixVersions.latest;
-
-    extraOptions = ''
-      keep-outputs = true
-      keep-derivations = true
-    '';
   };
 
   services.xserver.enable = true;
