@@ -128,8 +128,6 @@
     bindl = , XF86AudioPlay, exec, playerctl play-pause
     bindl = , XF86AudioNext, exec, playerctl next
     bindl = , XF86AudioPrev, exec, playerctl previous
-    bindm = ALT, mouse:272, movewindow
-    bindm = ALT, mouse:273, resizewindow
     submap = reset
   '';
 }

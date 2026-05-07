@@ -139,6 +139,7 @@
           pkgs-unstable.heroic
           pkgs-unstable.azahar
           pkgs-unstable.feishin
+          pkgs-unstable.protonplus
         ];
       };
     in
