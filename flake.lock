@@ -576,6 +576,22 @@
         "type": "github"
       }
     },
+    "nixpkgs_nvidia": {
+      "locked": {
+        "lastModified": 1776169885,
+        "narHash": "sha256-l/iNYDZ4bGOAFQY2q8y5OAfBBtrDAaPuRQqWaFHVRXM=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "4bd9165a9165d7b5e33ae57f3eecbcb28fb231c9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "4bd9165a9165d7b5e33ae57f3eecbcb28fb231c9",
+        "type": "github"
+      }
+    },
     "nixpkgs_teleport_14": {
       "locked": {
         "lastModified": 1743523161,
@@ -634,6 +650,27 @@
       "original": {
         "owner": "noctalia-dev",
         "repo": "noctalia-qs",
+        "type": "github"
+      }
+    },
+    "noctalia-v5": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-unstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1778181396,
+        "narHash": "sha256-A78G9FBGoxWZ0cOJ9L7A0gpJuyOP1b/qJaw+dkrC1Bs=",
+        "owner": "noctalia-dev",
+        "repo": "noctalia-shell",
+        "rev": "0408f951e5d31fee16c7c838ae752fc7533f54a7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "noctalia-dev",
+        "ref": "v5",
+        "repo": "noctalia-shell",
         "type": "github"
       }
     },
@@ -710,9 +747,11 @@
         "nix-gaming": "nix-gaming",
         "nixpkgs": "nixpkgs_3",
         "nixpkgs-unstable": "nixpkgs-unstable",
+        "nixpkgs_nvidia": "nixpkgs_nvidia",
         "nixpkgs_teleport_14": "nixpkgs_teleport_14",
         "noctalia": "noctalia",
         "noctalia-qs": "noctalia-qs",
+        "noctalia-v5": "noctalia-v5",
         "nvchad4nix": "nvchad4nix",
         "stylix": "stylix",
         "zen": "zen"

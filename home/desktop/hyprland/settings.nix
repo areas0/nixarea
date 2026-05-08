@@ -1,4 +1,13 @@
-{ pkgs-unstable, ... }:
+{
+  pkgs-unstable,
+  additionalConfig,
+  lib,
+  ...
+}:
+let
+  noctaliaV5 = (additionalConfig.noctaliaVersion or "v4") == "v5";
+  isNvidia = additionalConfig.isNvidia or false;
+in
 {
   wayland.windowManager.hyprland = {
     enable = true;
@@ -13,11 +22,11 @@
       "$mod" = "SUPER";
       "$terminal" = "kitty";
       "$fileManager" = "thunar";
-      "$noctalia" = "noctalia-shell ipc call";
+      "$noctalia" = if noctaliaV5 then "noctalia msg" else "noctalia-shell ipc call";
 
       exec-once = [
         "code"
-        "env QT_QPA_PLATFORMTHEME= noctalia-shell"
+        (if noctaliaV5 then "noctalia" else "env QT_QPA_PLATFORMTHEME= noctalia-shell")
         "wl-paste --watch cliphist store"
       ];
 
@@ -30,6 +39,12 @@
         "QT_QPA_PLATFORM,wayland"
         "SDL_VIDEODRIVER,wayland"
         "GDK_BACKEND,wayland"
+      ]
+      ++ lib.optionals isNvidia [
+        "GBM_BACKEND,nvidia-drm"
+        "__GLX_VENDOR_LIBRARY_NAME,nvidia"
+        "LIBVA_DRIVER_NAME,nvidia"
+        "AQ_DRM_DEVICES,/dev/dri/card1"
       ];
 
       input = {
