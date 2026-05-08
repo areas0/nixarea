@@ -7,6 +7,11 @@
     home-manager.url = "github:nix-community/home-manager/release-25.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nixpkgs_teleport_14.url = "github:nixos/nixpkgs?rev=8125d74e21449e7ba702af890297a8bb9dc5f273";
+    # Pinned to a rev where nvidiaPackages.beta = 595.58.03. Newer revs
+    # ship 595.71.05 which broke NVIDIA EGL on Wayland (eglGetDisplay fails,
+    # native Wayland clients fall back to llvmpipe → 100%+ CPU on animated UIs).
+    # nvd-confirmed: only nvidia-x11 changed across the regression boundary.
+    nixpkgs_nvidia.url = "github:nixos/nixpkgs?rev=4bd9165a9165d7b5e33ae57f3eecbcb28fb231c9";
     nvchad4nix = {
       url = "github:nix-community/nix4nvchad";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -31,6 +36,10 @@
     };
     noctalia-qs = {
       url = "github:noctalia-dev/noctalia-qs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+    noctalia-v5 = {
+      url = "github:noctalia-dev/noctalia-shell/v5";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
@@ -60,6 +69,7 @@
       stylix,
       noctalia,
       noctalia-qs,
+      noctalia-v5,
       git-hooks,
       claude-code,
       ...
@@ -68,6 +78,11 @@
       system = "x86_64-linux";
 
       pkgs-unstable = import inputs.nixpkgs-unstable {
+        inherit system;
+        config.allowUnfree = true;
+      };
+
+      pkgs-nvidia = import inputs.nixpkgs_nvidia {
         inherit system;
         config.allowUnfree = true;
       };
@@ -102,6 +117,7 @@
           nvchad4nix
           zen
           noctalia
+          noctalia-v5
           claude-code
           mkMatugenScheme
           ;
@@ -173,13 +189,15 @@
         areas-workstation = mkHost {
           hostConfig = ./hosts/areas-workstation/configuration.nix;
           hardwareConfig = ./hosts/areas-workstation/hardware-configuration.nix;
-          extraSpecialArgs = { inherit extraGamingPackages; };
+          extraSpecialArgs = { inherit extraGamingPackages pkgs-nvidia; };
           extraModules = [
             ./modules/docker.nix
             nix-citizen.nixosModules.default
             ./hosts/areas-workstation/star-citizen.nix
           ];
-          additionalConfig = personalConfig;
+          additionalConfig = personalConfig // {
+            isNvidia = true;
+          };
         };
 
         areas-thinkpad-home = mkHost {
