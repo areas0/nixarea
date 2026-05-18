@@ -64,13 +64,13 @@ in
       };
 
       dwindle = {
-        pseudotile = true;
+        # pseudotile isn't a real config key — it's a dispatcher.
         preserve_split = true;
         force_split = 2;
       };
 
       render = {
-        cm_fs_passthrough = 2;
+        # cm_fs_passthrough removed in Hyprland 0.55.
         cm_auto_hdr = 2;
       };
 
