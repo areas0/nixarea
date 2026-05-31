@@ -2,10 +2,9 @@
 {
   services.ollama = {
     enable = true;
-    # ollama-cuda is the CUDA-enabled variant; pkgs-unstable.ollama is CPU-only
-    # and overriding `package` here bypasses what `acceleration` would normally pick.
+    # ollama-cuda is the CUDA-enabled variant (pkgs-unstable.ollama is CPU-only).
+    # As of 26.05 `acceleration` was removed — the package alone selects the backend.
     package = pkgs-unstable.ollama-cuda;
-    acceleration = "cuda";
     host = "127.0.0.1";
     port = 11434;
     environmentVariables = {

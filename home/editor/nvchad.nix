@@ -10,7 +10,7 @@
     enable = true;
     neovim = pkgs-unstable.neovim-unwrapped;
     extraPackages = with pkgs; [
-      nodePackages.bash-language-server
+      bash-language-server
       docker-compose-language-service
       dockerfile-language-server
       emmet-language-server

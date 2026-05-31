@@ -2,9 +2,9 @@
   description = "NixOS configuration";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    home-manager.url = "github:nix-community/home-manager/release-25.11";
+    home-manager.url = "github:nix-community/home-manager/release-26.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nixpkgs_teleport_14.url = "github:nixos/nixpkgs?rev=8125d74e21449e7ba702af890297a8bb9dc5f273";
     # Pinned to a rev where nvidiaPackages.beta = 595.58.03. Newer revs
@@ -25,7 +25,8 @@
     nix-citizen.inputs.nix-gaming.follows = "nix-gaming";
 
     stylix = {
-      url = "github:nix-community/stylix/release-25.11";
+      # No release-26.05 branch published yet; track master until it is cut.
+      url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -159,13 +160,16 @@
       };
     in
     {
-      formatter.${system} = pkgs.nixfmt-rfc-style;
+      formatter.${system} = pkgs.nixfmt;
 
       checks.${system} = {
         pre-commit = git-hooks.lib.${system}.run {
           src = ./.;
           hooks = {
             nixfmt-rfc-style.enable = true;
+            # nixfmt-rfc-style's default package is the deprecated pkgs.nixfmt-rfc-style
+            # alias (warns on access); pkgs.nixfmt is now identical.
+            nixfmt-rfc-style.package = pkgs.nixfmt;
             commitizen.enable = true;
           };
         };
