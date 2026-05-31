@@ -2,7 +2,6 @@
   config,
   pkgs,
   pkgs-unstable,
-  pkgs-nvidia,
   ...
 }:
 
@@ -45,14 +44,11 @@
     open = true;
     nvidiaSettings = true;
 
-    # Pinned to 595.58.03 via pkgs-nvidia (see flake.nix). The May package
-    # bump moved nvidiaPackages.beta to 595.71.05 which broke NVIDIA EGL on
-    # Wayland for native clients (Zen, noctalia, etc.).
-    package =
-      let
-        fixedKernelPackages = pkgs-nvidia.linuxKernel.packagesFor config.boot.kernelPackages.kernel;
-      in
-      fixedKernelPackages.nvidiaPackages.beta;
+    # Latest driver from the live channel. The EGL-on-Wayland breakage that
+    # forced the old version pin was a package/module mismatch from pinning the
+    # driver to a separate nixpkgs rev (nixpkgs#525152), not this version — the
+    # in-tree module now ships nvidia-egl-external-platforms automatically.
+    package = config.boot.kernelPackages.nvidiaPackages.latest;
   };
 
   services.xserver.videoDrivers = [ "nvidia" ];
