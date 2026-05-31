@@ -6,5 +6,6 @@
     ./btop.nix
     ./blueman.nix
     ./zen.nix
+    ./aider.nix
   ];
 }

@@ -9,6 +9,7 @@
 {
   imports = [
     ../../modules/bluetooth.nix
+    ../../modules/llm.nix
   ];
 
   boot.loader.systemd-boot.enable = true;
