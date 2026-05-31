@@ -326,7 +326,7 @@ hl.window_rule({
 })
 
 hl.window_rule({ name = "code-opacity", match = { class = "code"     }, opacity = 0.95 })
-hl.window_rule({ name = "zen-opacity",  match = { class = "zen-beta" }, opacity = 0.99 })
+-- hl.window_rule({ name = "zen-opacity",  match = { class = "zen-beta" }, opacity = 0.99 })
 
 -- ---- Gaming: Steam games -------------------------------------------------
 -- Multiple properties on one rule, single match.

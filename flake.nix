@@ -196,6 +196,7 @@
           ];
           additionalConfig = personalConfig // {
             isNvidia = true;
+            enableLocalLLM = true;
           };
         };
 
