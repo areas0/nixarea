@@ -53,14 +53,14 @@ in
       glib-networking
       libxkbcommon
       wayland
-      xorg.libX11
-      xorg.libXcursor
-      xorg.libXext
-      xorg.libXfixes
-      xorg.libXrandr
-      xorg.libXrender
-      xorg.libXi
-      xorg.libxcb
+      libx11
+      libxcursor
+      libxext
+      libxfixes
+      libxrandr
+      libxrender
+      libxi
+      libxcb
       libepoxy
       lz4
     ];

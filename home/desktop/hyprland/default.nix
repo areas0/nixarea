@@ -1,4 +1,9 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 {
   imports = [
     ./bindings.nix
@@ -14,9 +19,17 @@
 
   gtk = {
     enable = true;
+    # Pin the legacy default; 26.05 flips gtk4.theme's default to null for
+    # stateVersion >= 26.05. Keep matching gtk3 (stylix-managed) for now.
+    gtk4.theme = config.gtk.theme;
     gtk3.extraConfig.gtk-application-prefer-dark-theme = 1;
     gtk4.extraConfig.gtk-application-prefer-dark-theme = 1;
   };
 
   qt.enable = true;
+
+  # Hyprland is the primary session. Override stylix's followSystem default,
+  # which picks up "kde" from Plasma 6 on the workstation — stylix's
+  # home-manager Qt theming only supports "qtct".
+  stylix.targets.qt.platform = lib.mkForce "qtct";
 }

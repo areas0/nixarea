@@ -5,7 +5,7 @@ in
 self: super:
 let
   pkgs = import inputs.nixpkgs_teleport_14 {
-    system = super.system;
+    system = super.stdenv.hostPlatform.system;
     config.allowUnfree = true;
   };
 in

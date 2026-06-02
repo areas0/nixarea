@@ -2,16 +2,11 @@
   description = "NixOS configuration";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    home-manager.url = "github:nix-community/home-manager/release-25.11";
+    home-manager.url = "github:nix-community/home-manager/release-26.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nixpkgs_teleport_14.url = "github:nixos/nixpkgs?rev=8125d74e21449e7ba702af890297a8bb9dc5f273";
-    # Pinned to a rev where nvidiaPackages.beta = 595.58.03. Newer revs
-    # ship 595.71.05 which broke NVIDIA EGL on Wayland (eglGetDisplay fails,
-    # native Wayland clients fall back to llvmpipe → 100%+ CPU on animated UIs).
-    # nvd-confirmed: only nvidia-x11 changed across the regression boundary.
-    nixpkgs_nvidia.url = "github:nixos/nixpkgs?rev=4bd9165a9165d7b5e33ae57f3eecbcb28fb231c9";
     nvchad4nix = {
       url = "github:nix-community/nix4nvchad";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -25,7 +20,8 @@
     nix-citizen.inputs.nix-gaming.follows = "nix-gaming";
 
     stylix = {
-      url = "github:nix-community/stylix/release-25.11";
+      # No release-26.05 branch published yet; track master until it is cut.
+      url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -85,11 +81,6 @@
       system = "x86_64-linux";
 
       pkgs-unstable = import inputs.nixpkgs-unstable {
-        inherit system;
-        config.allowUnfree = true;
-      };
-
-      pkgs-nvidia = import inputs.nixpkgs_nvidia {
         inherit system;
         config.allowUnfree = true;
       };
@@ -168,13 +159,16 @@
       };
     in
     {
-      formatter.${system} = pkgs.nixfmt-rfc-style;
+      formatter.${system} = pkgs.nixfmt;
 
       checks.${system} = {
         pre-commit = git-hooks.lib.${system}.run {
           src = ./.;
           hooks = {
             nixfmt-rfc-style.enable = true;
+            # nixfmt-rfc-style's default package is the deprecated pkgs.nixfmt-rfc-style
+            # alias (warns on access); pkgs.nixfmt is now identical.
+            nixfmt-rfc-style.package = pkgs.nixfmt;
             commitizen.enable = true;
           };
         };
@@ -197,7 +191,7 @@
         areas-workstation = mkHost {
           hostConfig = ./hosts/areas-workstation/configuration.nix;
           hardwareConfig = ./hosts/areas-workstation/hardware-configuration.nix;
-          extraSpecialArgs = { inherit extraGamingPackages pkgs-nvidia; };
+          extraSpecialArgs = { inherit extraGamingPackages; };
           extraModules = [
             ./modules/docker.nix
             nix-citizen.nixosModules.default
@@ -205,6 +199,7 @@
           ];
           additionalConfig = personalConfig // {
             isNvidia = true;
+            enableLocalLLM = true;
           };
         };
 

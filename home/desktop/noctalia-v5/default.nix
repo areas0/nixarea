@@ -106,7 +106,7 @@ in
   programs.noctalia-shell.enable = false;
 
   home.packages = [
-    noctalia-v5.packages.${pkgs.system}.default
+    noctalia-v5.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 
   xdg.configFile."noctalia/config.toml".source = toml.generate "noctalia-config.toml" config;

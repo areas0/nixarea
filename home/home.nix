@@ -55,6 +55,8 @@ in
 
     pkgs-unstable.talosctl
 
+    pkgs-unstable.talosctl
+
     # CLI tools
     pkgs.postgresql
     pkgs.terraform-docs
@@ -73,12 +75,12 @@ in
     pkgs.pre-commit
 
     # Nix
-    pkgs.nixfmt-rfc-style
+    pkgs.nixfmt
     pkgs.nixfmt-tree
 
     # Node
-    pkgs.nodePackages.npm
-    pkgs.nodePackages.markdownlint-cli
+    pkgs.nodejs # provides the npm CLI
+    pkgs.markdownlint-cli
 
     # C/C++
     pkgs.gnumake
@@ -131,8 +133,8 @@ in
     # Browsers (Zen is managed via programs.zen-browser)
 
     # File manager
-    pkgs.xfce.thunar
-    pkgs.xfce.thunar-archive-plugin
+    pkgs.thunar
+    pkgs.thunar-archive-plugin
     pkgs.kdePackages.ark
 
     # 1Password
@@ -157,7 +159,7 @@ in
 
     # Proton apps
     pkgs-unstable.protonmail-desktop
-    pkgs-unstable.protonvpn-gui
+    pkgs-unstable.proton-vpn
 
     pkgs-unstable.openhue-cli
 

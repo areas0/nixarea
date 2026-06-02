@@ -11,6 +11,10 @@ in
 {
   wayland.windowManager.hyprland = {
     enable = true;
+    # Keep home-manager generating hyprland.conf from `settings`. The hyprland.lua
+    # dropped in default.nix takes precedence at runtime (Hyprland 0.55+); this
+    # only pins the legacy default that 26.05 would otherwise flip to "lua".
+    configType = "hyprlang";
     package = pkgs-unstable.hyprland;
     portalPackage = pkgs-unstable.xdg-desktop-portal-hyprland;
     xwayland.enable = true;
