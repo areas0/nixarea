@@ -16,7 +16,7 @@
   # Pinned to 6.18 — kernel 7.0 broke NVIDIA EGL on Wayland
   # (eglGetDisplay fails, clients fall back to llvmpipe → 100%+ CPU on animated UIs).
   # Revisit once nvidia-x11 has a 7.x-compatible release.
-  boot.kernelPackages = pkgs.linuxPackages_6_18;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   boot.initrd.luks.devices."luks-07cc5a0f-351f-432c-85d9-8cdde83524d8".device =
     "/dev/disk/by-uuid/07cc5a0f-351f-432c-85d9-8cdde83524d8";

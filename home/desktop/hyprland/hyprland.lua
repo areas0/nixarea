@@ -115,7 +115,8 @@ if isNvidia then
     hl.env("GBM_BACKEND",               "nvidia-drm")
     hl.env("__GLX_VENDOR_LIBRARY_NAME", "nvidia")
     hl.env("LIBVA_DRIVER_NAME",         "nvidia")
-    hl.env("AQ_DRM_DEVICES",            "/dev/dri/card1")
+    -- No AQ_DRM_DEVICES: single GPU, and the card number is unstable across
+    -- boots (card0 vs card1). Aquamarine auto-detects the one card.
 end
 
 
@@ -178,9 +179,10 @@ hl.config({
     decoration = {
         rounding = 4,
         blur = {
-            enabled = true,
-            size    = 6,
-            passes  = 3,
+            enabled  = true,
+            size     = 8,
+            passes   = 3,
+            vibrancy = 0.17,  -- frosted-glass tint of what's behind
         },
     },
 

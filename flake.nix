@@ -20,8 +20,7 @@
     nix-citizen.inputs.nix-gaming.follows = "nix-gaming";
 
     stylix = {
-      # No release-26.05 branch published yet; track master until it is cut.
-      url = "github:nix-community/stylix";
+      url = "github:nix-community/stylix/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

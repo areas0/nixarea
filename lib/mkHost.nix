@@ -58,6 +58,7 @@ nixpkgs.lib.nixosSystem {
           claude-code
           additionalConfig
           ;
+        matugenScheme = mkMatugenScheme additionalConfig.theme additionalConfig.wallpaper;
       };
     }
   ];

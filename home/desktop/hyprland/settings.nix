@@ -48,7 +48,8 @@ in
         "GBM_BACKEND,nvidia-drm"
         "__GLX_VENDOR_LIBRARY_NAME,nvidia"
         "LIBVA_DRIVER_NAME,nvidia"
-        "AQ_DRM_DEVICES,/dev/dri/card1"
+        # No AQ_DRM_DEVICES: single GPU, and the card number is unstable across
+        # boots (card0 vs card1). Aquamarine auto-detects the one card.
       ];
 
       input = {
@@ -83,8 +84,9 @@ in
 
         blur = {
           enabled = true;
-          size = 6;
+          size = 8;
           passes = 3;
+          vibrancy = 0.17; # frosted-glass tint of what's behind
         };
       };
 

@@ -1,4 +1,4 @@
 { ... }:
 {
-  imports = [ ./nvchad.nix ];
+  imports = [ ./nvchad ];
 }
