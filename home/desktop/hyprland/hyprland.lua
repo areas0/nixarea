@@ -622,20 +622,35 @@ local function isGameWindow(w)
     return false
 end
 
+-- Helper: is this window fullscreened? `w.fullscreen` is the integer
+-- fullscreen-mode enum (0=none, 1=maximized, 2=fullscreen), NOT a boolean
+-- (LuaWindow.cpp pushes m_fullscreenState.internal as an integer). In Lua
+-- every number including 0 is truthy and `not 0` is false, so a bare
+-- `if w.fullscreen` / `not w.fullscreen` test is always true / always false
+-- and the gamemode exit logic never fires. Compare against 0 explicitly.
+local function isFullscreen(w)
+    return w and w.fullscreen ~= nil and w.fullscreen ~= 0
+end
+
 -- Helper: is at least one game window currently fullscreened anywhere?
 -- Iterates all windows via the query API; cheap (compositor's window list is
--- in-memory, not an IPC call).
-local function anyGameFullscreen()
+-- in-memory, not an IPC call). `excludeAddr` skips a specific window by address
+-- -- needed on the close path, where the dying window is still in the list AND
+-- still fullscreen at window.close emit time (Window.cpp clears fullscreen only
+-- a few lines after the emit), so it would otherwise count itself.
+local function anyGameFullscreen(excludeAddr)
     for _, w in ipairs(hl.get_windows()) do
-        if w.fullscreen and isGameWindow(w) then return true end
+        if w.address ~= excludeAddr and isFullscreen(w) and isGameWindow(w) then
+            return true
+        end
     end
     return false
 end
 
 -- Helper: leave gamemode if we were in it and no game is fullscreen anymore.
 -- Used by both window.fullscreen (un-fullscreen) and window.close (game crash/quit).
-local function maybeExitGamemode()
-    if hl.get_current_submap() == "gamemode" and not anyGameFullscreen() then
+local function maybeExitGamemode(excludeAddr)
+    if hl.get_current_submap() == "gamemode" and not anyGameFullscreen(excludeAddr) then
         hl.dispatch(hl.dsp.submap("reset"))
     end
 end
@@ -646,10 +661,10 @@ hl.on("window.fullscreen", function(w)
     -- happens after m_fullscreenState assignment).
     local inGamemode = (hl.get_current_submap() == "gamemode")
 
-    if w.fullscreen and isGameWindow(w) and not inGamemode then
+    if isFullscreen(w) and isGameWindow(w) and not inGamemode then
         -- Game went fullscreen and we're not already in gamemode → enter.
         hl.dispatch(hl.dsp.submap("gamemode"))
-    elseif not w.fullscreen and isGameWindow(w) then
+    elseif not isFullscreen(w) and isGameWindow(w) then
         -- Only the un-fullscreen of a GAME window can auto-exit gamemode.
         -- This protects the case where the user manually entered gamemode
         -- (no games involved) and then un-fullscreens an unrelated window.
@@ -663,7 +678,9 @@ end)
 -- stuck in gamemode. Hook window.close to cover that path.
 hl.on("window.close", function(w)
     if isGameWindow(w) then
-        maybeExitGamemode()
+        -- Exclude the closing window: at window.close emit time it is still in
+        -- the window list and still fullscreen, so it would count itself.
+        maybeExitGamemode(w.address)
     end
 end)
 
