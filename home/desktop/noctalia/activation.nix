@@ -22,10 +22,13 @@ let
       ]
     }''${PATH:+:$PATH}"
 
-    # noctalia-shell is a Qt wrapper → exec's quickshell; comm name is .quickshell-wra
-    # Match the quickshell process whose env contains QS_CONFIG_PATH=…noctalia-shell
+    # noctalia-shell (a makeCWrapper) exec's qs → .quickshell-wrapped, every link
+    # preserving argv0. Hyprland launches it as "noctalia-shell", so the live
+    # process's cmdline is "noctalia-shell" with NO "quickshell" substring — the
+    # old `pgrep -f quickshell` matched cmdline and silently found nothing. Match
+    # both spellings, then confirm via QS_CONFIG_PATH=…noctalia-shell in the env.
     pid=""
-    for p in $(pgrep -f quickshell -u "$(id -u)"); do
+    for p in $(pgrep -f 'quickshell|noctalia-shell' -u "$(id -u)"); do
       if [[ -r "/proc/$p/environ" ]] && tr '\0' '\n' < "/proc/$p/environ" | grep -q 'QS_CONFIG_PATH=.*noctalia-shell'; then
         pid="$p"
         break
