@@ -48,6 +48,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Tracks padoa/stack-info main. Bump with: nix flake update stack-info.
+    # Private repo — fetched over SSH using the host's git credentials.
+    stack-info = {
+      url = "git+ssh://git@github.com/padoa/stack-info?ref=main";
+      flake = false;
+    };
+
   };
 
   outputs =
@@ -83,6 +90,8 @@
         overlays = [
           (import ./overlays/teleport.nix { inherit inputs; })
           (import ./overlays/fladder.nix)
+          (import ./overlays/hammer.nix)
+          (import ./overlays/kubectl-stack.nix { inherit inputs; })
           (final: prev: { inherit nixpkgs-unstable; })
         ];
       };

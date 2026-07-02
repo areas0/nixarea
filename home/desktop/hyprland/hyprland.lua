@@ -218,57 +218,38 @@ hl.config({
 
 -- Laptops (eDP-1 etc. — these calls are no-ops on a host that doesn't have
 -- the output, hyprland just ignores monitors it can't find)
-hl.monitor({ output = "eDP-1", mode = "1920x1200@60", position = "0x0", scale = 1 })
+hl.monitor({ output = "eDP-1", mode = "1920x1200@60", position = "1440x1080", scale = 1 })
+
+-- Generic BenQ match for the secondary landscape unit. Listed BEFORE the
+-- serial-specific portrait rule so the more-specific rule overrides it
+-- (Hyprland is last-match-wins for desc: rules — the more specific entry
+-- must come later, not earlier).
+hl.monitor({
+    output   = "desc:BNQ BenQ LCD",
+    mode     = "preferred",
+    position = "3360x0",
+    scale    = 1,
+})
+
+hl.monitor({
+    output    = "desc:BNQ BenQ LCD 89L03574019",
+    mode      = "2560x1440@59.95",
+    position  = "0x0",
+    scale     = 1,
+    transform = 1,
+})
 
 hl.monitor({
     -- "desc:" prefix matches by EDID description — same convention as hyprlang.
     output   = "desc:Iiyama North America PL2770H 0x30393235",
     mode     = "1920x1080@144",
-    position = "1920x0",
+    position = "1440x0",
     scale    = 1,
 })
 
-hl.monitor({
-    output   = "desc:BNQ BenQ LCD 89L03574019",
-    mode     = "2560x1440@59.95",
-    position = "3840x0",
-    scale    = 1,
-})
-
--- Workstation HDR (formerly `monitorv2`)
-hl.monitor({
-    output              = "DP-2",
-    mode                = "2560x1440@360.00Hz",
-    position            = "auto",
-    scale               = 1,
-    sdr_min_luminance   = 0,
-    sdr_max_luminance   = 200,
-    cm                  = "hdredid",
-    supports_hdr        = 1,
-    bitdepth            = 10,
-    vrr                 = 1,
-    sdr_eotf            = "gamma22force",  -- was 2 in hyprlang ("2" also works)
-    supports_wide_color = 1,
-    sdrbrightness       = 1.1,
-    sdrsaturation       = 1.0,
-})
-hl.monitor({
-    output              = "DP-3",
-    mode                = "1920x1080@143.98100Hz",
-    position            = "1920x0",
-    scale               = 1,
-    sdr_min_luminance   = 0,
-    sdr_max_luminance   = 200,
-    cm                  = "auto",
-    supports_hdr        = 0,
-    bitdepth            = 8,
-    vrr                 = 1,
-    sdr_eotf            = "gamma22",  -- was 1 in hyprlang ("1" also works)
-    supports_wide_color = 0,
-    sdrbrightness       = 1.1,
-    sdrsaturation       = 1.0,
-    transform           = 3,
-})
+-- NOTE: the workstation's 360Hz HDR monitor is intentionally not configured
+-- here yet. Add it as a `desc:`-matched rule (no output name) when ready, so
+-- this file stays static and free of host-specific / output-name conflicts.
 
 
 -- ----------------------------------------------------------------------------

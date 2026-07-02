@@ -669,8 +669,26 @@
         "noctalia-qs": "noctalia-qs",
         "noctalia-v5": "noctalia-v5",
         "nvchad4nix": "nvchad4nix",
+        "stack-info": "stack-info",
         "stylix": "stylix",
         "zen": "zen"
+      }
+    },
+    "stack-info": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1779957556,
+        "narHash": "sha256-oKvlKZVpdNbr+ywiN8ql7bdwQanfp0WQ+yxtyFKRoK4=",
+        "ref": "main",
+        "rev": "58603080faeb0c13ef466f3c50875cf1f1bbf5b1",
+        "revCount": 81,
+        "type": "git",
+        "url": "ssh://git@github.com/padoa/stack-info"
+      },
+      "original": {
+        "ref": "main",
+        "type": "git",
+        "url": "ssh://git@github.com/padoa/stack-info"
       }
     },
     "stylix": {

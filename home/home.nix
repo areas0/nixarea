@@ -48,6 +48,12 @@ in
     pkgs-unstable.kubectl-view-secret
     pkgs-unstable.kube-linter
     pkgs-unstable.kubectl-cnpg
+    pkgs.hammer
+    pkgs.kubectl-stack
+    pkgs.kubectl-ctx
+    pkgs.kubectl-client
+
+    pkgs-unstable.talosctl
 
     pkgs-unstable.talosctl
 

@@ -97,46 +97,18 @@ in
       };
 
       monitor = [
-        "eDP-1, 1920x1200@60, 0x0, 1"
-        "desc:Iiyama North America PL2770H 0x30393235, 1920x1080@144, 1920x0, 1"
-        "desc: BNQ BenQ LCD 89L03574019, 2560x1440@59.95, 3840x0, 1"
+        "eDP-1, 1920x1200@60, 1440x1080, 1"
+        # Generic BenQ first; serial-specific portrait rule must come AFTER
+        # so it overrides (last match wins).
+        "desc:BNQ BenQ LCD, preferred, 3360x0, 1"
+        "desc: BNQ BenQ LCD 89L03574019, 2560x1440@59.95, 0x0, 1, transform, 1"
+        "desc:Iiyama North America PL2770H 0x30393235, 1920x1080@144, 1440x0, 1"
       ];
 
-      monitorv2 = [
-        {
-          output = "DP-2";
-          mode = "2560x1440@360.00Hz";
-          position = "auto";
-          scale = 1;
-          sdr_min_luminance = 0;
-          sdr_max_luminance = 200;
-          cm = "hdredid";
-          supports_hdr = 1;
-          bitdepth = 10;
-          vrr = 1;
-          sdr_eotf = 2;
-          supports_wide_color = 1;
-          sdrbrightness = 1.1;
-          sdrsaturation = 1.0;
-        }
-        {
-          output = "DP-3";
-          mode = "1920x1080@143.98100Hz";
-          position = "1920x0";
-          scale = 1;
-          sdr_min_luminance = 0;
-          sdr_max_luminance = 200;
-          cm = "auto";
-          supports_hdr = 0;
-          bitdepth = 8;
-          vrr = 1;
-          sdr_eotf = 1;
-          supports_wide_color = 0;
-          sdrbrightness = 1.1;
-          sdrsaturation = 1.0;
-          transform = 3;
-        }
-      ];
+      # NOTE: the workstation's 360Hz HDR monitor is intentionally not
+      # configured here yet. Add it as a `desc:`-matched monitor rule (no
+      # output name) when ready, keeping this fallback config static and free
+      # of host-specific / output-name conflicts.
 
       workspace = [
         "r[1-4], monitor:eDP-1"
