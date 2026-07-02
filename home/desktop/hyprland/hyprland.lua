@@ -247,9 +247,27 @@ hl.monitor({
     scale    = 1,
 })
 
--- NOTE: the workstation's 360Hz HDR monitor is intentionally not configured
--- here yet. Add it as a `desc:`-matched rule (no output name) when ready, so
--- this file stays static and free of host-specific / output-name conflicts.
+-- Workstation's 360Hz HDR OLED (Samsung Odyssey G60SD). Matched by EDID
+-- `desc:` rather than output name so this file stays host-agnostic — it's a
+-- no-op on hosts without the panel. `position = "auto"` lets hyprland place it
+-- relative to the other outputs. HDR fields carried over from the old DP-2
+-- config: 10-bit, VRR, hdredid colour management, forced-gamma2.2 SDR EOTF.
+hl.monitor({
+    output              = "desc:Samsung Electric Company Odyssey G60SD HNAX701148",
+    mode                = "2560x1440@360.00Hz",
+    position            = "auto",
+    scale               = 1,
+    sdr_min_luminance   = 0,
+    sdr_max_luminance   = 200,
+    cm                  = "hdredid",
+    supports_hdr        = 1,
+    bitdepth            = 10,
+    vrr                 = 1,
+    sdr_eotf            = "gamma22force",
+    supports_wide_color = 1,
+    sdrbrightness       = 1.1,
+    sdrsaturation       = 1.0,
+})
 
 
 -- ----------------------------------------------------------------------------
