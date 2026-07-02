@@ -49,9 +49,8 @@ in
     pkgs-unstable.kube-linter
     pkgs-unstable.kubectl-cnpg
     pkgs.hammer
-    pkgs.kubectl-stack
-    pkgs.kubectl-ctx
-    pkgs.kubectl-client
+    # kubectl-stack / kubectl-ctx / kubectl-client are work-only — they build
+    # from the private padoa/stack-info repo. Added via workConfig.additionalPackages.
 
     pkgs-unstable.talosctl
 

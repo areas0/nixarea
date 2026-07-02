@@ -134,7 +134,12 @@
         wallpaper = "${./assets/oshinoko-2.png}";
         theme = defaultTheme;
         isLaptop = true;
-        additionalPackages = [ ];
+        # Work-only: built from the private padoa/stack-info repo (stack-info input).
+        additionalPackages = [
+          pkgs.kubectl-stack
+          pkgs.kubectl-ctx
+          pkgs.kubectl-client
+        ];
       };
 
       personalConfig = {
