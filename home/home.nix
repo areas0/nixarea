@@ -48,9 +48,8 @@ in
     pkgs-unstable.kubectl-view-secret
     pkgs-unstable.kube-linter
     pkgs-unstable.kubectl-cnpg
-    pkgs.hammer
-    # kubectl-stack / kubectl-ctx / kubectl-client are work-only — they build
-    # from the private padoa/stack-info repo. Added via workConfig.additionalPackages.
+    # hammer + kubectl-stack / kubectl-ctx / kubectl-client are work-only.
+    # Added via workConfig.additionalPackages.
 
     pkgs-unstable.talosctl
 

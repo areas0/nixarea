@@ -134,8 +134,10 @@
         wallpaper = "${./assets/oshinoko-2.png}";
         theme = defaultTheme;
         isLaptop = true;
-        # Work-only: built from the private padoa/stack-info repo (stack-info input).
+        # Work-only. kubectl-stack/ctx/client build from the private
+        # padoa/stack-info repo; hammer is the padoa work CLI.
         additionalPackages = [
+          pkgs.hammer
           pkgs.kubectl-stack
           pkgs.kubectl-ctx
           pkgs.kubectl-client
