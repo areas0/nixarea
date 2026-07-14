@@ -31,7 +31,10 @@ in
 wallpaper:
 let
   c = builtins.fromJSON (builtins.readFile (matugenJson wallpaper));
-  hex = name: builtins.substring 1 6 c.${name}.default.color;
+  # matugen's `strip` format emits hex without a leading `#`, but older
+  # versions included it — remove it only when present instead of assuming
+  # a fixed offset.
+  hex = name: builtins.replaceStrings [ "#" ] [ "" ] c.${name}.default.color;
 in
 {
   slug = "material-you" + (if amoled then "-amoled" else "");

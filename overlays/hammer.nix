@@ -55,7 +55,7 @@ let
       echo 'replace github.com/padoa/stack-info-operator => ../operator-src' >> hammer/go.mod
     '';
 
-    vendorHash = "sha256-BDAtIZWEp2d9KYQj5hbkAkY8DE8h5RA/iG0Zn+ibkGU=";
+    vendorHash = "sha256-MtOKdK04C7NpkQokuCbnC9XynHUfUQ/9cW24XmxnRK8=";
 
     ldflags = [
       "-s"
