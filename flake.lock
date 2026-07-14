@@ -669,9 +669,27 @@
         "noctalia-qs": "noctalia-qs",
         "noctalia-v5": "noctalia-v5",
         "nvchad4nix": "nvchad4nix",
+        "sre-toolchain": "sre-toolchain",
         "stack-info": "stack-info",
         "stylix": "stylix",
         "zen": "zen"
+      }
+    },
+    "sre-toolchain": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1775231129,
+        "narHash": "sha256-Iiq3PCWTtCnweeYjrxr2FV/8RBXGFiMHsAdUbtLxNN8=",
+        "ref": "refs/tags/hammer-1.1.1",
+        "rev": "90186f20b115d5a83babb7b418d071123c878953",
+        "revCount": 60,
+        "type": "git",
+        "url": "ssh://git@github.com/padoa/sre-toolchain"
+      },
+      "original": {
+        "ref": "refs/tags/hammer-1.1.1",
+        "type": "git",
+        "url": "ssh://git@github.com/padoa/sre-toolchain"
       }
     },
     "stack-info": {

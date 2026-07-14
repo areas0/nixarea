@@ -19,9 +19,8 @@
 
   gtk = {
     enable = true;
-    # Pin the legacy default; 26.05 flips gtk4.theme's default to null for
-    # stateVersion >= 26.05. Keep matching gtk3 (stylix-managed) for now.
-    # gtk4.theme = config.gtk.theme;
+    # gtk4.theme is managed by stylix's gtk target (it mirrors gtk.theme), so
+    # we no longer pin it here — doing so collides with stylix's definition.
     gtk3.extraConfig.gtk-application-prefer-dark-theme = 1;
     gtk4.extraConfig.gtk-application-prefer-dark-theme = 1;
   };

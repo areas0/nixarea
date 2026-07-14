@@ -20,6 +20,9 @@
     nix-citizen.inputs.nix-gaming.follows = "nix-gaming";
 
     stylix = {
+      # Pinned to the 26.05 release branch to match nixpkgs. master tracks
+      # unstable, and its kmscon target expects the structured
+      # `services.kmscon.config` option that only exists on unstable.
       url = "github:nix-community/stylix/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -52,6 +55,14 @@
     # Private repo — fetched over SSH using the host's git credentials.
     stack-info = {
       url = "git+ssh://git@github.com/padoa/stack-info?ref=main";
+      flake = false;
+    };
+
+    # hammer (lives in sre-toolchain's hammer/) — pinned to the latest published
+    # semver tag rather than main. Bump by pointing ref at the new tag. Private
+    # repo — fetched over SSH using the host's git credentials.
+    sre-toolchain = {
+      url = "git+ssh://git@github.com/padoa/sre-toolchain?ref=refs/tags/hammer-1.1.1";
       flake = false;
     };
 
@@ -90,8 +101,9 @@
         overlays = [
           (import ./overlays/teleport.nix { inherit inputs; })
           (import ./overlays/fladder.nix)
-          (import ./overlays/hammer.nix)
+          (import ./overlays/hammer.nix { inherit inputs; })
           (import ./overlays/kubectl-stack.nix { inherit inputs; })
+          (import ./overlays/notion-app.nix)
           (final: prev: { inherit nixpkgs-unstable; })
         ];
       };
@@ -141,6 +153,7 @@
           pkgs.kubectl-stack
           pkgs.kubectl-ctx
           pkgs.kubectl-client
+          pkgs.notion-app
         ];
       };
 
