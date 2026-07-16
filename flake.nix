@@ -143,7 +143,7 @@
       ];
 
       workConfig = {
-        wallpaper = "${./assets/oshinoko-2.png}";
+        wallpaper = "${./assets/frieren.png}";
         theme = defaultTheme;
         isLaptop = true;
         # Work-only. kubectl-stack/ctx/client build from the private
