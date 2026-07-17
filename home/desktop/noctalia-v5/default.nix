@@ -13,13 +13,19 @@ let
   wallpaperDir = "${../../../assets}";
 
   config = {
+    # v5.0.0-beta.3 moved ui_scale out of [shell] into a dedicated [accessibility]
+    # block; the old shell.ui_scale key is no longer read.
+    accessibility.ui_scale = 1.0;
+
     shell = {
-      ui_scale = 1.0;
       polkit_agent = true;
+      # v5 replaced the old attach_*/background_blur panel booleans with a
+      # transparency mode + per-panel placement. "glass" is the translucent
+      # (formerly background_blur) look; "attached" docks the panels to the bar.
       panel = {
-        background_blur = true;
-        attach_control_center = true;
-        attach_wallpaper = true;
+        transparency_mode = "glass";
+        control_center_placement = "attached";
+        wallpaper_placement = "attached";
       };
     };
 
@@ -35,6 +41,13 @@ let
       fill_mode = "crop";
     };
 
+    # v5 backdrop: dim + blur the desktop behind open panels.
+    backdrop = {
+      enabled = true;
+      blur_intensity = 0.5;
+      tint_intensity = 0.3;
+    };
+
     notification = {
       enable_daemon = true;
       layer = "top";
@@ -45,25 +58,40 @@ let
 
     weather = {
       enabled = false;
-      address = "Paris";
       unit = "celsius";
       refresh_minutes = 30;
     };
+
+    # v5 split "where am I" out of weather into a shared [location] block that
+    # also feeds night light and theme auto mode.
+    location.address = "Paris";
 
     nightlight.enabled = false;
 
     system.monitor.enabled = true;
 
+    # v5 added a dedicated lock screen with a blurred desktop snapshot as the
+    # background — paired with the idle lock below.
+    lockscreen = {
+      enabled = true;
+      blurred_desktop = true;
+      blur_intensity = 0.5;
+      tint_intensity = 0.3;
+    };
+
     idle.behavior = {
       lock = {
         timeout = 180;
-        command = "noctalia:screen-lock";
+        # v5.0.0-beta.3 replaced the idle IPC command strings with an `action` enum
+        # (lock | screen_off | suspend | lock_and_suspend | command). The old
+        # command/resume_command fields are read only when action = "command".
+        action = "lock";
         enabled = true;
       };
       screen-off = {
         timeout = 360;
-        command = "noctalia:dpms-off";
-        resume_command = "noctalia:dpms-on";
+        # `screen_off` handles dpms-off plus resume-on-activity; no resume command.
+        action = "screen_off";
       };
     };
 
@@ -71,14 +99,15 @@ let
       position = "top";
       thickness = 34;
       radius = 12;
-      margin_h = 180;
-      margin_v = 10;
+      # v5 renamed the bar margins: margin_h -> margin_ends (inset from each end),
+      # margin_v -> margin_edge (distance from the screen edge).
+      margin_ends = 180;
+      margin_edge = 10;
       padding = 14;
       widget_spacing = 6;
       scale = 1.2;
       shadow = true;
       reserve_space = true;
-      attach_panels = true;
       background_opacity = 0.6;
       capsule = true;
       capsule_opacity = 0.8;

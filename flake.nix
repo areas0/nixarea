@@ -36,8 +36,10 @@
       url = "github:noctalia-dev/noctalia-qs";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+    # Pinned to the v5.0.0-beta.3 tag — locked so a `nix flake update` won't drag
+    # in an unreleased HEAD. Bump the ref deliberately when a newer v5 tag lands.
     noctalia-v5 = {
-      url = "github:noctalia-dev/noctalia-shell";
+      url = "github:noctalia-dev/noctalia-shell/v5.0.0-beta.3";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
@@ -219,6 +221,7 @@
           additionalConfig = personalConfig // {
             isNvidia = true;
             enableLocalLLM = true;
+            noctaliaVersion = "v5";
           };
         };
 

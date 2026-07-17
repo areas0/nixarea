@@ -1,31 +1,71 @@
-{ ... }:
+{ additionalConfig, lib, ... }:
+let
+  noctaliaV5 = (additionalConfig.noctaliaVersion or "v4") == "v5";
+  # Full IPC command per action. v5 speaks the flat `noctalia msg <command>`
+  # scheme; v4 spoke `noctalia-shell ipc call <noun> <verb>`. Mirrors the `nc`
+  # table in hyprland.lua (the active runtime config); this hyprlang set is the
+  # fallback used only if the lua file is removed.
+  nc =
+    if noctaliaV5 then
+      {
+        lock = "noctalia msg session lock";
+        launcher = "noctalia msg panel-toggle launcher";
+        windows = "noctalia msg window-switcher";
+        clipboard = "noctalia msg panel-toggle clipboard";
+        widgetsEdit = "noctalia msg desktop-widgets-edit";
+        widgetsToggle = "noctalia msg desktop-widgets-toggle";
+        volUp = "noctalia msg volume-up";
+        volDown = "noctalia msg volume-down";
+        volMute = "noctalia msg volume-mute";
+        briUp = "noctalia msg brightness-up";
+        briDown = "noctalia msg brightness-down";
+      }
+    else
+      {
+        lock = "noctalia-shell ipc call lockScreen lock";
+        launcher = "noctalia-shell ipc call launcher toggle";
+        windows = "noctalia-shell ipc call launcher windows";
+        clipboard = "noctalia-shell ipc call launcher clipboard";
+        widgetsEdit = "noctalia-shell ipc call desktopWidgets edit";
+        widgetsToggle = "noctalia-shell ipc call desktopWidgets toggle";
+        volUp = "noctalia-shell ipc call volume increase";
+        volDown = "noctalia-shell ipc call volume decrease";
+        volMute = "noctalia-shell ipc call volume muteOutput";
+        briUp = "noctalia-shell ipc call brightness increase";
+        briDown = "noctalia-shell ipc call brightness decrease";
+      };
+in
 {
   wayland.windowManager.hyprland.settings = {
     bind = [
       "$mod SHIFT, Q, killactive"
       "$mod, RETURN, exec, $terminal"
-      "$mod SHIFT, E, exec, $noctalia lockScreen lock"
+      "$mod SHIFT, E, exec, ${nc.lock}"
       "$mod SHIFT, I, exit"
       "$mod, E, exec, $fileManager"
       "$mod, V, togglefloating"
       "$mod, F, fullscreen"
 
       # launcher
-      "$mod, D, exec, $noctalia launcher toggle"
-      "ALT, SPACE, exec, $noctalia launcher toggle"
-      "$mod, W, exec, $noctalia launcher windows"
-      "$mod, C, exec, $noctalia launcher clipboard"
+      "$mod, D, exec, ${nc.launcher}"
+      "ALT, SPACE, exec, ${nc.launcher}"
+      "$mod, W, exec, ${nc.windows}"
+      "$mod, C, exec, ${nc.clipboard}"
 
       # desktop widgets
-      "$mod, period, exec, $noctalia desktopWidgets edit"
-      "$mod SHIFT, period, exec, $noctalia desktopWidgets toggle"
+      "$mod, period, exec, ${nc.widgetsEdit}"
+      "$mod SHIFT, period, exec, ${nc.widgetsToggle}"
 
       # dwindle layout
       "$mod, P, pseudo"
       "$mod, O, togglesplit"
-
-      # workspace overview
-      "$mod, Tab, exec, $noctalia plugin:workspace-overview toggle"
+    ]
+    # Workspace overview was a v4 noctalia plugin; v5's plugin IPC changed and
+    # the plugin isn't bundled, so bind it on v4 only (matches hyprland.lua).
+    ++ lib.optionals (!noctaliaV5) [
+      "$mod, Tab, exec, noctalia-shell ipc call plugin:workspace-overview toggle"
+    ]
+    ++ [
 
       # window groups
       "$mod, G, togglegroup"
@@ -65,14 +105,14 @@
       "$mod SHIFT, P, exec, bash -c 'grim - | tee ~/Pictures/Screenshots/$(date +%Y%m%d_%H%M%S).png | wl-copy'"
 
       # audio
-      ", XF86AudioRaiseVolume, exec, $noctalia volume increase"
-      ", XF86AudioLowerVolume, exec, $noctalia volume decrease"
-      ", XF86AudioMute, exec, $noctalia volume muteOutput"
+      ", XF86AudioRaiseVolume, exec, ${nc.volUp}"
+      ", XF86AudioLowerVolume, exec, ${nc.volDown}"
+      ", XF86AudioMute, exec, ${nc.volMute}"
       ", XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
 
       # brightness
-      ", XF86MonBrightnessUp, exec, $noctalia brightness increase"
-      ", XF86MonBrightnessDown, exec, $noctalia brightness decrease"
+      ", XF86MonBrightnessUp, exec, ${nc.briUp}"
+      ", XF86MonBrightnessDown, exec, ${nc.briDown}"
 
       # resize submap
       "$mod, R, submap, resize"

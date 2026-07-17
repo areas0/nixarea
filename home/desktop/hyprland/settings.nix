@@ -26,7 +26,6 @@ in
       "$mod" = "SUPER";
       "$terminal" = "kitty";
       "$fileManager" = "thunar";
-      "$noctalia" = if noctaliaV5 then "noctalia msg" else "noctalia-shell ipc call";
 
       exec-once = [
         "code"

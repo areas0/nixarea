@@ -78,23 +78,42 @@ local mod         = "SUPER"
 local terminal    = "kitty"
 local fileManager = "thunar"
 
--- noctalia wrapper command. Runtime-detected so one file works across hosts:
---   workstation has the v5 binary `noctalia`; the laptops have v4's
---   `noctalia-shell`. We probe `command -v` once at config load.
-local function commandExists(cmd)
-    -- io.popen runs the command and gives us its stdout as a file handle.
-    -- :read("*l") pulls one line; nil/empty means the command wasn't found.
-    local f = io.popen("command -v " .. cmd .. " 2>/dev/null")
-    if not f then return false end
-    local line = f:read("*l")
-    f:close()
-    return line ~= nil and line ~= ""
-end
-
-local noctaliaV5    = commandExists("noctalia")
-local noctalia      = noctaliaV5 and "noctalia msg" or "noctalia-shell ipc call"
+-- noctalia version. Injected from Nix (additionalConfig.noctaliaVersion) at
+-- build time — see home/desktop/hyprland/default.nix, which substitutes the
+-- @noctaliaV5@ token below. Runtime `command -v` probing via io.popen proved
+-- unreliable in Hyprland's embedded Lua, so the host's Nix flag is baked in.
+local noctaliaV5     = @noctaliaV5@
 local noctaliaLaunch = noctaliaV5 and "noctalia"
                                    or "env QT_QPA_PLATFORMTHEME= noctalia-shell"
+
+-- Full IPC command per action. The two shells speak different dialects: v5 uses
+-- the flat `noctalia msg <command>` scheme; v4 used `noctalia-shell ipc call
+-- <noun> <verb>`. Keyed by action so the binds below stay version-agnostic.
+local nc = noctaliaV5 and {
+    lock          = "noctalia msg session lock",
+    launcher      = "noctalia msg panel-toggle launcher",
+    windows       = "noctalia msg window-switcher",
+    clipboard     = "noctalia msg panel-toggle clipboard",
+    widgetsEdit   = "noctalia msg desktop-widgets-edit",
+    widgetsToggle = "noctalia msg desktop-widgets-toggle",
+    volUp         = "noctalia msg volume-up",
+    volDown       = "noctalia msg volume-down",
+    volMute       = "noctalia msg volume-mute",
+    briUp         = "noctalia msg brightness-up",
+    briDown       = "noctalia msg brightness-down",
+} or {
+    lock          = "noctalia-shell ipc call lockScreen lock",
+    launcher      = "noctalia-shell ipc call launcher toggle",
+    windows       = "noctalia-shell ipc call launcher windows",
+    clipboard     = "noctalia-shell ipc call launcher clipboard",
+    widgetsEdit   = "noctalia-shell ipc call desktopWidgets edit",
+    widgetsToggle = "noctalia-shell ipc call desktopWidgets toggle",
+    volUp         = "noctalia-shell ipc call volume increase",
+    volDown       = "noctalia-shell ipc call volume decrease",
+    volMute       = "noctalia-shell ipc call volume muteOutput",
+    briUp         = "noctalia-shell ipc call brightness increase",
+    briDown       = "noctalia-shell ipc call brightness decrease",
+}
 
 
 -- ----------------------------------------------------------------------------
@@ -127,7 +146,7 @@ end
 -- function to "hyprland.start" and call hl.exec_cmd for each program.
 hl.on("hyprland.start", function()
     hl.exec_cmd("code")
-    hl.exec_cmd(noctaliaLaunch)  -- v4 / v5 picked by commandExists() above
+    hl.exec_cmd(noctaliaLaunch)  -- v4 / v5 picked by the injected noctaliaV5 flag
     hl.exec_cmd("wl-paste --watch cliphist store")
 end)
 
@@ -426,28 +445,33 @@ hl.window_rule({
 -- ---- Window management ---------------------------------------------------
 hl.bind(mod .. " + SHIFT + Q",   hl.dsp.window.close())
 hl.bind(mod .. " + RETURN",      hl.dsp.exec_cmd(terminal))
-hl.bind(mod .. " + SHIFT + E",   hl.dsp.exec_cmd(noctalia .. " lockScreen lock"))
+hl.bind(mod .. " + SHIFT + E",   hl.dsp.exec_cmd(nc.lock))
 hl.bind(mod .. " + SHIFT + I",   hl.dsp.exit())
 hl.bind(mod .. " + E",           hl.dsp.exec_cmd(fileManager))
 hl.bind(mod .. " + V",           hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mod .. " + F",           hl.dsp.window.fullscreen())  -- toggle by default
 
 -- ---- Launcher ------------------------------------------------------------
-hl.bind(mod .. " + D",       hl.dsp.exec_cmd(noctalia .. " launcher toggle"))
-hl.bind("ALT + SPACE",       hl.dsp.exec_cmd(noctalia .. " launcher toggle"))
-hl.bind(mod .. " + W",       hl.dsp.exec_cmd(noctalia .. " launcher windows"))
-hl.bind(mod .. " + C",       hl.dsp.exec_cmd(noctalia .. " launcher clipboard"))
+hl.bind(mod .. " + D",       hl.dsp.exec_cmd(nc.launcher))
+hl.bind("ALT + SPACE",       hl.dsp.exec_cmd(nc.launcher))
+hl.bind(mod .. " + W",       hl.dsp.exec_cmd(nc.windows))
+hl.bind(mod .. " + C",       hl.dsp.exec_cmd(nc.clipboard))
 
 -- ---- Desktop widgets -----------------------------------------------------
-hl.bind(mod .. " + period",         hl.dsp.exec_cmd(noctalia .. " desktopWidgets edit"))
-hl.bind(mod .. " + SHIFT + period", hl.dsp.exec_cmd(noctalia .. " desktopWidgets toggle"))
+hl.bind(mod .. " + period",         hl.dsp.exec_cmd(nc.widgetsEdit))
+hl.bind(mod .. " + SHIFT + period", hl.dsp.exec_cmd(nc.widgetsToggle))
 
 -- ---- Dwindle layout ------------------------------------------------------
 hl.bind(mod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mod .. " + O", hl.dsp.layout("togglesplit"))
 
 -- ---- Workspace overview --------------------------------------------------
-hl.bind(mod .. " + Tab", hl.dsp.exec_cmd(noctalia .. " plugin:workspace-overview toggle"))
+-- v4 shipped this as the `workspace-overview` plugin. v5's plugin IPC changed
+-- to `noctalia msg plugin <author/plugin:entry> <target> <event>` and the
+-- plugin isn't bundled, so bind it on v4 only until the v5 plugin id is known.
+if not noctaliaV5 then
+    hl.bind(mod .. " + Tab", hl.dsp.exec_cmd("noctalia-shell ipc call plugin:workspace-overview toggle"))
+end
 
 -- ---- Window groups -------------------------------------------------------
 -- The 0.55 API renamed these into hl.dsp.group.*:
@@ -513,9 +537,9 @@ hl.bind(mod .. " + SHIFT + P",
 -- ---- Audio ---------------------------------------------------------------
 -- Note: no leading comma like hyprlang's `, XF86...`. A bare keysym means
 -- "no modifier required". `{ locked = true }` was the old `bindl`.
-hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd(noctalia .. " volume increase"))
-hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd(noctalia .. " volume decrease"))
-hl.bind("XF86AudioMute",        hl.dsp.exec_cmd(noctalia .. " volume muteOutput"))
+hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd(nc.volUp))
+hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd(nc.volDown))
+hl.bind("XF86AudioMute",        hl.dsp.exec_cmd(nc.volMute))
 hl.bind("XF86AudioMicMute",     hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"))
 
 hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
@@ -523,8 +547,8 @@ hl.bind("XF86AudioNext", hl.dsp.exec_cmd("playerctl next"),       { locked = tru
 hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"),   { locked = true })
 
 -- ---- Brightness ----------------------------------------------------------
-hl.bind("XF86MonBrightnessUp",   hl.dsp.exec_cmd(noctalia .. " brightness increase"))
-hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd(noctalia .. " brightness decrease"))
+hl.bind("XF86MonBrightnessUp",   hl.dsp.exec_cmd(nc.briUp))
+hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd(nc.briDown))
 
 -- ---- Mouse binds (was `bindm`) -------------------------------------------
 -- The "mouse:NNN" token in the keystring is what the parser uses to flag

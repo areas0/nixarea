@@ -2,8 +2,12 @@
   pkgs,
   config,
   lib,
+  additionalConfig,
   ...
 }:
+let
+  noctaliaV5 = (additionalConfig.noctaliaVersion or "v4") == "v5";
+in
 {
   imports = [
     ./bindings.nix
@@ -13,7 +17,13 @@
   # Hyprland 0.55+: if hyprland.lua exists, it is loaded INSTEAD of
   # hyprland.conf. The hyprlang config generated from settings.nix/bindings.nix
   # stays on disk as a fallback — delete the lua file to revert.
-  xdg.configFile."hypr/hyprland.lua".source = ./hyprland.lua;
+  #
+  # The lua carries a @noctaliaV5@ token instead of probing for the binary at
+  # runtime (io.popen is unreliable in Hyprland's embedded Lua); we bake the
+  # host's Nix flag in here so the v5 IPC dialect is selected deterministically.
+  xdg.configFile."hypr/hyprland.lua".text =
+    builtins.replaceStrings [ "@noctaliaV5@" ] [ (if noctaliaV5 then "true" else "false") ]
+      (builtins.readFile ./hyprland.lua);
 
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
 
