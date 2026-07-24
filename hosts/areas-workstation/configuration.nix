@@ -66,6 +66,11 @@
     displayManager.sddm.wayland.enable = true;
   };
 
+  # niri session alongside Hyprland — shows up as its own SDDM entry. The module
+  # wires portals (gnome+gtk), gnome-keyring and polkit for the niri session.
+  programs.niri.enable = true;
+  programs.niri.useNautilus = false; # thunar is the file manager; keep FileChooser on gtk
+
   programs.steam.enable = true;
   programs.steam.gamescopeSession.enable = true;
   programs.steam.extraCompatPackages = [ pkgs-unstable.proton-ge-bin ];

@@ -27,6 +27,15 @@ let
         control_center_placement = "attached";
         wallpaper_placement = "attached";
       };
+
+      # Clipboard manager (toggled with $mod+C via the Hyprland `clipboard` IPC
+      # bind). History is persisted encrypted under the master key from the
+      # secret-service (libsecret) — the default [storage] key source, new in
+      # v5.0.0-beta.4, so no explicit key config is needed.
+      clipboard_enabled = true;
+
+      # beta.4: the session panel can render each action's keyboard shortcut.
+      session.show_shortcuts = true;
     };
 
     theme = {
@@ -57,16 +66,29 @@ let
     osd.position = "top_right";
 
     weather = {
-      enabled = false;
+      enabled = true;
+      # beta.4: animated weather effects (rain/snow/etc.) overlaid on the widget.
+      effects = true;
       unit = "celsius";
       refresh_minutes = 30;
     };
 
     # v5 split "where am I" out of weather into a shared [location] block that
-    # also feeds night light and theme auto mode.
-    location.address = "Paris";
+    # also feeds night light and theme auto mode. The custom schedule mirrors
+    # the old hyprsunset profiles (identity at 7:30, warm at 23:00).
+    location = {
+      address = "Paris";
+      custom_schedule = true;
+      sunset = "23:00";
+      sunrise = "07:30";
+    };
 
-    nightlight.enabled = false;
+    # Replaces hyprsunset (Hyprland-only CTM protocol, dead under niri).
+    # Same 5000K night temperature as the old hyprsunset profile.
+    nightlight = {
+      enabled = true;
+      temperature_night = 5000;
+    };
 
     system.monitor.enabled = true;
 
@@ -118,6 +140,7 @@ let
         "media"
       ];
       center = [
+        "weather"
         "clock"
       ];
       end = [
