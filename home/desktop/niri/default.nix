@@ -29,7 +29,13 @@ in
 {
   # X11 apps (Steam, games) under niri. niri spawns xwayland-satellite itself
   # and exports DISPLAY; the explicit path below avoids relying on PATH.
-  home.packages = [ pkgs.xwayland-satellite ];
+  # nirius adds focus-or-spawn (the old hyprctl focuswindow binds) and a
+  # scratchpad, both missing from niri core; its niriusd daemon is
+  # spawn-at-startup'd in the KDL below.
+  home.packages = [
+    pkgs.xwayland-satellite
+    pkgs.nirius
+  ];
 
   # No home-manager niri module in release-26.05 and no stylix target: raw KDL,
   # with stylix colors hand-wired into the focus ring. Mirrors the Hyprland
@@ -92,6 +98,7 @@ in
 
     spawn-at-startup "noctalia"
     spawn-at-startup "sh" "-c" "wl-paste --watch cliphist store"
+    spawn-at-startup "niriusd"
 
     xwayland-satellite {
         path "${pkgs.xwayland-satellite}/bin/xwayland-satellite"
@@ -105,6 +112,11 @@ in
         gaps 2
         focus-ring {
             width 1
+            active-color "#${colors.base0D}"
+            inactive-color "#${colors.base03}"
+        }
+        tab-indicator {
+            hide-when-single-tab
             active-color "#${colors.base0D}"
             inactive-color "#${colors.base03}"
         }
@@ -128,6 +140,20 @@ in
 
         Mod+Period { spawn "noctalia" "msg" "desktop-widgets-edit"; }
         Mod+Shift+Period { spawn "noctalia" "msg" "desktop-widgets-toggle"; }
+
+        // App focus shortcuts (nirius): focus the window, cycle through
+        // matches, or launch it if absent — same as the old hyprctl
+        // focuswindow binds.
+        Mod+Z { spawn "nirius" "focus-or-spawn" "-a" "zen-beta" "zen-beta"; }
+        Mod+S { spawn "nirius" "focus-or-spawn" "-a" "[Ss]lack" "slack"; }
+
+        // Scratchpad (nirius): Mod+U shows/cycles scratchpad windows,
+        // Mod+Shift+U sends the focused window to the scratchpad.
+        Mod+U { spawn "nirius" "scratchpad-show"; }
+        Mod+Shift+U { spawn "nirius" "scratchpad-toggle"; }
+
+        // Tabbed column: Hyprland group (Super+G) equivalent.
+        Mod+T { toggle-column-tabbed-display; }
 
         Mod+O { toggle-overview; }
 
@@ -191,10 +217,9 @@ in
         match app-id="^code$"
         opacity 0.95
     }
-    window-rule {
-        match app-id="^zen-beta$"
-        opacity 0.99
-    }
+    // No opacity rule for zen: niri has no blur, so compositor-side
+    // transparency (and zen's own Transparent-Zen mod surfaces) render as a
+    // plain hole to the wallpaper instead of Hyprland's frosted glass.
 
     // Gaming — Hyprland's immediate/no_blur/no_shadow/no_anim rules have no
     // niri counterpart; per-window VRR is the useful analogue.
