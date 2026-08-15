@@ -33,6 +33,13 @@ let
       # secret-service (libsecret) — the default [storage] key source, new in
       # v5.0.0-beta.4, so no explicit key config is needed.
       clipboard_enabled = true;
+      # beta.8 added clipboard re-offering: when the app owning a Wayland
+      # selection exits, the shell claims the selection back so the item stays
+      # pasteable. Upstream defaults this on and excludes apps advertising
+      # x-kde-passwordManagerHint, but 1Password is in use here and a manager
+      # that clears the clipboard by quitting is indistinguishable from any
+      # other app closing — so opt out rather than risk a resurrected secret.
+      clipboard_keep_from_closed_apps = false;
 
       # beta.4: the session panel can render each action's keyboard shortcut.
       session.show_shortcuts = true;
@@ -42,6 +49,10 @@ let
       mode = "dark";
       source = "wallpaper";
       wallpaper_scheme = "m3-tonal-spot";
+      # beta.8: anchor dark surfaces to true black. Mirrors the host's `amoled`
+      # theme knob, which does the same thing to base00 in lib/matugen.nix, so
+      # the shell's own palette doesn't drift from every stylix-themed app.
+      pure_black_dark = additionalConfig.theme.amoled or false;
     };
 
     wallpaper = {
@@ -63,7 +74,17 @@ let
       background_opacity = 0.8;
     };
 
-    osd.position = "top_right";
+    osd = {
+      position = "top_right";
+      # beta.8 split the OSD into per-kind toggles. Only lock_keys is turned
+      # off: no bar widget consumes Caps/Num/Scroll state, and disabling it
+      # stops the shell polling for it entirely.
+      kinds.lock_keys = false;
+    };
+
+    # beta.8 moved the control-center calendar tab out of [calendar] (which
+    # still gates actual event fetching, and stays off) into its own block.
+    control_center.calendar.show_week_numbers = true;
 
     weather = {
       enabled = true;
@@ -151,6 +172,13 @@ let
         "volume"
         "session"
       ];
+
+      # beta.8 replaced the dead zone's flat `command`/`right_command`/… string
+      # fields with an [.actions] table keyed by gesture, taking the same verbs
+      # as `noctalia msg`. With margin_ends = 180 the empty bar stretch is large,
+      # so give it the launcher on left-click; right-click already defaults to
+      # the control center.
+      dead_zone.actions.left = "panel-toggle launcher";
     };
   };
 in
