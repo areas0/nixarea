@@ -8,7 +8,7 @@
   ...
 }:
 {
-  imports = [ nvchad4nix.homeManagerModule ];
+  imports = [ nvchad4nix.homeManagerModules.nvchad ];
 
   # NvChad compiles its theme into a bytecode cache under the data dir, and
   # only rebuilds it via the lazy `build` hook on plugin install/update — never
