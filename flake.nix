@@ -95,6 +95,9 @@
       pkgs-unstable = import inputs.nixpkgs-unstable {
         inherit system;
         config.allowUnfree = true;
+        overlays = [
+          (import ./overlays/azahar.nix)
+        ];
       };
 
       pkgs = import nixpkgs {
