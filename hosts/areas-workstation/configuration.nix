@@ -48,7 +48,16 @@
     # forced the old version pin was a package/module mismatch from pinning the
     # driver to a separate nixpkgs rev (nixpkgs#525152), not this version — the
     # in-tree module now ships nvidia-egl-external-platforms automatically.
-    package = config.boot.kernelPackages.nvidiaPackages.latest;
+    # nixpkgs stable's nvidiaPackages.latest (595.71.05) doesn't build
+    # against Linux 7.2: the kernel dropped the generic strncpy() symbol
+    # (deprecated for years, now gone), and nvidia-drm-helper.c also predates
+    # 7.2's DRM atomic-commit API changes (see
+    # github.com/NVIDIA/open-gpu-kernel-modules/issues/1224, still open with
+    # no official fix). nixpkgs-unstable already carries 610.57.04, which
+    # builds clean against our kernel with zero patches — pull the driver
+    # from there instead of patching around it. Drop this override once
+    # nixpkgs stable catches up.
+    package = (pkgs-unstable.linuxPackagesFor config.boot.kernelPackages.kernel).nvidiaPackages.latest;
   };
 
   services.xserver.videoDrivers = [ "nvidia" ];
