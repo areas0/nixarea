@@ -43,6 +43,10 @@ let
 
       # beta.4: the session panel can render each action's keyboard shortcut.
       session.show_shortcuts = true;
+
+      # beta.9: surface a result's desktop actions (e.g. "New window") in the
+      # launcher instead of only the default activation.
+      launcher.show_app_actions = true;
     };
 
     theme = {
@@ -135,6 +139,9 @@ let
         timeout = 360;
         # `screen_off` handles dpms-off plus resume-on-activity; no resume command.
         action = "screen_off";
+        # beta.9: once locked, re-arm screen-off at a shorter timeout instead of
+        # waiting out the rest of the original 360s countdown from before lock.
+        locked_timeout = 30;
       };
     };
 
@@ -165,6 +172,11 @@ let
         "clock"
       ];
       end = [
+        # Performance monitors, sampled per [system.monitor]'s poll intervals.
+        "cpu"
+        "ram"
+        "gpu_usage"
+        "gpu_vram_used"
         "tray"
         "notifications"
         "network"
@@ -180,6 +192,14 @@ let
       # the control center.
       dead_zone.actions.left = "panel-toggle launcher";
     };
+
+    # "cpu"/"ram" are built-in sysmon aliases (stat preset, gauge + value by
+    # default). gpu_usage/gpu_vram_used have no alias, so declare them as
+    # sysmon instances of their own — gpu_vram_used is new in beta.9.
+    widget.gpu_usage.type = "sysmon";
+    widget.gpu_usage.stat = "gpu_usage";
+    widget.gpu_vram_used.type = "sysmon";
+    widget.gpu_vram_used.stat = "gpu_vram_used";
   };
 in
 {
