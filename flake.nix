@@ -36,10 +36,10 @@
       url = "github:noctalia-dev/noctalia-qs";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
-    # Pinned to the v5.0.0-beta.9 tag — locked so a `nix flake update` won't drag
+    # Pinned to the v5.0.0-beta.10 tag — locked so a `nix flake update` won't drag
     # in an unreleased HEAD. Bump the ref deliberately when a newer v5 tag lands.
     noctalia-v5 = {
-      url = "github:noctalia-dev/noctalia-shell/v5.0.0-beta.9";
+      url = "github:noctalia-dev/noctalia-shell/v5.0.0-beta.10";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
@@ -179,6 +179,8 @@
           pkgs-unstable.azahar
           pkgs-unstable.feishin
           pkgs-unstable.protonplus
+          pkgs-unstable.jellyfin-mpv-shim
+          pkgs-unstable.transmission-remote-gtk
         ];
       };
     in

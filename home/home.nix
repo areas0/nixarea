@@ -164,6 +164,8 @@ in
     pkgs-unstable.galaxy-buds-client
 
     pkgs.fastfetch
+
+    pkgs-unstable.nvd
   ]
   ++ additionalConfig.additionalPackages;
 
