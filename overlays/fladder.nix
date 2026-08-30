@@ -1,11 +1,11 @@
 self: super:
 let
-  version = "0.10.3";
+  version = "0.11.0";
 
   bundleSrc = super.fetchzip {
     url = "https://github.com/DonutWare/Fladder/releases/download/v${version}/Fladder-Linux-${version}.zip";
     stripRoot = false;
-    sha256 = "sha256-1qb239AiO66GOkK+VvvEaxlT9tJElsTOkoNc++qwqoU=";
+    sha256 = "sha256-ObznIELOf73hJ/kl8tfTQDW1hRf9hEbXM3GH0V21Gbg=";
   };
 
   iconSvg = super.fetchurl {
@@ -77,8 +77,8 @@ in
       cp -r ./* $out/
 
       # Ensure the main binary is executable
-      if [ -f "$out/Fladder" ]; then
-        chmod +x "$out/Fladder"
+      if [ -f "$out/fladder" ]; then
+        chmod +x "$out/fladder"
       fi
 
       # Get library paths from NixOS
@@ -94,8 +94,8 @@ in
       fi
 
       # Fix RPATH for the main binary
-      if [ -f "$out/Fladder" ]; then
-        patchelf --set-rpath "\$ORIGIN/lib:$LIBRARY_PATH" "$out/Fladder" 2>/dev/null || true
+      if [ -f "$out/fladder" ]; then
+        patchelf --set-rpath "\$ORIGIN/lib:$LIBRARY_PATH" "$out/fladder" 2>/dev/null || true
       fi
 
       # Create a wrapper script in bin/
@@ -103,7 +103,7 @@ in
       cat > $out/bin/fladder <<EOF
       #!${super.stdenv.shell}
       cd "$out"
-      exec "$out/Fladder" "\$@"
+      exec "$out/fladder" "\$@"
       EOF
       chmod +x $out/bin/fladder
 
