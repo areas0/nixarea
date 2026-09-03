@@ -203,8 +203,6 @@ let
   };
 in
 {
-  programs.noctalia-shell.enable = false;
-
   home.packages = [
     noctalia-v5.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];

@@ -78,18 +78,10 @@ local mod         = "SUPER"
 local terminal    = "kitty"
 local fileManager = "thunar"
 
--- noctalia version. Injected from Nix (additionalConfig.noctaliaVersion) at
--- build time — see home/desktop/hyprland/default.nix, which substitutes the
--- @noctaliaV5@ token below. Runtime `command -v` probing via io.popen proved
--- unreliable in Hyprland's embedded Lua, so the host's Nix flag is baked in.
-local noctaliaV5     = @noctaliaV5@
-local noctaliaLaunch = noctaliaV5 and "noctalia"
-                                   or "env QT_QPA_PLATFORMTHEME= noctalia-shell"
+local noctaliaLaunch = "noctalia"
 
--- Full IPC command per action. The two shells speak different dialects: v5 uses
--- the flat `noctalia msg <command>` scheme; v4 used `noctalia-shell ipc call
--- <noun> <verb>`. Keyed by action so the binds below stay version-agnostic.
-local nc = noctaliaV5 and {
+-- Full IPC command per action, in the flat `noctalia msg <command>` scheme.
+local nc = {
     lock          = "noctalia msg session lock",
     launcher      = "noctalia msg panel-toggle launcher",
     windows       = "noctalia msg window-switcher",
@@ -101,18 +93,6 @@ local nc = noctaliaV5 and {
     volMute       = "noctalia msg volume-mute",
     briUp         = "noctalia msg brightness-up",
     briDown       = "noctalia msg brightness-down",
-} or {
-    lock          = "noctalia-shell ipc call lockScreen lock",
-    launcher      = "noctalia-shell ipc call launcher toggle",
-    windows       = "noctalia-shell ipc call launcher windows",
-    clipboard     = "noctalia-shell ipc call launcher clipboard",
-    widgetsEdit   = "noctalia-shell ipc call desktopWidgets edit",
-    widgetsToggle = "noctalia-shell ipc call desktopWidgets toggle",
-    volUp         = "noctalia-shell ipc call volume increase",
-    volDown       = "noctalia-shell ipc call volume decrease",
-    volMute       = "noctalia-shell ipc call volume muteOutput",
-    briUp         = "noctalia-shell ipc call brightness increase",
-    briDown       = "noctalia-shell ipc call brightness decrease",
 }
 
 
@@ -146,7 +126,7 @@ end
 -- function to "hyprland.start" and call hl.exec_cmd for each program.
 hl.on("hyprland.start", function()
     hl.exec_cmd("code")
-    hl.exec_cmd(noctaliaLaunch)  -- v4 / v5 picked by the injected noctaliaV5 flag
+    hl.exec_cmd(noctaliaLaunch)
     hl.exec_cmd("wl-paste --watch cliphist store")
 end)
 
@@ -464,14 +444,6 @@ hl.bind(mod .. " + SHIFT + period", hl.dsp.exec_cmd(nc.widgetsToggle))
 -- ---- Dwindle layout ------------------------------------------------------
 hl.bind(mod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mod .. " + O", hl.dsp.layout("togglesplit"))
-
--- ---- Workspace overview --------------------------------------------------
--- v4 shipped this as the `workspace-overview` plugin. v5's plugin IPC changed
--- to `noctalia msg plugin <author/plugin:entry> <target> <event>` and the
--- plugin isn't bundled, so bind it on v4 only until the v5 plugin id is known.
-if not noctaliaV5 then
-    hl.bind(mod .. " + Tab", hl.dsp.exec_cmd("noctalia-shell ipc call plugin:workspace-overview toggle"))
-end
 
 -- ---- Window groups -------------------------------------------------------
 -- The 0.55 API renamed these into hl.dsp.group.*:

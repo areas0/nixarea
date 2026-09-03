@@ -27,19 +27,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    noctalia = {
-      url = "github:noctalia-dev/noctalia-shell/legacy-v4";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-      inputs.noctalia-qs.follows = "noctalia-qs";
-    };
-    noctalia-qs = {
-      url = "github:noctalia-dev/noctalia-qs";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-    # Pinned to the v5.0.0-beta.10 tag — locked so a `nix flake update` won't drag
-    # in an unreleased HEAD. Bump the ref deliberately when a newer v5 tag lands.
+    # Tracks noctalia-shell's default branch (main) instead of a pinned tag.
     noctalia-v5 = {
-      url = "github:noctalia-dev/noctalia-shell/v5.0.0-beta.10";
+      url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
@@ -82,8 +72,6 @@
       nix-citizen,
       nix-gaming,
       stylix,
-      noctalia,
-      noctalia-qs,
       noctalia-v5,
       git-hooks,
       claude-code,
@@ -131,7 +119,6 @@
           pkgs-unstable
           nvchad4nix
           zen
-          noctalia
           noctalia-v5
           claude-code
           mkMatugenScheme
@@ -226,7 +213,6 @@
           additionalConfig = personalConfig // {
             isNvidia = true;
             enableLocalLLM = true;
-            noctaliaVersion = "v5";
             # Trial: niri session installed alongside Hyprland (picked in SDDM).
             enableNiri = true;
           };

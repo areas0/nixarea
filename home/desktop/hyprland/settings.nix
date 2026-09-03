@@ -5,7 +5,6 @@
   ...
 }:
 let
-  noctaliaV5 = (additionalConfig.noctaliaVersion or "v4") == "v5";
   isNvidia = additionalConfig.isNvidia or false;
 in
 {
@@ -29,7 +28,7 @@ in
 
       exec-once = [
         "code"
-        (if noctaliaV5 then "noctalia" else "env QT_QPA_PLATFORMTHEME= noctalia-shell")
+        "noctalia"
         "wl-paste --watch cliphist store"
       ];
 

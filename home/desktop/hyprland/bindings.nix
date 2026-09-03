@@ -1,39 +1,21 @@
-{ additionalConfig, lib, ... }:
+{ ... }:
 let
-  noctaliaV5 = (additionalConfig.noctaliaVersion or "v4") == "v5";
-  # Full IPC command per action. v5 speaks the flat `noctalia msg <command>`
-  # scheme; v4 spoke `noctalia-shell ipc call <noun> <verb>`. Mirrors the `nc`
-  # table in hyprland.lua (the active runtime config); this hyprlang set is the
-  # fallback used only if the lua file is removed.
-  nc =
-    if noctaliaV5 then
-      {
-        lock = "noctalia msg session lock";
-        launcher = "noctalia msg panel-toggle launcher";
-        windows = "noctalia msg window-switcher";
-        clipboard = "noctalia msg panel-toggle clipboard";
-        widgetsEdit = "noctalia msg desktop-widgets-edit";
-        widgetsToggle = "noctalia msg desktop-widgets-toggle";
-        volUp = "noctalia msg volume-up";
-        volDown = "noctalia msg volume-down";
-        volMute = "noctalia msg volume-mute";
-        briUp = "noctalia msg brightness-up";
-        briDown = "noctalia msg brightness-down";
-      }
-    else
-      {
-        lock = "noctalia-shell ipc call lockScreen lock";
-        launcher = "noctalia-shell ipc call launcher toggle";
-        windows = "noctalia-shell ipc call launcher windows";
-        clipboard = "noctalia-shell ipc call launcher clipboard";
-        widgetsEdit = "noctalia-shell ipc call desktopWidgets edit";
-        widgetsToggle = "noctalia-shell ipc call desktopWidgets toggle";
-        volUp = "noctalia-shell ipc call volume increase";
-        volDown = "noctalia-shell ipc call volume decrease";
-        volMute = "noctalia-shell ipc call volume muteOutput";
-        briUp = "noctalia-shell ipc call brightness increase";
-        briDown = "noctalia-shell ipc call brightness decrease";
-      };
+  # Full IPC command per action, in v5's flat `noctalia msg <command>` scheme.
+  # Mirrors the `nc` table in hyprland.lua (the active runtime config); this
+  # hyprlang set is the fallback used only if the lua file is removed.
+  nc = {
+    lock = "noctalia msg session lock";
+    launcher = "noctalia msg panel-toggle launcher";
+    windows = "noctalia msg window-switcher";
+    clipboard = "noctalia msg panel-toggle clipboard";
+    widgetsEdit = "noctalia msg desktop-widgets-edit";
+    widgetsToggle = "noctalia msg desktop-widgets-toggle";
+    volUp = "noctalia msg volume-up";
+    volDown = "noctalia msg volume-down";
+    volMute = "noctalia msg volume-mute";
+    briUp = "noctalia msg brightness-up";
+    briDown = "noctalia msg brightness-down";
+  };
 in
 {
   wayland.windowManager.hyprland.settings = {
@@ -59,11 +41,6 @@ in
       # dwindle layout
       "$mod, P, pseudo"
       "$mod, O, togglesplit"
-    ]
-    # Workspace overview was a v4 noctalia plugin; v5's plugin IPC changed and
-    # the plugin isn't bundled, so bind it on v4 only (matches hyprland.lua).
-    ++ lib.optionals (!noctaliaV5) [
-      "$mod, Tab, exec, noctalia-shell ipc call plugin:workspace-overview toggle"
     ]
     ++ [
 

@@ -6,7 +6,6 @@
   pkgs-unstable,
   nvchad4nix,
   zen,
-  noctalia,
   noctalia-v5,
   claude-code,
   mkMatugenScheme,
@@ -44,7 +43,6 @@ nixpkgs.lib.nixosSystem {
       home-manager.users.areas = import ../home;
       home-manager.sharedModules = [
         zen.homeModules.default
-        noctalia.homeModules.default
       ];
       home-manager.backupFileExtension = "backup";
 

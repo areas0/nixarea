@@ -1,6 +1,5 @@
 { additionalConfig, lib, ... }:
 let
-  v5 = (additionalConfig.noctaliaVersion or "v4") == "v5";
   niri = additionalConfig.enableNiri or false;
 in
 {
@@ -8,7 +7,7 @@ in
     ./hypridle
     ./hyprland
     ./hyprlock
-    (if v5 then ./noctalia-v5 else ./noctalia)
+    ./noctalia-v5
   ]
   ++ lib.optionals niri [ ./niri ]
   # hyprsunset speaks the Hyprland-only CTM protocol and does nothing under
