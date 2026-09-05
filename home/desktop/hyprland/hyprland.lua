@@ -246,6 +246,17 @@ hl.monitor({
     scale    = 1,
 })
 
+-- Acer XB253Q (TH5EE0058521), currently seen as DP-2. Matched by EDID desc so
+-- this stays host-agnostic. Rotated to portrait; transform = 3 is
+-- 270deg clockwise (90deg counter-clockwise) — confirmed correct orientation.
+hl.monitor({
+    output    = "desc:Acer Technologies XB253Q TH5EE0058521",
+    mode      = "1920x1080@60",
+    position  = "auto",
+    scale     = 1,
+    transform = 3,
+})
+
 -- Workstation's 360Hz HDR OLED (Samsung Odyssey G60SD). Matched by EDID
 -- `desc:` rather than output name so this file stays host-agnostic — it's a
 -- no-op on hosts without the panel. `position = "auto"` lets hyprland place it
