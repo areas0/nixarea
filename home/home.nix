@@ -53,8 +53,6 @@ in
 
     pkgs-unstable.talosctl
 
-    pkgs-unstable.talosctl
-
     # CLI tools
     pkgs.postgresql
     pkgs.terraform-docs
