@@ -178,10 +178,7 @@
         pre-commit = git-hooks.lib.${system}.run {
           src = ./.;
           hooks = {
-            nixfmt-rfc-style.enable = true;
-            # nixfmt-rfc-style's default package is the deprecated pkgs.nixfmt-rfc-style
-            # alias (warns on access); pkgs.nixfmt is now identical.
-            nixfmt-rfc-style.package = pkgs.nixfmt;
+            nixfmt.enable = true;
             commitizen.enable = true;
           };
         };
