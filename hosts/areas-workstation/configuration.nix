@@ -8,8 +8,17 @@
 {
   imports = [
     ../../modules/bluetooth.nix
-    # ../../modules/llm.nix
+    ../../modules/llm.nix
   ];
+
+  # CUDA is unfree, so cache.nixos.org doesn't carry it (incl. ollama-cuda).
+  # The NixOS CUDA team's cache replaces the defunct cuda-maintainers.cachix.org.
+  nix.settings = {
+    substituters = [ "https://cache.nixos-cuda.org" ];
+    trusted-public-keys = [
+      "cache.nixos-cuda.org:74DUi4Ye579gUqzH4ziL9IyiJBlDpMRn9MBN8oNan9M="
+    ];
+  };
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -95,6 +104,22 @@
       ];
     };
   };
+
+  # Star Citizen / RSI Launcher networking requirements per CIG support docs.
+  networking.firewall.allowedUDPPortRanges = [
+    {
+      from = 64090;
+      to = 64110;
+    }
+  ];
+  networking.firewall.allowedTCPPortRanges = [
+    {
+      from = 8000;
+      to = 8020;
+    }
+  ];
+
+  services.netbird.enable = true;
 
   services.sunshine = {
     enable = true;

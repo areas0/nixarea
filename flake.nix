@@ -150,7 +150,7 @@
       };
 
       personalConfig = {
-        wallpaper = "${./assets/frieren.png}";
+        wallpaper = "${./assets/oshinoko.png}";
         theme = {
           schemeType = "scheme-vibrant";
           contrast = 0.3;
