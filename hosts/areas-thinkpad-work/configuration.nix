@@ -9,6 +9,7 @@
   imports = [
     ../../modules/docker.nix
     ../../modules/bluetooth.nix
+    ../../modules/intel-dock-workarounds.nix
   ];
 
   nixpkgs.overlays = [
@@ -22,7 +23,12 @@
     "/dev/disk/by-uuid/14370851-877b-4e97-b209-9f29f2b01b07";
   networking.hostName = "areas-thinkpad-work";
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # LTS (6.18) rather than linuxPackages_latest. The i915 Type-C / DP-alt
+  # hotplug bugs tracked in modules/intel-dock-workarounds.nix are both
+  # reported against 7.2.x, which is what linuxPackages_latest resolves to
+  # here; 6.18 is the series aquamarine#353 calls out as stable for this
+  # class of failure. Revisit once those issues are fixed upstream.
+  boot.kernelPackages = pkgs.linuxPackages;
 
   systemd.services = {
     pritunl-client-service = {
@@ -65,8 +71,7 @@
       user = "root";
       mode = "755";
     };
-    "/var/lib/ws1-hub/agent"."L+".argument =
-      "${pkgs.workspaceone-intelligent-hub}/libexec/agent";
+    "/var/lib/ws1-hub/agent"."L+".argument = "${pkgs.workspaceone-intelligent-hub}/libexec/agent";
     "/var/lib/ws1-hub/data".v = {
       group = "root";
       user = "root";

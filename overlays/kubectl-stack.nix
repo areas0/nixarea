@@ -26,7 +26,7 @@ let
     # `replace github.com/padoa/stack-info/operator => ../operator`.
     env.GOWORK = "off";
 
-    vendorHash = "sha256-HVQN+dbvNg/Qsyil168wuUoE4GIzz3YRLRG6/fbqkV4=";
+    vendorHash = "sha256-nTBRys/h7OTeB3U5EaWrsJrNCadtJP3C3REl2S+4Wpk=";
 
     ldflags = [
       "-s"

@@ -240,7 +240,12 @@ hl.monitor({
 
 hl.monitor({
     -- "desc:" prefix matches by EDID description — same convention as hyprlang.
-    output   = "desc:Iiyama North America PL2770H 0x30393235",
+    -- The string must match what the kernel actually reports: this panel's EDID
+    -- says "iiyama Corporation", not "Iiyama North America". With the wrong
+    -- vendor string the rule silently never matched and the output fell back to
+    -- auto-placement, which moved it every time the dock came and went. Verify
+    -- any change here against the `description:` line in `hyprctl monitors`.
+    output   = "desc:iiyama Corporation PL2770H 0x30393235",
     mode     = "1920x1080@144",
     position = "1440x0",
     scale    = 1,
@@ -257,27 +262,63 @@ hl.monitor({
     transform = 3,
 })
 
--- Workstation's 360Hz HDR OLED (Samsung Odyssey G60SD). Matched by EDID
--- `desc:` rather than output name so this file stays host-agnostic — it's a
--- no-op on hosts without the panel. `position = "auto"` lets hyprland place it
--- relative to the other outputs. HDR fields carried over from the old DP-2
--- config: 10-bit, VRR, hdredid colour management, forced-gamma2.2 SDR EOTF.
-hl.monitor({
-    output              = "desc:Samsung Electric Company Odyssey G60SD HNAX701148",
-    mode                = "2560x1440@360.00Hz",
-    position            = "auto",
-    scale               = 1,
-    sdr_min_luminance   = 0,
-    sdr_max_luminance   = 200,
-    cm                  = "hdredid",
-    supports_hdr        = 1,
-    bitdepth            = 10,
-    vrr                 = 1,
-    sdr_eotf            = "gamma22force",
-    supports_wide_color = 1,
-    sdrbrightness       = 1.1,
-    sdrsaturation       = 1.0,
-})
+-- 360Hz HDR OLED (Samsung Odyssey G60SD). Matched by EDID `desc:` rather than
+-- output name so this file stays host-agnostic — it's a no-op on hosts without
+-- the panel. `position = "auto"` lets hyprland place it relative to the other
+-- outputs.
+--
+-- HDR is gated on the DP link actually supporting it. On the work laptop's
+-- USB-C path the link currently trains at DP 1.2/HBR2 (no DSC): the kernel
+-- prunes every mode above 1440p@120 and exposes neither VRR capability nor
+-- HDR metadata (aquamarine logs "crtc doesn't support HDR"). Forcing
+-- cm=hdredid + supports_hdr on that link makes Hyprland encode for a
+-- wide-gamut/HDR target the monitor never enters — the picture goes washed-out
+-- gray.
+--
+-- Manual toggle, not auto-detected: the Lua monitor object (LuaMonitor.cpp,
+-- verified at v0.55.4) exposes only current state (refresh_rate, vrr_active)
+-- — not the kernel's available-mode list — so there's nothing to probe at
+-- eval time. Flip to true once the link is DP 1.4+DSC; verify first with:
+--   hyprctl monitors   → availableModes must list 2560x1440@360.00Hz
+local samsungDesc = "desc:Samsung Electric Company Odyssey G60SD HNAX701148"
+local samsungFullLink = false
+
+local samsung = {
+    output   = samsungDesc,
+    -- Hyprland's exact "WxH@Hz" mode string does NOT fall back when the mode
+    -- isn't offered — it just fails to set any mode, leaving the output at
+    -- 0x0 (blank screen, `hyprctl monitors` shows the connector connected
+    -- but with no real resolution). Use the "preferred" keyword instead so
+    -- it always resolves to whatever the current link actually supports
+    -- (360Hz on DP 1.4+DSC, 120Hz on the constrained SDR-only link).
+    mode     = samsungFullLink and "2560x1440@360.00Hz" or "preferred",
+    position = "auto",
+    scale    = 1,
+}
+if samsungFullLink then
+    -- Full DP 1.4 link: HDR fields carried over from the old DP-2 config —
+    -- hdredid colour management, forced-gamma2.2 SDR EOTF, SDR tone mapping.
+    samsung.bitdepth             = 10
+    samsung.vrr                  = 1
+    samsung.cm                  = "hdredid"
+    samsung.supports_hdr        = 1
+    samsung.supports_wide_color = 1
+    samsung.sdr_eotf            = "gamma22force"
+    samsung.sdr_min_luminance   = 0
+    samsung.sdr_max_luminance   = 200
+    samsung.sdrbrightness       = 1.1
+    samsung.sdrsaturation       = 1.0
+else
+    -- SDR-only link: the aquamarine log confirms this CRTC reports
+    -- vrr_capable=0 and can't clear bandwidth for 10bpc at this resolution.
+    -- Forcing vrr=1/bitdepth=10 anyway makes every atomic commit (even the
+    -- ATOMIC_TEST_ONLY probe) fail with EINVAL, so no mode ever gets applied
+    -- and the output sticks at 0x0 — a black screen regardless of the
+    -- requested resolution. Only request what this link can actually do:
+    -- plain sRGB, default (8) bit depth, no VRR.
+    samsung.cm = "srgb"
+end
+hl.monitor(samsung)
 
 
 -- ----------------------------------------------------------------------------
@@ -453,6 +494,13 @@ hl.bind(mod .. " + period",         hl.dsp.exec_cmd(nc.widgetsEdit))
 hl.bind(mod .. " + SHIFT + period", hl.dsp.exec_cmd(nc.widgetsToggle))
 
 -- ---- Dwindle layout ------------------------------------------------------
+-- Recovery: rebuild the renderer and re-probe every connector. First thing to
+-- try when the screens go dead but input still works — aquamarine can lose a
+-- page-flip completion around a modeset and then commit no further frames on
+-- any output (see modules/intel-dock-workarounds.nix). If this does not bring
+-- them back, drop to a TTY and run `display-rescue`.
+hl.bind(mod .. " + SHIFT + R", hl.dsp.force_renderer_reload())
+
 hl.bind(mod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mod .. " + O", hl.dsp.layout("togglesplit"))
 

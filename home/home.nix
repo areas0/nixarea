@@ -88,6 +88,9 @@ in
     pkgs.jq
     pkgs.yq
 
+    # Databases
+    pkgs.sqlite # sqlite3 CLI, required by the claude-carbon statusline and hooks
+
     # Git/GitHub
     pkgs.gh
 
@@ -164,6 +167,7 @@ in
     pkgs.fastfetch
 
     pkgs-unstable.nvd
+    pkgs.rtk
   ]
   ++ additionalConfig.additionalPackages;
 

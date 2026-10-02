@@ -20,13 +20,13 @@ let
 in
 (buildNpmPackage.override { inherit nodejs; }) (finalAttrs: {
   pname = "better-sqlite3";
-  version = "12.8.0";
+  version = "13.0.3";
 
   src = fetchFromGitHub {
     owner = "WiseLibs";
     repo = "better-sqlite3";
     rev = "v${finalAttrs.version}";
-    hash = "sha256-B9SHvlSK9Heqhp3maCPRf08tatXzLi5m2zcnU5o2Y0E=";
+    hash = "sha256-nn3TnkdPLiZlitAO7QlzZmObgxX7MY0xx4RJ/Xu8IQw=";
   };
 
   nativeBuildInputs = [
@@ -42,10 +42,10 @@ in
   '';
 
   buildPhase = ''
-    node-gyp rebuild --release --runtime=electron
+    node-gyp rebuild --release --force_build=1 --runtime=electron
   '';
 
-  npmDepsHash = "sha256-mtciGERuBzkBLNAW5/muq6S2hZONrFa/7hALN7KOv9A=";
+  npmDepsHash = "sha256-PXw5SCitKiSd5b5E+cl5cL4k8QEbZCEhJM9DXMKcbIE=";
   npmInstallFlags = [ "--ignore-scripts" ];
 
   installPhase = ''
