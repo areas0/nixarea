@@ -4,9 +4,7 @@ let
 in
 {
   imports = [
-    ./hypridle
     ./hyprland
-    ./hyprlock
     ./noctalia-v5
   ]
   ++ lib.optionals niri [ ./niri ]

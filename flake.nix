@@ -83,9 +83,6 @@
       pkgs-unstable = import inputs.nixpkgs-unstable {
         inherit system;
         config.allowUnfree = true;
-        overlays = [
-          (import ./overlays/azahar.nix)
-        ];
       };
 
       pkgs = import nixpkgs {
@@ -97,7 +94,6 @@
           (import ./overlays/hammer.nix { inherit inputs; })
           (import ./overlays/kubectl-stack.nix { inherit inputs; })
           (import ./overlays/notion-app.nix)
-          (final: prev: { inherit nixpkgs-unstable; })
         ];
       };
 
@@ -137,7 +133,6 @@
       workConfig = {
         wallpaper = "${./assets/frieren.png}";
         theme = defaultTheme;
-        isLaptop = true;
         # Work-only. kubectl-stack/ctx/client build from the private
         # padoa/stack-info repo; hammer is the padoa work CLI.
         additionalPackages = [
@@ -157,7 +152,6 @@
           lightnessDark = 0.0;
           amoled = true;
         };
-        isLaptop = false;
         additionalPackages = [
           pkgs-unstable.wine64Packages.waylandFull
           pkgs-unstable.gamescope-wsi
@@ -223,9 +217,7 @@
           extraSpecialArgs = {
             extraGamingPackages = [ ];
           };
-          additionalConfig = personalConfig // {
-            isLaptop = true;
-          };
+          additionalConfig = personalConfig;
         };
       };
     };

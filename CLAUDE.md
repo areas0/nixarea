@@ -68,13 +68,13 @@ At the user level, `home/home.nix` wraps `matugen` in a shell script that inject
 
 `home/default.nix` imports `home.nix` (packages + session vars + mime) plus four category directories: `programs/`, `desktop/`, `editor/`, `shell/`. Each category has its own `default.nix` that enumerates the modules it imports.
 
-Note: `home/desktop/` contains sub-directories for `hyprpaper`, `hyprpanel`, and `walker` that are **not** imported from `home/desktop/default.nix`. Only `hypridle`, `hyprland`, `hyprlock`, `noctalia-v5`, `hyprsunset` are active. Treat the unimported folders as dormant; don't wire them in without a reason.
+Note: `home/desktop/hyprland/hyprland.lua` is the whole Hyprland runtime config (Hyprland loads it instead of `hyprland.conf`); `settings.nix` only enables the home-manager module. Idle, lock, night light and the launcher are handled by noctalia, so there are no hypridle/hyprlock/hyprpaper/hyprpanel/walker modules. `niri` is imported only when `additionalConfig.enableNiri` is set, and `hyprsunset` only when it isn't.
 
 `home/desktop/noctalia-v5` is the only noctalia module (the legacy v4 shell and its `noctalia`/`noctalia-qs` flake inputs have been removed) and is imported unconditionally for every host. It's a complete rewrite of the old shell — no Quickshell, no home-manager module from upstream, configuration is a TOML file generated via `pkgs.formats.toml` and dropped at `~/.config/noctalia/config.toml`. The `noctalia-v5` flake input tracks noctalia-shell's default branch directly (no tag pin) — `nix flake update noctalia-v5` picks up whatever is at HEAD.
 
 ### Mixing stable and unstable nixpkgs
 
-`pkgs-unstable` is threaded through `specialArgs` (NixOS) and `home-manager.extraSpecialArgs`. Use `pkgs-unstable.<pkg>` only when the stable channel lags; otherwise prefer `pkgs`. Existing examples: Hyprland/Hyprlock packages, matugen, kubectl and k8s tooling, terraform, zen, gamescope.
+`pkgs-unstable` is threaded through `specialArgs` (NixOS) and `home-manager.extraSpecialArgs`. Use `pkgs-unstable.<pkg>` only when the stable channel lags; otherwise prefer `pkgs`. Existing examples: Hyprland packages, matugen, kubectl and k8s tooling, terraform, zen, gamescope.
 
 ### Overlays
 

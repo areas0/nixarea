@@ -1,9 +1,9 @@
 -- =============================================================================
 -- ACTIVE: Hyprland 0.55+ Lua config. Wired in home/desktop/hyprland/default.nix
 -- as `xdg.configFile."hypr/hyprland.lua".source`. Because Hyprland loads this
--- in preference to hyprland.conf when both are present, settings.nix and
--- bindings.nix are currently INERT — kept on disk as a hyprlang fallback you
--- can revert to by removing the xdg.configFile line.
+-- in preference to hyprland.conf when both are present. settings.nix only
+-- enables the home-manager module; the hyprlang settings/bindings it used to
+-- carry were removed (see git history before the lua migration).
 --
 -- API names, field names, and dispatcher names below were verified against
 -- the upstream source at github.com/hyprwm/Hyprland under src/config/lua/.
