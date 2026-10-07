@@ -275,13 +275,18 @@ hl.monitor({
 -- wide-gamut/HDR target the monitor never enters — the picture goes washed-out
 -- gray.
 --
--- Manual toggle, not auto-detected: the Lua monitor object (LuaMonitor.cpp,
+-- Per-host toggle (additionalConfig.samsungFullLink in flake.nix), not
+-- auto-detected: the Lua monitor object (LuaMonitor.cpp,
 -- verified at v0.55.4) exposes only current state (refresh_rate, vrr_active)
 -- — not the kernel's available-mode list — so there's nothing to probe at
--- eval time. Flip to true once the link is DP 1.4+DSC; verify first with:
+-- eval time. Set it true for a host once the link is DP 1.4+DSC; verify first with:
 --   hyprctl monitors   → availableModes must list 2560x1440@360.00Hz
 local samsungDesc = "desc:Samsung Electric Company Odyssey G60SD HNAX701148"
-local samsungFullLink = false
+local samsungFullLink = @samsungFullLink@ -- substituted per host by default.nix
+-- HDR is forced on regardless of link capability (decoupled from the mode /
+-- bitdepth / VRR gating below). If the picture goes washed-out or black on a
+-- DP 1.2 link, set this back to false.
+local samsungHdr = true
 
 local samsung = {
     output   = samsungDesc,
@@ -295,11 +300,8 @@ local samsung = {
     position = "auto",
     scale    = 1,
 }
-if samsungFullLink then
-    -- Full DP 1.4 link: HDR fields carried over from the old DP-2 config —
+if samsungHdr then
     -- hdredid colour management, forced-gamma2.2 SDR EOTF, SDR tone mapping.
-    samsung.bitdepth             = 10
-    samsung.vrr                  = 1
     samsung.cm                  = "hdredid"
     samsung.supports_hdr        = 1
     samsung.supports_wide_color = 1
@@ -309,14 +311,14 @@ if samsungFullLink then
     samsung.sdrbrightness       = 1.1
     samsung.sdrsaturation       = 1.0
 else
-    -- SDR-only link: the aquamarine log confirms this CRTC reports
-    -- vrr_capable=0 and can't clear bandwidth for 10bpc at this resolution.
-    -- Forcing vrr=1/bitdepth=10 anyway makes every atomic commit (even the
-    -- ATOMIC_TEST_ONLY probe) fail with EINVAL, so no mode ever gets applied
-    -- and the output sticks at 0x0 — a black screen regardless of the
-    -- requested resolution. Only request what this link can actually do:
-    -- plain sRGB, default (8) bit depth, no VRR.
     samsung.cm = "srgb"
+end
+if samsungFullLink then
+    -- Full DP 1.4 link: 10 bpc + VRR. On a constrained link, forcing these
+    -- makes every atomic commit (even the ATOMIC_TEST_ONLY probe) fail with
+    -- EINVAL, leaving the output at 0x0 — a black screen.
+    samsung.bitdepth = 10
+    samsung.vrr      = 1
 end
 hl.monitor(samsung)
 

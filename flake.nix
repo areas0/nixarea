@@ -209,6 +209,8 @@
           ];
           additionalConfig = personalConfig // {
             isNvidia = true;
+            # Native DP 1.4a (+DSC) to the Samsung G60SD: 360Hz, 10 bpc, VRR.
+            samsungFullLink = true;
             enableLocalLLM = true;
             # Trial: niri session installed alongside Hyprland (picked in SDDM).
             enableNiri = true;
