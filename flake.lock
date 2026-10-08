@@ -76,11 +76,11 @@
         "systems": "systems"
       },
       "locked": {
-        "lastModified": 1791259350,
-        "narHash": "sha256-zFzAgJWwGylQEnlX3wC/j2sVjMRCVnYNn8ogLDF7JGc=",
+        "lastModified": 1791313301,
+        "narHash": "sha256-6wQM1lQAb3q0hVIZ48KsrFlLGwu6W2HCmLDqnoyqvvU=",
         "owner": "sadjow",
         "repo": "claude-code-nix",
-        "rev": "05717477d9464707396b6387ae401175450173d6",
+        "rev": "13f3032e7a46582bbd3ed749e25817c7ac584b77",
         "type": "github"
       },
       "original": {
@@ -342,11 +342,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1791265590,
-        "narHash": "sha256-fOrobHKriYn7+1TLF5OnBq5O2F/prMXN+VOHwZiiPWU=",
+        "lastModified": 1791350236,
+        "narHash": "sha256-AJAIMIhVGq7rOxvuxIsa70Bawy/fMutkcjM/2YXzDyI=",
         "owner": "fufexan",
         "repo": "nix-gaming",
-        "rev": "4df275fb999611ac853949fd0fdfbd055d68371f",
+        "rev": "74105fcc663c660efb04dcf1d69ba321094f0ad6",
         "type": "github"
       },
       "original": {
@@ -420,11 +420,11 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1791254437,
-        "narHash": "sha256-qMSsgG+9tIdx282dMqGuJAUK3t6F36clM6efd0rXfes=",
+        "lastModified": 1791353474,
+        "narHash": "sha256-v72qr4LsSz61tQki/41nHKZKPY6NSeZavtGlAInOCng=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "b25309931cfda5f0b8805f462a29897eeae50168",
+        "rev": "2efa67fd26b6df417c33e4603185c701f260dd83",
         "type": "github"
       },
       "original": {
@@ -473,11 +473,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1791249451,
-        "narHash": "sha256-ucUgpRWCvXd17/29C1rPYliLTz8mdNeOvsSGdtBGMAY=",
+        "lastModified": 1791371658,
+        "narHash": "sha256-jJqXgLYhTBaloTDSVQ+20QDZ/UXnOp9RUdGMvuQoHB0=",
         "owner": "noctalia-dev",
         "repo": "noctalia-shell",
-        "rev": "4237bc286bb9db7fec8ba663bfc42779af9b1372",
+        "rev": "8240b170dbbbf47b231170a795b24ae9ac7923f6",
         "type": "github"
       },
       "original": {
@@ -587,11 +587,11 @@
     "stack-info": {
       "flake": false,
       "locked": {
-        "lastModified": 1791206090,
-        "narHash": "sha256-2HYy2S+nBWHR1NToO8nXczQ0lTltyFvpAPIiEVp6atg=",
+        "lastModified": 1791380722,
+        "narHash": "sha256-KCIeP1z4WjiPRd/whKgqHHFm7ADCiymqH38Ir3KE7bE=",
         "ref": "main",
-        "rev": "e2f9b4f92df49b6f409f29aa1cadae26d6b7c97d",
-        "revCount": 167,
+        "rev": "4320f2aca1f81ffd23dd82ec785dde2b13f55a8a",
+        "revCount": 170,
         "type": "git",
         "url": "ssh://git@github.com/padoa/stack-info"
       },
@@ -756,11 +756,11 @@
         "nixpkgs": "nixpkgs_4"
       },
       "locked": {
-        "lastModified": 1791266850,
-        "narHash": "sha256-F/scdmE9Y03TfSQWrBHaJWTRTr3rRQBqvJSDgF48g1c=",
+        "lastModified": 1791367832,
+        "narHash": "sha256-MSFMvb579iNOOx89nEAligQJaLB6Qv1QfAw31eC4JIU=",
         "owner": "0xc000022070",
         "repo": "zen-browser-flake",
-        "rev": "d9e4e25d6ade5d541074045d332d887c044e11f5",
+        "rev": "a2caf7fe6fb6e4786591acb9cdf1306db1b011f7",
         "type": "github"
       },
       "original": {

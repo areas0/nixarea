@@ -49,7 +49,7 @@
       # Formatters
       gofumpt
       gotools # goimports
-      nixfmt-rfc-style
+      nixfmt
       prettierd
       ruff
       shfmt

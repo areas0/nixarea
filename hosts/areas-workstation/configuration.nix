@@ -82,6 +82,10 @@
     desktopManager.plasma6.enable = true;
     displayManager.sddm.enable = true;
     displayManager.sddm.wayland.enable = true;
+    # 26.11: the niri module also sets a default session, which conflicts with
+    # plasma6's. Pin it to what 26.05 resolved to; SDDM remembers the last
+    # session actually picked anyway.
+    displayManager.defaultSession = "plasma";
   };
 
   # niri session alongside Hyprland — shows up as its own SDDM entry. The module
