@@ -7,5 +7,6 @@
     ./blueman.nix
     ./zen.nix
     ./aider.nix
+    ./claude-code
   ];
 }
