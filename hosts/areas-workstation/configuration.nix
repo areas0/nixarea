@@ -53,20 +53,28 @@
     open = true;
     nvidiaSettings = true;
 
-    # Latest driver from the live channel. The EGL-on-Wayland breakage that
-    # forced the old version pin was a package/module mismatch from pinning the
-    # driver to a separate nixpkgs rev (nixpkgs#525152), not this version — the
-    # in-tree module now ships nvidia-egl-external-platforms automatically.
-    # nixpkgs stable's nvidiaPackages.latest (595.71.05) doesn't build
-    # against Linux 7.2: the kernel dropped the generic strncpy() symbol
-    # (deprecated for years, now gone), and nvidia-drm-helper.c also predates
-    # 7.2's DRM atomic-commit API changes (see
-    # github.com/NVIDIA/open-gpu-kernel-modules/issues/1224, still open with
-    # no official fix). nixpkgs-unstable already carries 610.57.04, which
-    # builds clean against our kernel with zero patches — pull the driver
-    # from there instead of patching around it. Drop this override once
-    # nixpkgs stable catches up.
-    package = (pkgs-unstable.linuxPackagesFor config.boot.kernelPackages.kernel).nvidiaPackages.latest;
+    # Pinned to 610.57.04, NOT nvidiaPackages.latest (currently 615.78.08).
+    # 615.71.09 (and later 615.x) has an open-kernel-module regression where
+    # a DisplayPort power-cycle / monitor blank-wake triggers a GSP RPC that
+    # never returns (stuck in kgspRecvPoll_IMPL), deadlocking nvidia-modeset
+    # and freezing the whole display stack — only a hard power cycle
+    # recovers (see github.com/NVIDIA/open-gpu-kernel-modules/issues/1392,
+    # also #1371/#1367/#1289; reproduced across many GPUs/compositors,
+    # including Hyprland). Every reporter who downgraded to 610.57.04 says
+    # it fixed it; no fix has shipped upstream as of 2026-10. Hashes pulled
+    # from nixpkgs commit 14e8b3d448 (the last commit to carry this version
+    # as new_feature before it was bumped to 615.71.09). Revisit once #1392
+    # has a confirmed fix (PR #1359 is a candidate, untested by reporters).
+    package =
+      (pkgs-unstable.linuxPackagesFor config.boot.kernelPackages.kernel).nvidiaPackages.mkDriver
+        {
+          version = "610.57.04";
+          sha256_64bit = "sha256-suk1xmuDuwDAyFe8jg7g/VLekoa0DJzB7sKafOfrEW0=";
+          sha256_aarch64 = "sha256-QCefrMBCmpOwuOyXv1k5Gj0iB2CYlPgnG3JToUw/j54=";
+          openSha256 = "sha256-rQHOOOY4KL92Ww3KDwh+j4eGU7oNAH8LutZC5wmFnPo=";
+          settingsSha256 = "sha256-ZEMo8I8Zc2Tq6RVDNYpAH+f094dUaZiBqO+5f6lIjRI=";
+          persistencedSha256 = "sha256-aXmD2VY1RLlgAnlHhOUMWzvMyhI6JTClcFLm4imF/mA=";
+        };
   };
 
   services.xserver.videoDrivers = [ "nvidia" ];
