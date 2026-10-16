@@ -1,0 +1,6 @@
+{
+  "name": "eva",
+  "owner": { "name": "areas0" },
+  "metadata": { "description": "Evangelion mods for Claude Code" },
+  "plugins": [{ "name": "nerv-magi", "source": "./" }]
+}
