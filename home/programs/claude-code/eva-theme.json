@@ -1,5 +1,5 @@
 {
-  "name": "Evangelion",
+  "name": "Evangelion Unit-01",
   "base": "dark",
   "overrides": {
     "claude": "#ff6a00",
@@ -28,6 +28,7 @@
     "ide": "#6fb7ff",
     "fastMode": "#ff6a00",
     "fastModeShimmer": "#ffa040",
+    "effortUltra": "#2ee6d6",
 
     "diffAdded": "#1f3d12",
     "diffRemoved": "#4a1216",
@@ -54,6 +55,21 @@
     "purple_FOR_SUBAGENTS_ONLY": "#8b4fc4",
     "orange_FOR_SUBAGENTS_ONLY": "#ff6a00",
     "pink_FOR_SUBAGENTS_ONLY": "#ff5fa2",
-    "cyan_FOR_SUBAGENTS_ONLY": "#2ee6d6"
+    "cyan_FOR_SUBAGENTS_ONLY": "#2ee6d6",
+
+    "rainbow_red": "#e0262d",
+    "rainbow_orange": "#ff6a00",
+    "rainbow_yellow": "#ffb000",
+    "rainbow_green": "#7cfc00",
+    "rainbow_blue": "#6fb7ff",
+    "rainbow_indigo": "#6b3fa0",
+    "rainbow_violet": "#b57bff",
+    "rainbow_red_shimmer": "#ff6a6a",
+    "rainbow_orange_shimmer": "#ffa040",
+    "rainbow_yellow_shimmer": "#ffd060",
+    "rainbow_green_shimmer": "#b5ff6a",
+    "rainbow_blue_shimmer": "#a8d4ff",
+    "rainbow_indigo_shimmer": "#9b6fd0",
+    "rainbow_violet_shimmer": "#d0a8ff"
   }
 }
