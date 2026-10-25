@@ -22,10 +22,13 @@
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  # Pinned to 6.18 — kernel 7.0 broke NVIDIA EGL on Wayland
-  # (eglGetDisplay fails, clients fall back to llvmpipe → 100%+ CPU on animated UIs).
-  # Revisit once nvidia-x11 has a 7.x-compatible release.
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # Pinned to 7.2, NOT linuxPackages_latest (now 7.3). hardware.nvidia.package
+  # below is pinned to 610.57.04 to dodge a 615.x display-freeze regression;
+  # 610.57.04 fails to build on kernel 7.3 (gpio_device_get_chip() gained a
+  # const qualifier upstream, nv-caps-imex.c doesn't account for it, no
+  # nixpkgs patch exists yet). Pinning the kernel here stops it silently
+  # outrunning the driver pin again. Revisit both pins together.
+  boot.kernelPackages = pkgs.linuxPackages_7_2;
 
   boot.initrd.luks.devices."luks-07cc5a0f-351f-432c-85d9-8cdde83524d8".device =
     "/dev/disk/by-uuid/07cc5a0f-351f-432c-85d9-8cdde83524d8";

@@ -34,7 +34,7 @@ in
     pkgs.argocd
     pkgs.argo-workflows
     pkgs.awscli2
-    pkgs-unstable.azure-cli
+    pkgs.azure-cli
     pkgs.circleci-cli
     pkgs.dig
     pkgs.helm-ls
