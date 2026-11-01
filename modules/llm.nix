@@ -1,5 +1,20 @@
 { pkgs-unstable, ... }:
 {
+  # fpdf2 2.8.9 (open-webui dependency) fails this test on 26.05: the rendered
+  # PDF's hash no longer matches the reference. Image-output only, so skip it.
+  # Drop once nixpkgs fixes or disables it upstream.
+  nixpkgs.overlays = [
+    (final: prev: {
+      pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
+        (pyfinal: pyprev: {
+          fpdf2 = pyprev.fpdf2.overridePythonAttrs (old: {
+            disabledTests = (old.disabledTests or [ ]) ++ [ "test_image_with_explicit_dimensions" ];
+          });
+        })
+      ];
+    })
+  ];
+
   services.ollama = {
     enable = true;
     # ollama-cuda is the CUDA-enabled variant (pkgs-unstable.ollama is CPU-only).

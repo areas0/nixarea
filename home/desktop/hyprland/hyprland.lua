@@ -1,9 +1,10 @@
 -- =============================================================================
 -- ACTIVE: Hyprland 0.55+ Lua config. Wired in home/desktop/hyprland/default.nix
--- as `xdg.configFile."hypr/hyprland.lua".source`. Because Hyprland loads this
--- in preference to hyprland.conf when both are present. settings.nix only
--- enables the home-manager module; the hyprlang settings/bindings it used to
--- carry were removed (see git history before the lua migration).
+-- as `wayland.windowManager.hyprland.extraConfig`, so home-manager (configType
+-- = "lua") appends it to the hypr/hyprland.lua it generates, after its own
+-- stylix colors and systemd session start hook. settings.nix only enables the
+-- module; the hyprlang settings/bindings it used to carry were removed (see
+-- git history before the lua migration).
 --
 -- API names, field names, and dispatcher names below were verified against
 -- the upstream source at github.com/hyprwm/Hyprland under src/config/lua/.

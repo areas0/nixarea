@@ -10,13 +10,13 @@
     ./settings.nix
   ];
 
-  # Hyprland 0.55+: if hyprland.lua exists, it is loaded INSTEAD of
-  # hyprland.conf, so this file is the whole runtime config; settings.nix only
-  # enables the module.
+  # Hyprland 0.55+ loads hyprland.lua instead of hyprland.conf. With
+  # configType = "lua", HM generates that file (systemd session startup hook)
+  # and appends this as its extraConfig, so it is the whole runtime config.
   #
   # `@samsungFullLink@` in the lua file is substituted per host from
   # additionalConfig (true only where the Samsung gets a DP 1.4+DSC link).
-  xdg.configFile."hypr/hyprland.lua".text =
+  wayland.windowManager.hyprland.extraConfig =
     builtins.replaceStrings
       [ "@samsungFullLink@" ]
       [ (lib.boolToString (additionalConfig.samsungFullLink or false)) ]
