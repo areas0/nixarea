@@ -94,6 +94,7 @@
           (import ./overlays/hammer.nix { inherit inputs; })
           (import ./overlays/kubectl-stack.nix { inherit inputs; })
           (import ./overlays/notion-app.nix)
+          (import ./overlays/lichii.nix)
         ];
       };
 
@@ -128,6 +129,7 @@
         bottles
         heroic
         ryubing
+        lichii
       ];
 
       workConfig = {

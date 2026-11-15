@@ -22,13 +22,11 @@
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  # Pinned to 7.2, NOT linuxPackages_latest (now 7.3). hardware.nvidia.package
-  # below is pinned to 610.57.04 to dodge a 615.x display-freeze regression;
-  # 610.57.04 fails to build on kernel 7.3 (gpio_device_get_chip() gained a
-  # const qualifier upstream, nv-caps-imex.c doesn't account for it, no
-  # nixpkgs patch exists yet). Pinning the kernel here stops it silently
-  # outrunning the driver pin again. Revisit both pins together.
-  boot.kernelPackages = pkgs.linuxPackages_7_2;
+  # Pinned explicitly so a kernel bump can't silently outrun the driver pin in
+  # hardware.nvidia.package below; revisit both together. Known-good fallback
+  # if 620.70.06 misbehaves: linuxPackages_6_18 + driver 610.57.04 (610 does
+  # not build on 7.3: dmem_cgroup_register_region() changed signature).
+  boot.kernelPackages = pkgs.linuxPackages_7_3;
 
   boot.initrd.luks.devices."luks-07cc5a0f-351f-432c-85d9-8cdde83524d8".device =
     "/dev/disk/by-uuid/07cc5a0f-351f-432c-85d9-8cdde83524d8";
@@ -56,28 +54,22 @@
     open = true;
     nvidiaSettings = true;
 
-    # Pinned to 610.57.04, NOT nvidiaPackages.latest (currently 615.78.08).
-    # 615.71.09 (and later 615.x) has an open-kernel-module regression where
-    # a DisplayPort power-cycle / monitor blank-wake triggers a GSP RPC that
-    # never returns (stuck in kgspRecvPoll_IMPL), deadlocking nvidia-modeset
-    # and freezing the whole display stack — only a hard power cycle
-    # recovers (see github.com/NVIDIA/open-gpu-kernel-modules/issues/1392,
-    # also #1371/#1367/#1289; reproduced across many GPUs/compositors,
-    # including Hyprland). Every reporter who downgraded to 610.57.04 says
-    # it fixed it; no fix has shipped upstream as of 2026-10. Hashes pulled
-    # from nixpkgs commit 14e8b3d448 (the last commit to carry this version
-    # as new_feature before it was bumped to 615.71.09). Revisit once #1392
-    # has a confirmed fix (PR #1359 is a candidate, untested by reporters).
-    package =
-      (pkgs-unstable.linuxPackagesFor config.boot.kernelPackages.kernel).nvidiaPackages.mkDriver
-        {
-          version = "610.57.04";
-          sha256_64bit = "sha256-suk1xmuDuwDAyFe8jg7g/VLekoa0DJzB7sKafOfrEW0=";
-          sha256_aarch64 = "sha256-QCefrMBCmpOwuOyXv1k5Gj0iB2CYlPgnG3JToUw/j54=";
-          openSha256 = "sha256-rQHOOOY4KL92Ww3KDwh+j4eGU7oNAH8LutZC5wmFnPo=";
-          settingsSha256 = "sha256-ZEMo8I8Zc2Tq6RVDNYpAH+f094dUaZiBqO+5f6lIjRI=";
-          persistencedSha256 = "sha256-aXmD2VY1RLlgAnlHhOUMWzvMyhI6JTClcFLm4imF/mA=";
-        };
+    # Testing nixpkgs-unstable's latest (615.78.08 as of 2026-11). 615.x has an
+    # open-module regression where a DisplayPort power-cycle / blank-wake / S3
+    # resume deadlocks nvidia-modeset and freezes the display until a hard
+    # reset (NVIDIA internal bug 7029722; github.com/NVIDIA/
+    # open-gpu-kernel-modules/issues/1392, #1371, #1289). 615.78.08 fixes the
+    # monitor power-cycle path; remaining DPMS hangs go through the DP
+    # Adaptive-Sync path, which `options nvidia_modeset conceal_vrr_caps=1`
+    # avoids (at the cost of VRR). Known-good fallback: 610.57.04 on 6.18 via
+    # mkDriver {
+    #   version = "610.57.04";
+    #   sha256_64bit = "sha256-suk1xmuDuwDAyFe8jg7g/VLekoa0DJzB7sKafOfrEW0=";
+    #   openSha256 = "sha256-rQHOOOY4KL92Ww3KDwh+j4eGU7oNAH8LutZC5wmFnPo=";
+    #   settingsSha256 = "sha256-ZEMo8I8Zc2Tq6RVDNYpAH+f094dUaZiBqO+5f6lIjRI=";
+    #   persistencedSha256 = "sha256-aXmD2VY1RLlgAnlHhOUMWzvMyhI6JTClcFLm4imF/mA=";
+    # }
+    package = (pkgs-unstable.linuxPackagesFor config.boot.kernelPackages.kernel).nvidiaPackages.latest;
   };
 
   services.xserver.videoDrivers = [ "nvidia" ];
@@ -109,15 +101,21 @@
   programs.steam.extraCompatPackages = [ pkgs-unstable.proton-ge-bin ];
   programs.gamemode.enable = true;
 
+  # Fixed 96 kHz graph: Easy Effects keeps the graph busy, so PipeWire can never
+  # switch rates and would stay stuck at whatever rate the first stream had.
   services.pipewire.extraConfig.pipewire."90-highrez" = {
     "context.properties" = {
       "default.clock.rate" = 96000;
-      "default.clock.allowed-rates" = [
-        44100
-        48000
-        96000
-      ];
+      "default.clock.allowed-rates" = [ 96000 ];
     };
+  };
+  # 44.1/48 kHz streams are resampled to 96 kHz; resampling happens client-side,
+  # so raise quality for both pulse and native PipeWire clients.
+  services.pipewire.extraConfig.pipewire-pulse."90-resample" = {
+    "stream.properties"."resample.quality" = 10;
+  };
+  services.pipewire.extraConfig.client."90-resample" = {
+    "stream.properties"."resample.quality" = 10;
   };
 
   # Star Citizen / RSI Launcher networking requirements per CIG support docs.
