@@ -26,7 +26,7 @@ let
 in
 symlinkJoin {
   pname = "notion-app";
-  version = "7.17.0";
+  version = "7.39.0";
 
   paths = [
     notion-bin

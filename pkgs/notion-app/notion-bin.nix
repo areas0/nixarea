@@ -38,11 +38,11 @@ let
 in
 stdenv.mkDerivation (finalAttrs: {
   pname = "notion-bin";
-  version = "7.17.0";
+  version = "7.39.0";
 
   src = fetchurl {
     url = "https://desktop-release.notion-static.com/Notion%20Setup%20${finalAttrs.version}.exe";
-    hash = "sha256-FbEELUu9lWXWCREOSN38i+JzgEv0nKt8fSD9Ibo8jMs=";
+    hash = "sha256-l6pIn0vxZn/HpY8UDjsDxv3XhJaqe3Q9xP92bgNSIs0=";
   };
 
   nativeBuildInputs = [
@@ -85,22 +85,26 @@ stdenv.mkDerivation (finalAttrs: {
     cp -vf "${bufferutil}/lib/bufferutil/bufferutil.node" asar_patched/node_modules/bufferutil/build/Release/bufferutil.node
     cp -vf ${./notion.png} "asar_patched/.webpack/main/trayIcon.png"
 
-    sed -i 's|this.tray.on("click",(()=>{this.onClick()}))|this.tray.setContextMenu(this.trayMenu),this.tray.on("click",(()=>{this.onClick()}))|g' "asar_patched/.webpack/main/index.js"
+    sed -i 's|this.tray.on("click",()=>{this.onClick()})|this.tray.setContextMenu(this.trayMenu),this.tray.on("click",()=>{this.onClick()})|g' "asar_patched/.webpack/main/index.js"
     sed -i 's|getIcon(){[^}]*}|getIcon(){return require("path").resolve(__dirname, "trayIcon.png");}|g' "asar_patched/.webpack/main/index.js"
 
     # fake the useragent as windows to fix the spellchecker languages selector and other issues
     sed -i 's|e.setUserAgent(`''${e.getUserAgent()} WantsServiceWorker`),|e.setUserAgent(`''${e.getUserAgent().replace("Linux", "Windows")} WantsServiceWorker`),|g' "asar_patched/.webpack/main/index.js"
 
-    # fully disabling auto updates
-    sed -i 's|if("darwin"===process.platform){const e=l.systemPreferences?.getUserDefault(C,"boolean"),t=M.Store.getState().app.preferences?.isAutoUpdaterDisabled,r=M.Store.getState().app.preferences?.isAutoUpdaterOSSupportBypass,n=(0,y.isOsUnsupportedForAutoUpdates)();return Boolean(e\|\|t\|\|!r&&n)}return!1|return!0|g' "asar_patched/.webpack/main/index.js"
-
-    # avoid running duplicated instances, fixes url opening
-    sed -i 's|handleOpenUrl);else if("win32"===process.platform)|handleOpenUrl);else if("linux"===process.platform)|g' "asar_patched/.webpack/main/index.js"
-    sed -i 's|async function(){(0,E.setupCrashReporter)(),|o.app.requestSingleInstanceLock() ? async function(){(0,E.setupCrashReporter)(),|g' "asar_patched/.webpack/main/index.js"
-    sed -i 's|setupCleanup)()}()}()|setupCleanup)()}()}() : o.app.quit();|g' "asar_patched/.webpack/main/index.js"
-
     # use the windows version of the tray menu
-    sed -i 's|r="win32"===process.platform?function(e,t)|r="linux"===process.platform?function(e,t)|g' "asar_patched/.webpack/main/index.js"
+    sed -i 's|="win32"===process.platform?function(e,t){const{isOpenAtLoginEnabled|="linux"===process.platform?function(e,t){const{isOpenAtLoginEnabled|g' "asar_patched/.webpack/main/index.js"
+
+    # Notion handles auto-update opt-out and single-instance/url opening on linux
+    # natively since 7.3x, so those patches are gone. Fail the build if a patch
+    # above stops matching the (minified) bundle instead of silently skipping it.
+    for needle in \
+      'this.tray.setContextMenu(this.trayMenu),this.tray.on("click"' \
+      'trayIcon.png");}' \
+      'getUserAgent().replace("Linux", "Windows")' \
+      '="linux"===process.platform?function(e,t){const{isOpenAtLoginEnabled'; do
+      grep -qF -- "$needle" asar_patched/.webpack/main/index.js \
+        || { echo "patch no longer applies: $needle" >&2; exit 1; }
+    done
 
     runHook postPatch
   '';

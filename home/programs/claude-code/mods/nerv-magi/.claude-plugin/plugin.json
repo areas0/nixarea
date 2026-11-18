@@ -1,6 +1,6 @@
 {
   "name": "nerv-magi",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "author": { "name": "areas0" },
   "description": "MAGI tool-call tally, /magi pane with a battlefield and an animated A.T. Field, and NERV wording, in the Evangelion theme's colors",
   "types": "./types/index.d.ts"

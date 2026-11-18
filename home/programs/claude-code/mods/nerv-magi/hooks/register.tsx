@@ -275,7 +275,10 @@ export const register: Register = on => {
   })
 
   on('turn.start', async ($, e, next) => {
-    // A new sortie: a fresh Angel, and whatever the last one left on the field is gone.
+    // A new sortie: a fresh Angel, and whatever the last one left on the field is gone, queued
+    // events included (a prompt that starts within a frame of the last turn's end would else
+    // inherit its ending).
+    anim.pending = []
     anim.outcome = null
     anim.shots = []
     anim.strikes = []
@@ -288,14 +291,19 @@ export const register: Register = on => {
 
   on('tool.call', async ($, e, next) => {
     const seat = seatFor(e.tool)
+    // The fight is the turn's: a background agent still working after the turn has ended
+    // neither wounds the fallen Angel nor wakes the field.
+    const isLive = seat !== null && (await read($, isActive))
 
     if (seat !== null) {
-      anim.pending.push({ kind: 'shot', seat })
       await update($, tally, t => {
         const seats = t ?? EMPTY
 
         return { ...seats, [seat]: seats[seat] + 1 }
       })
+    }
+    if (seat !== null && isLive) {
+      anim.pending.push({ kind: 'shot', seat })
       await update($, fight, f => {
         const now = f ?? FRESH_FIGHT
 
@@ -306,7 +314,7 @@ export const register: Register = on => {
     const ran = await next(e)
 
     // The call failed: the Angel strikes back.
-    if (seat !== null && ran.isError === true) {
+    if (isLive && ran.isError === true) {
       anim.pending.push({ kind: 'strike' })
       await update($, fight, f => {
         const now = f ?? FRESH_FIGHT
@@ -346,6 +354,7 @@ export const register: Register = on => {
 
   on('session.end', async ($, e, next) => {
     if (e.reason === 'clear') {
+      anim.pending = []
       anim.outcome = null
       anim.shots = []
       anim.strikes = []

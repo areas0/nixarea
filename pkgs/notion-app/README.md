@@ -15,6 +15,10 @@ avoids the windowed-resize regression that the prebuilt AppImage hit. See
 1. Set `version` in `default.nix` and `notion-bin.nix`.
 2. Update the `.exe` `hash` in `notion-bin.nix` (`nix-prefetch-url` the new URL).
 3. The `sed` patches target Notion's *minified* `.webpack/main/index.js` — they
-   may need re-deriving if the bundle changed.
+   may need re-deriving if the bundle changed. `notion-bin.nix` greps for each
+   patched result and fails the build if one stops matching, so a stale patch
+   can't pass silently. (As of 7.39 auto-update opt-out and single-instance on
+   linux are native, so only the tray, icon and user-agent patches remain.)
+   Inspect the bundle with `asar e <app.asar> out` and search `.webpack/main/index.js`.
 4. `better-sqlite3` / `bufferutil` versions + their `npmDepsHash` may need a bump
    to match what the new Notion expects.

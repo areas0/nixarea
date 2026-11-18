@@ -431,5 +431,52 @@ describe('nerv-magi', () => {
       expect(fresh).not.toContain('SORTIE ABORTED')
       expect(fresh).toContain('ANGEL  RAMIEL')
     })
+
+    test('a prompt that starts right after a turn ends does not inherit its ending', async ($, on) => {
+      const { clock, blits, ui } = await setUp($, on)
+      // Mean brightness of a picture sent to the terminal: a calm battle is about 36 out of 255,
+      // the white flash of the Angel's destruction well over 100.
+      const brightness = (rgba: string) => {
+        const bytes = Uint8Array.from(atob(rgba), c => c.charCodeAt(0))
+        let n = 0
+        for (let i = 0; i < bytes.length; i += 4) {
+          n += (bytes[i] ?? 0) + (bytes[i + 1] ?? 0) + (bytes[i + 2] ?? 0)
+        }
+
+        return n / ((bytes.length / 4) * 3)
+      }
+
+      await $.turn.start({ text: 'first', turnId: 't1' })
+      await $.tool.call({ tool: 'Read', file_path: '/a' })
+      await finish($, 't1', 1000)
+      // A queued prompt starts before the field has drawn a single frame of the ending.
+      await $.turn.start({ text: 'second', turnId: 't2' })
+      await clock.advance(300)
+
+      const text = await said(ui)
+      expect(text).not.toContain('ANGEL DESTROYED')
+      expect(text).toContain('ANGEL  RAMIEL')
+
+      expect(blits.length).toBeGreaterThan(0)
+      for (const blit of blits) {
+        expect(brightness(blit.source.rgba)).toBeLessThan(70)
+      }
+    })
+
+    test('a tool call after the turn has ended does not wake the field', async ($, on) => {
+      const { clock, blits } = await setUp($, on)
+
+      await $.turn.start({ text: 'go', turnId: 't1' })
+      await $.tool.call({ tool: 'Read', file_path: '/a' })
+      await finish($, 't1', 1000)
+      await clock.advance(6000)
+      const settled = blits.length
+
+      // A background agent finishing its work after the main turn is over.
+      await $.tool.call({ tool: 'Bash', command: 'ls' })
+      await clock.advance(3000)
+
+      expect(blits).toHaveLength(settled)
+    })
   })
 })
