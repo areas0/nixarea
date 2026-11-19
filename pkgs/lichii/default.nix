@@ -15,15 +15,15 @@
 
 let
   pname = "lichii";
-  version = "66";
+  version = "69";
 
   # `url` and `hash` are rewritten together with `version` by
   # scripts/update-lichii. Release assets live on catbox.moe (random ids), so
   # the url cannot be derived from the version.
   src = fetchurl {
     name = "Lichii-v${version}-linux-x64-pgo.AppImage";
-    url = "https://files.catbox.moe/e9ljyq.AppImage";
-    hash = "sha256-MT8MoRvQimAqrVokn+RMxb2l1mzx+fRT7I/mFqa+N5s=";
+    url = "https://gitgud.io/api/v4/projects/53102/packages/generic/lichii-superbuild/v69/lichii-linux-x86_64-pgo.AppImage";
+    hash = "sha256-uc5gjKAVll0sp5blKzjhi2SjAGOAb2A9iK29WY/LDno=";
   };
 
   contents = appimageTools.extract { inherit pname version src; };
