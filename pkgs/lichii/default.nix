@@ -3,10 +3,10 @@
 # ffmpeg shipped inside) but expects an FHS system for GL/Vulkan/X11/audio, so
 # it runs inside appimageTools' FHS env rather than being patchelf'd.
 #
-# Fetched from the callme-sy/Lichii-Superbuild GitHub releases (unofficial PGO
-# builds with curated fixes on top of zortos293/Lichii). When bumping
-# `version`, update `hash` too; GitHub shows each asset's sha256 digest
-# (`gh release view v<N> -R callme-sy/Lichii-Superbuild --json assets`).
+# Fetched from the RedSyl/lichii-superbuild releases on gitgud.io (unofficial
+# PGO builds with curated fixes on top of zortos293/Lichii). The previous
+# source, callme-sy/Lichii-Superbuild on GitHub, was deleted; its last build
+# (v56) is archived in ~/archive/lichii/. Bump with `scripts/update-lichii`.
 {
   lib,
   appimageTools,
@@ -15,11 +15,15 @@
 
 let
   pname = "lichii";
-  version = "56";
+  version = "66";
 
+  # `url` and `hash` are rewritten together with `version` by
+  # scripts/update-lichii. Release assets live on catbox.moe (random ids), so
+  # the url cannot be derived from the version.
   src = fetchurl {
-    url = "https://github.com/callme-sy/Lichii-Superbuild/releases/download/v${version}/Lichii-v${version}-linux-x64-pgo.AppImage";
-    hash = "sha256-uR0FFlQIhq+dzOxJU0IcL8pQW1KuUdx6DfQs7R7hcCg=";
+    name = "Lichii-v${version}-linux-x64-pgo.AppImage";
+    url = "https://files.catbox.moe/e9ljyq.AppImage";
+    hash = "sha256-MT8MoRvQimAqrVokn+RMxb2l1mzx+fRT7I/mFqa+N5s=";
   };
 
   contents = appimageTools.extract { inherit pname version src; };

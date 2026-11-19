@@ -381,7 +381,10 @@ hl.window_rule({
 })
 
 hl.window_rule({ name = "code-opacity", match = { class = "code"     }, opacity = 0.95 })
-hl.window_rule({ name = "zen-opacity",  match = { class = "zen-beta" }, opacity = 0.90 })
+-- Zen: no compositor-level opacity. Hyprland's `opacity` is per-window, so it also
+-- dims video. Transparency is handled inside the browser by the Transparent Zen mod
+-- (zen.widget.linux.transparency), which only affects UI/page backgrounds and
+-- leaves <video> opaque.
 
 -- ---- Gaming: Steam games -------------------------------------------------
 -- Multiple properties on one rule, single match.
