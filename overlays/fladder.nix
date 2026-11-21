@@ -1,11 +1,11 @@
 self: super:
 let
-  version = "0.11.0";
+  version = "0.12.1";
 
   bundleSrc = super.fetchzip {
     url = "https://github.com/DonutWare/Fladder/releases/download/v${version}/Fladder-Linux-${version}.zip";
     stripRoot = false;
-    sha256 = "sha256-ObznIELOf73hJ/kl8tfTQDW1hRf9hEbXM3GH0V21Gbg=";
+    sha256 = "sha256-Y667sQY1XaFtmAVc92n6EF6wtSkh54iF1YGSZFYn+wY=";
   };
 
   iconSvg = super.fetchurl {
@@ -64,6 +64,13 @@ in
       libepoxy
       lz4
     ];
+
+    # libdartjni.so (bundled since 0.12.0) links libjvm.so, only used if a JVM is started
+    autoPatchelfIgnoreMissingDeps = [ "libjvm.so" ];
+
+    # Dart FFI dlopen()s bundled libs (e.g. libsqlite3.so) from inside libflutter_linux_gtk.so;
+    # autoPatchelf rewrites its RUNPATH, so keep $ORIGIN to find lib/ siblings.
+    appendRunpaths = [ "$ORIGIN" ];
 
     desktopItems = [ desktopEntry ];
 
