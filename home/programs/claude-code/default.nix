@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  pkgs-unstable,
   ...
 }:
 let
@@ -13,6 +14,30 @@ let
       pkgs.git
     ];
     text = builtins.readFile ./statusline.sh;
+  };
+
+  # PermissionRequest hook: asks through Hyprland's own dialog (hyprland-guiutils) instead of only
+  # the terminal prompt. Plays a sound + noctalia toast, pins the dialog on every workspace and
+  # repeats until answered; "Deny & discuss" denies with an interrupt and focuses the terminal
+  # hosting the session. No answer in time prints nothing, so the terminal prompt takes over.
+  # hyprctl and noctalia come from the session PATH (they must match the running compositor/shell).
+  # Errexit/pipefail are off on purpose: the script relies on `head` closing pipes and on a hook
+  # that must always exit 0.
+  permissionPrompt = pkgs.writeShellApplication {
+    name = "claude-permission-prompt";
+    bashOptions = [ ];
+    runtimeInputs = [
+      pkgs.jq
+      pkgs.coreutils
+      pkgs.procps
+      pkgs.pipewire
+      pkgs-unstable.hyprland-guiutils
+    ];
+    text =
+      builtins.replaceStrings
+        [ "@sound@" ]
+        [ "${pkgs.sound-theme-freedesktop}/share/sounds/freedesktop/stereo/dialog-warning.oga" ]
+        (builtins.readFile ./permission-prompt.sh);
   };
 
   # Where the nerv-magi mod is linked, at a path that stays put across rebuilds (the store path
@@ -81,6 +106,20 @@ let
       path = "${config.home.homeDirectory}/${modLink}";
     };
     enabledPlugins."nerv-magi@eva" = true;
+
+    # Timeout > the script's own 120s so it can fall back to the terminal prompt itself.
+    # Arrays are replaced by the merge below, so this owns hooks.PermissionRequest entirely.
+    hooks.PermissionRequest = [
+      {
+        hooks = [
+          {
+            type = "command";
+            command = lib.getExe permissionPrompt;
+            timeout = 150;
+          }
+        ];
+      }
+    ];
   };
 in
 {
